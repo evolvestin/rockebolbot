@@ -1,1 +1,1 @@
-bot: python3 spy.py
+worker: python3 spy.py
