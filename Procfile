@@ -1,1 +1,1 @@
-web: python spy.py
+bot: python3 spy.py
