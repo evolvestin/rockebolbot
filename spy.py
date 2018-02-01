@@ -18,17 +18,17 @@ def repeat_all_messages(message): # Название функции не игр�
     #bot.send_message(396978030, message.text)
 
     if message.chat.id == 491625180: #be
-        bot.send_message(-1001186759363, "С в " + message.text)
+        bot.send_message(-1001116128920, "С в " + message.text)
     elif message.chat.id == 394850016: #ow
-        bot.send_message(-1001186759363, "Ч в " + message.text)
+        bot.send_message(-1001116128920, "Ч в " + message.text)
     elif message.chat.id == 485591553: #so
-        bot.send_message(-1001186759363, "деф Ж в " + message.text)
+        bot.send_message(-1001116128920, "деф Ж в " + message.text)
     elif message.chat.id == 430602902: #fb
-        bot.send_message(-1001186759363, "Б в " + message.text)
+        bot.send_message(-1001116128920, "Б в " + message.text)
     elif message.chat.id == 497892874: #gt
-        bot.send_message(-1001186759363, "деф К в " + message.text)
+        bot.send_message(-1001116128920, "деф К в " + message.text)
     elif message.chat.id == 350037139: #sm
-        bot.send_message(-1001186759363, "деф Су в " + message.text)
+        bot.send_message(-1001116128920, "деф Су в " + message.text)
 
 
 if __name__ == '__main__':
