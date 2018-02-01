@@ -2,27 +2,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Telegram bot tutorial: https://djangostars.com/blog/how-to-create-and-deploy-a-telegram-bot/
-              in Russian: https://tproger.ru/translations/telegram-bot-create-and-deploy/"""
 import telebot
+token = "462725941:AAFxYxX0G_smCog6ZS-f2T_vqVfdUwCTRH4"
+bot = telebot.TeleBot(token)
 
-API_TOKEN = '462725941:AAFxYxX0G_smCog6ZS-f2T_vqVfdUwCTRH4'
+@bot.message_handler(content_types=["text"])
+def repeat_all_messages(message): # Название функции не играет никакой роли, в принципе
+    bot.send_message(message.chat.id, message.text)
 
-bot = telebot.TeleBot(API_TOKEN)
-
-# Handle '/start' and '/help'
-@bot.message_handler(commands=['help', 'start'])
-def send_welcome(message):
-    bot.reply_to(message, """\
-Hi there, I am EchoBot.
-I am here to echo your kind words back to you. Just say anything nice and I'll say the exact same thing to you!\
-""" + message.from_user.first_name)
-
-bot.send_message(396978030, "test")
-# Handle all other messages with content_type 'text' (content_types defaults to ['text'])
-@bot.message_handler(func=lambda message: True)
-def echo_message(message):
-    bot.reply_to(message, message.text)
-	
-
-bot.polling()
+if __name__ == '__main__':
+     bot.polling(none_stop=True)
