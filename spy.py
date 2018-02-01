@@ -16,13 +16,13 @@ bot = telebot.TeleBot(token)
 @bot.message_handler(content_types=["text"])
 def repeat_all_messages(message): # Название функции не играет никакой роли, в принципе
     #bot.send_message(396978030, message.text)
-   
-    if message.chat.id == 394850016: #ow
-        bot.send_message(-1001186759363, "Ч в " + message.text)
-    return
 
     if message.chat.id == 491625180: #be
         bot.send_message(-1001186759363, "С в " + message.text)
+    return
+
+    if message.chat.id == 394850016: #ow
+        bot.send_message(-1001186759363, "Ч в " + message.text)
     return
 
     if message.chat.id == 485591553: #so
