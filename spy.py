@@ -21,22 +21,23 @@ def repeat_all_messages(message): # Название функции не игр�
         bot.send_message(-1001186759363, "С в " + message.text)
     return
 
+def repeat_all_black(message)
     if message.chat.id == 394850016: #ow
         bot.send_message(-1001186759363, "Ч в " + message.text)
     return
-
+def repeat_all_yellow(message)
     if message.chat.id == 485591553: #so
         bot.send_message(-1001186759363, "деф Ж в " + message.text)
     return
-
+def repeat_all_white(message)
     if message.chat.id == 430602902: #fb
         bot.send_message(-1001186759363, "Б в " + message.text)
     return
-
+def repeat_all_red(message)
     if message.chat.id == 497892874: #gt
         bot.send_message(-1001186759363, "деф К в " + message.text)
     return
-
+def repeat_all_sumrok(message)
     if message.chat.id == 350037139: #sm
         bot.send_message(-1001186759363, "деф Су в " + message.text)
     return
