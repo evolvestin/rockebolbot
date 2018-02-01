@@ -14,6 +14,8 @@ def repeat_all_messages(message): # Название функции не игр�
     if message.chat.id == 394850016:
         bot.send_message(396978030, "он пишет, но что ты не узнаешь")
     return
-
+    if message.text == К
+        bot.send_message(396978030, "U+1F1EE")
+    return
 if __name__ == '__main__':
      bot.polling(none_stop=True)
