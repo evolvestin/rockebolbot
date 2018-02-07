@@ -24,7 +24,7 @@ def repeat_all_messages(message): # Название функции не игр�
     elif message.chat.id == 485591553: #so
         bot.send_message(-1001116128920, "деф Ж: " + message.text)
     elif message.chat.id == 430602902: #fb
-        bot.send_message(-1001175146945, "Б: " + message.text)
+        bot.send_message(-1001175146945, "🇨🇾: " + message.text)
     elif message.chat.id == 497892874: #gt
         bot.send_message(-1001175146945, "деф К: " + message.text)
     elif message.chat.id == 350037139: #sm
