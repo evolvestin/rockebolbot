@@ -20,15 +20,15 @@ def repeat_all_messages(message): # Название функции не игр�
     if message.chat.id == 491625180: #be
         bot.send_message(-1001116128920, "🇪🇺: " + message.text)
     elif message.chat.id == 394850016: #ow
-        bot.send_message(-1001175146945, "Ч: " + message.text)
+        bot.send_message(-1001175146945, "🇬🇵: " + message.text)
     elif message.chat.id == 485591553: #so
-        bot.send_message(-1001116128920, "деф Ж: " + message.text)
+        bot.send_message(-1001116128920, "деф 🇻🇦: " + message.text)
     elif message.chat.id == 430602902: #fb
         bot.send_message(-1001175146945, "🇨🇾: " + message.text)
     elif message.chat.id == 497892874: #gt
-        bot.send_message(-1001175146945, "деф К: " + message.text)
+        bot.send_message(-1001175146945, "деф 🇮🇲: " + message.text)
     elif message.chat.id == 350037139: #sm
-        bot.send_message(-1001175146945, "деф Су: " + message.text)
+        bot.send_message(-1001175146945, "деф 🇰🇮: " + message.text)
 
 
 if __name__ == '__main__':
