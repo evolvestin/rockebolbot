@@ -33,7 +33,7 @@ def repeat_all_messages(message): # Название функции не игр�
         bot.send_message(-1001175146945, "деф 🇰🇮: " + message.text)
     elif message.chat.id == 396978030: #kke
         bot.send_message(396978030, "дебил: " + message.text)
-    elif message.chat.id == 396978030:
+  #  elif message.chat.id == 396978030:
         content = requests.get(url).read()
 
 if __name__ == '__main__':
