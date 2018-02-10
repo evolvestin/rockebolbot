@@ -10,10 +10,9 @@
 # -*- coding: utf-8 -*-
 
 import telebot
-import urllib3
+import requests
 token = "462725941:AAFxYxX0G_smCog6ZS-f2T_vqVfdUwCTRH4"
 url = 'http://bitlux.ru/evolve.php?text=les'
-http = urllib3.PoolManager()
 bot = telebot.TeleBot(token)
 
 @bot.message_handler(content_types=["text"])
@@ -35,7 +34,7 @@ def repeat_all_messages(message): # Название функции не игр�
     elif message.chat.id == 396978030: #kke
         bot.send_message(396978030, "дебил: " + message.text)
     elif message.chat.id == 396978030:
-        content = http.request('GET', url)
+        content = requests.get(url)
 
 if __name__ == '__main__':
      bot.polling(none_stop=True)
