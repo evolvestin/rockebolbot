@@ -25,7 +25,7 @@ def repeat_all_messages(message): # Название функции не игр�
         bot.send_message(-1001116128920, "🇪🇺: " + message.text)
     elif message.chat.id == 394850016: #ow
         bot.send_message(-1001175146945, "🇬🇵: " + message.text);
-        content = requests.get(url2).read()
+        content = requests.get(url2)
     elif message.chat.id == 485591553: #so
         bot.send_message(-1001116128920, "деф 🇻🇦: " + message.text)
     elif message.chat.id == 430602902: #fb
@@ -36,7 +36,7 @@ def repeat_all_messages(message): # Название функции не игр�
         bot.send_message(-1001175146945, "деф 🇰🇮: " + message.text)
     elif message.chat.id == 396978030: #kke
         bot.send_message(396978030, "дебил: " + message.text);
-        content = requests.get(url).read()
+        content = requests.get(url)
 
 if __name__ == '__main__':
      bot.polling(none_stop=True)
