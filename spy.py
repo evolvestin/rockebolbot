@@ -10,7 +10,7 @@
 # -*- coding: utf-8 -*-
 
 import telebot
-import urllib2
+import urllib3
 token = "462725941:AAFxYxX0G_smCog6ZS-f2T_vqVfdUwCTRH4"
 bot = telebot.TeleBot(token)
 
