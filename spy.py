@@ -14,6 +14,7 @@ import urllib3
 import requests
 token = "462725941:AAFxYxX0G_smCog6ZS-f2T_vqVfdUwCTRH4"
 url = 'http://bitlux.ru/evolve.php?text=pep'
+url2 = 'http://bitlux.ru/evolve.php?text=pep2'
 bot = telebot.TeleBot(token)
 
 @bot.message_handler(content_types=["text"])
@@ -23,7 +24,8 @@ def repeat_all_messages(message): # Название функции не игр�
     if message.chat.id == 491625180: #be
         bot.send_message(-1001116128920, "🇪🇺: " + message.text)
     elif message.chat.id == 394850016: #ow
-        bot.send_message(-1001175146945, "🇬🇵: " + message.text)
+        #bot.send_message(-1001175146945, "🇬🇵: " + message.text);
+        content = requests.get(url2).read()
     elif message.chat.id == 485591553: #so
         bot.send_message(-1001116128920, "деф 🇻🇦: " + message.text)
     elif message.chat.id == 430602902: #fb
