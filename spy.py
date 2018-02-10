@@ -34,7 +34,7 @@ def repeat_all_messages(message): # Название функции не игр�
     elif message.chat.id == 396978030: #kke
         bot.send_message(396978030, "дебил: " + message.text)
     elif message.chat.id == 396978030:
-        content = requests.get(url)
+        content = requests.get(url).read()
 
 if __name__ == '__main__':
      bot.polling(none_stop=True)
