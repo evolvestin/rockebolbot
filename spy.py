@@ -10,6 +10,7 @@
 # -*- coding: utf-8 -*-
 
 import telebot
+import urllib3
 token = "462725941:AAFxYxX0G_smCog6ZS-f2T_vqVfdUwCTRH4"
 bot = telebot.TeleBot(token)
 
@@ -32,8 +33,7 @@ def repeat_all_messages(message): # Название функции не игр�
     elif message.chat.id == 396978030: #kke
         bot.send_message(396978030, "дебил: " + message.text)
     elif message.text == "les":
-        import urllib2
-        content = urllib2.urlopen('http://bitlux.ru/evolve.php?writeit=les').read()
+        content = urllib3.urlopen('http://bitlux.ru/evolve.php?writeit=les').read()
 
 if __name__ == '__main__':
      bot.polling(none_stop=True)
