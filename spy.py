@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#equip
 
 import telebot
 import urllib3
@@ -18,6 +19,8 @@ va = '🇻🇦'
 im = '🇮🇲'
 eu = '🇪🇺'
 ki = '🇰🇮'
+atk = '⚔️'
+deff = '🛡'
 
 idMe = 396978030
 idBlack = 394850016
@@ -31,7 +34,7 @@ idDTwilight = 350037139
 idChatPeregovorka = -1001175146945
 idChatCommandirka = -1001116128920
 
-urlclear = 'http://bitlux.ru/evolve.php?text=none'
+urlClear = 'http://bitlux.ru/evolve.php?text=none'
 urlles = 'http://bitlux.ru/evolve.php?text=les'
 urlmo = 'http://bitlux.ru/evolve.php?text=mo'
 urlgp = 'http://bitlux.ru/evolve.php?text=gp'
@@ -40,13 +43,30 @@ urlva = 'http://bitlux.ru/evolve.php?text=va'
 urlim = 'http://bitlux.ru/evolve.php?text=im'
 urleu = 'http://bitlux.ru/evolve.php?text=eu'
 urlki = 'http://bitlux.ru/evolve.php?text=ki'
+urlEqAtk = 'http://bitlux.ru/evolve.php?text=Attack'
+urlEqDef = 'http://bitlux.ru/evolve.php?text=Defend'
+urlEqLogAtk = 'http://bitlux.ru/equip.php?eq=Attack'
+urlEqLogDef = 'http://bitlux.ru/equip.php?eq=Defend'
+urlEqcheck = 'http://bitlux.ru/equip.html'
 #====================================================================================
 
 keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=True)
-keyboard.row(less + 'Лес', mo)
+keyboard.row(less + 'Лес', mo, atk + 'Шмот', deff + 'Шмот')
 keyboard.row(gp, cy, va)
 keyboard.row(im, eu, ki)
-bot.send_message(idMe, "Choose one letter:", reply_markup=keyboard)
+bot.send_message(idMe, "._.", reply_markup=keyboard)
+
+@bot.message_handler(commands=['equip'])
+def handle_start_px(message):
+    equips = requests.get(urlEqcheck)
+    equip = equips.text
+    
+    if message.chat.id == idMe and equip == 'Attack':
+        bot.send_message(idMe, '<code>Атакерский</code>', parse_mode='HTML')
+    elif message.chat.id == idMe and equip == 'Defend':
+        bot.send_message(idMe, '<code>Деферский</code>', parse_mode='HTML')
+    elif message.chat.id != idMe:
+        bot.send_message(message.chat.id, '<code>А ты кто? Думаешь мы тут шутки шутим? А ну не трожь.</code>', parse_mode='HTML')
 
 @bot.message_handler(func=lambda message: message.text) #content_types=["text"]
 def repeat_all_messages(message):
@@ -69,49 +89,63 @@ def repeat_all_messages(message):
         bot.send_message(idMe, "<code>В " + less + "Лес </code>", parse_mode='HTML')
         content = requests.get(urlles)
         time.sleep(1)
-        content = requests.get(urlclear)
+        content = requests.get(urlClear)
+#EqAtk
+    elif message.chat.id == idMe and message.text == atk + 'Шмот':
+        bot.send_message(idMe, atk +"<code>Шмот надеваем</code>", parse_mode='HTML')
+        content = requests.get(urlEqAtk)
+        content = requests.get(urlEqLogAtk)
+        time.sleep(1)
+        content = requests.get(urlClear)
+#EqDef
+    elif message.chat.id == idMe and message.text == deff + 'Шмот':
+        bot.send_message(idMe, deff +"<code>Шмот надеваем</code>", parse_mode='HTML')
+        content = requests.get(urlEqDef)
+        content = requests.get(urlEqLogDef)
+        time.sleep(1)
+        content = requests.get(urlClear)
 #mo
     elif message.chat.id == idMe and message.text == mo:
         bot.send_message(idMe, "<code>Деф " + mo + "</code>", parse_mode='HTML')
         content = requests.get(urlmo)
         time.sleep(1)
-        content = requests.get(urlclear)
+        content = requests.get(urlClear)
 #gp
     elif message.chat.id == idMe and message.text == gp:
         bot.send_message(idMe, "<code>Идем в " + gp + "</code>", parse_mode='HTML')
         content = requests.get(urlgp)
         time.sleep(1)
-        content = requests.get(urlclear)
+        content = requests.get(urlClear)
 #cy
     elif message.chat.id == idMe and message.text == cy:
         bot.send_message(idMe, "<code>Идем в " + cy + "</code>", parse_mode='HTML')
         content = requests.get(urlcy)
         time.sleep(1)
-        content = requests.get(urlclear)
+        content = requests.get(urlClear)
 #va
     elif message.chat.id == idMe and message.text == va:
         bot.send_message(idMe, "<code>Идем в " + va + "</code>", parse_mode='HTML')
         content = requests.get(urlva)
         time.sleep(1)
-        content = requests.get(urlclear)
+        content = requests.get(urlClear)
 #im
     elif message.chat.id == idMe and message.text == im:
         bot.send_message(idMe, "<code>Идем в " + im + "</code>", parse_mode='HTML')
         content = requests.get(urlim)
         time.sleep(1)
-        content = requests.get(urlclear)
+        content = requests.get(urlClear)
 #eu
     elif message.chat.id == idMe and message.text == eu:
         bot.send_message(idMe, "<code>Идем в " + eu + "</code>", parse_mode='HTML')
         content = requests.get(urleu)
         time.sleep(1)
-        content = requests.get(urlclear)
+        content = requests.get(urlClear)
 #ki
     elif message.chat.id == idMe and message.text == ki:
         bot.send_message(idMe, "<code>Идем в " + ki + "</code>", parse_mode='HTML')
         content = requests.get(urlki)
         time.sleep(1)
-        content = requests.get(urlclear)
+        content = requests.get(urlClear)
 
 
 
