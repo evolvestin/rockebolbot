@@ -148,6 +148,14 @@ def repeat_all_messages(message):
         content = requests.get(urlClear)
 
 
+def telepol():
+    try:
+        bot.polling(none_stop=True, timeout=60)
+    except:
+        bot.stop_polling()
+        sleep(5)
+        telepol()
+
 
 if __name__ == '__main__':
-     bot.polling(none_stop=True)
+     telepol()
