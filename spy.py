@@ -94,15 +94,15 @@ def repeat_all_messages(message):
     elif message.chat.id == idMe and message.text == atk + 'Шмот':
         bot.send_message(idMe, atk +"<code>Шмот надеваем</code>", parse_mode='HTML')
         content = requests.get(urlEqAtk)
+        time.sleep(2)
         content = requests.get(urlEqLogAtk)
-        time.sleep(1)
         content = requests.get(urlClear)
 #EqDef
     elif message.chat.id == idMe and message.text == deff + 'Шмот':
         bot.send_message(idMe, deff +"<code>Шмот надеваем</code>", parse_mode='HTML')
         content = requests.get(urlEqDef)
+        time.sleep(2)
         content = requests.get(urlEqLogDef)
-        time.sleep(1)
         content = requests.get(urlClear)
 #mo
     elif message.chat.id == idMe and message.text == mo:
