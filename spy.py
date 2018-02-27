@@ -78,10 +78,10 @@ def repeat_all_messages(message):
     elif message.chat.id == idDBlack and message.forward_date is not None:
         if str(message.forward_from.username) == 'CWRedBot':
             bot.send_message(idChatCommandirka, "<code>atk" + im + ": " + message.text + "</code>", parse_mode='HTML')
-            #bot.send_message(idChatPeregovorka, "<code>atk" + im + ": " + message.text + "</code>", parse_mode='HTML')
+            bot.send_message(idChatPeregovorka, "<code>atk" + im + ": " + message.text + "</code>", parse_mode='HTML')
         elif str(message.forward_from.username) == 'ToweRobot':
             bot.send_message(idChatCommandirka, "<code>def" + gp + ": " + message.text + "</code>", parse_mode='HTML')
-            #bot.send_message(idChatPeregovorka, "<code>def" + gp + ": " + message.text + "</code>", parse_mode='HTML')    
+            bot.send_message(idChatPeregovorka, "<code>def" + gp + ": " + message.text + "</code>", parse_mode='HTML')    
 
     elif message.chat.id == idRed:
         bot.send_message(idChatCommandirka, "<code>🇮🇲(Dareten): " + message.text + "</code>", parse_mode='HTML')
