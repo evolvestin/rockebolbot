@@ -24,10 +24,12 @@ deff = '🛡'
 
 idMe = 396978030
 idBlack = 394850016
+idDBlack = 200299701 #MISSSPACEX
 idBlue = 491625180
 idDYellow = 485591553
 idWhite = 430602902
 idRed = 519673442 #DARETEN
+idRed2 = 200299701 #MISSSPACEX
 idDRed = 497892874
 idDTwilight = 350037139
 
@@ -72,6 +74,15 @@ def handle_start_px(message):
 def repeat_all_messages(message):
     if message.chat.id == idBlue: 
         bot.send_message(idChatCommandirka, "<code>🇪🇺: " + message.text + "</code>", parse_mode='HTML')
+
+    elif message.chat.id == idDBlack and message.forward_date is not None:
+        if str(message.forward_from.username) == 'CWRedBot':
+            bot.send_message(idChatCommandirka, "<code>atk" + im + ": " + message.text + "</code>", parse_mode='HTML')
+            #bot.send_message(idChatPeregovorka, "<code>atk" + im + ": " + message.text + "</code>", parse_mode='HTML')
+        elif str(message.forward_from.username) == 'ToweRobot':
+            bot.send_message(idChatCommandirka, "<code>def" + gp + ": " + message.text + "</code>", parse_mode='HTML')
+            #bot.send_message(idChatPeregovorka, "<code>def" + gp + ": " + message.text + "</code>", parse_mode='HTML')    
+
     elif message.chat.id == idRed:
         bot.send_message(idChatCommandirka, "<code>🇮🇲(Dareten): " + message.text + "</code>", parse_mode='HTML')
         bot.send_message(idChatPeregovorka, "<code>🇮🇲(Dareten): " + message.text + "</code>", parse_mode='HTML')
