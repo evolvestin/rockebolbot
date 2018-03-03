@@ -78,24 +78,29 @@ def repeat_all_messages(message):
     elif message.chat.id == idDBlack and message.forward_date is not None:
         if str(message.forward_from.username) == 'CWRedBot':
             bot.send_message(idChatCommandirka, "<code>atk" + im + ": " + message.text + "</code>", parse_mode='HTML')
-            bot.send_message(idChatPeregovorka, "<code>atk" + im + ": " + message.text + "</code>", parse_mode='HTML')
+            #bot.send_message(idChatPeregovorka, "<code>atk" + im + ": " + message.text + "</code>", parse_mode='HTML')
         elif str(message.forward_from.username) == 'ToweRobot':
             bot.send_message(idChatCommandirka, "<code>def" + gp + ": " + message.text + "</code>", parse_mode='HTML')
-            bot.send_message(idChatPeregovorka, "<code>def" + gp + ": " + message.text + "</code>", parse_mode='HTML')    
+            #bot.send_message(idChatPeregovorka, "<code>def" + gp + ": " + message.text + "</code>", parse_mode='HTML')    
 
     elif message.chat.id == idRed:
         bot.send_message(idChatCommandirka, "<code>🇮🇲(Dareten): " + message.text + "</code>", parse_mode='HTML')
-        bot.send_message(idChatPeregovorka, "<code>🇮🇲(Dareten): " + message.text + "</code>", parse_mode='HTML')
+        #bot.send_message(idChatPeregovorka, "<code>🇮🇲(Dareten): " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idBlack:
-        bot.send_message(idChatPeregovorka, "<code>🇬🇵: " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, "<code>🇬🇵: " + message.text + "</code>", parse_mode='HTML')
+	#bot.send_message(idChatPeregovorka, "<code>🇬🇵: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idDYellow:
         bot.send_message(idChatCommandirka, "<code>деф 🇻🇦: " + message.text + "</code>", parse_mode='HTML')
+	#bot.send_message(idChatPeregovorka, "<code>деф 🇻🇦: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idWhite:
-        bot.send_message(idChatPeregovorka, "<code>🇨🇾: " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, "<code>🇨🇾: " + message.text + "</code>", parse_mode='HTML')
+	#bot.send_message(idChatPeregovorka, "<code>🇨🇾: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idDRed:
-        bot.send_message(idChatPeregovorka, "<code>деф 🇮🇲: " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, "<code>деф 🇮🇲: " + message.text + "</code>", parse_mode='HTML')
+	#bot.send_message(idChatPeregovorka, "<code>деф 🇮🇲: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idDTwilight:
-        bot.send_message(idChatPeregovorka, "<code>деф 🇰🇮: " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, "<code>деф 🇰🇮: " + message.text + "</code>", parse_mode='HTML')
+	#bot.send_message(idChatPeregovorka, "<code>деф 🇰🇮: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idMe and message.text == '🌲Лес':
         bot.send_message(idMe, "<code>В " + less + "Лес </code>", parse_mode='HTML')
         content = requests.get(urlles)
