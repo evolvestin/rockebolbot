@@ -124,57 +124,57 @@ def repeat_all_messages(message):
     elif message.chat.id == idMe and message.text == atk + "Шмот":
         bot.send_message(idMe, atk +"<code>Шмот надеваем</code>", parse_mode='HTML')
         content = requests.get(urlEqAtk)
-        time.sleep(13)
+        time.sleep(4)
         content = requests.get(urlEqLogAtk)
         content = requests.get(urlClear)
 #EqDef
     elif message.chat.id == idMe and message.text == deff + "Шмот":
         bot.send_message(idMe, deff +"<code>Шмот надеваем</code>", parse_mode='HTML')
         content = requests.get(urlEqDef)
-        time.sleep(13)
+        time.sleep(4)
         content = requests.get(urlEqLogDef)
         content = requests.get(urlClear)
 #mo
     elif message.chat.id == idMe and message.text == mo:
         bot.send_message(idMe, "<code>Деф " + mo + "</code>", parse_mode='HTML')
         content = requests.get(urlmo)
-        time.sleep(12)
+        time.sleep(3)
         content = requests.get(urlClear)
 #gp
     elif message.chat.id == idMe and message.text == gp:
         bot.send_message(idMe, "<code>Идем в " + gp + "</code>", parse_mode='HTML')
         content = requests.get(urlgp)
-        time.sleep(12)
+        time.sleep(3)
         content = requests.get(urlClear)
 #cy
     elif message.chat.id == idMe and message.text == cy:
         bot.send_message(idMe, "<code>Идем в " + cy + "</code>", parse_mode='HTML')
         content = requests.get(urlcy)
-        time.sleep(12)
+        time.sleep(3)
         content = requests.get(urlClear)
 #va
     elif message.chat.id == idMe and message.text == va:
         bot.send_message(idMe, "<code>Идем в " + va + "</code>", parse_mode='HTML')
         content = requests.get(urlva)
-        time.sleep(12)
+        time.sleep(3)
         content = requests.get(urlClear)
 #im
     elif message.chat.id == idMe and message.text == im:
         bot.send_message(idMe, "<code>Идем в " + im + "</code>", parse_mode='HTML')
         content = requests.get(urlim)
-        time.sleep(12)
+        time.sleep(3)
         content = requests.get(urlClear)
 #eu
     elif message.chat.id == idMe and message.text == eu:
         bot.send_message(idMe, "<code>Идем в " + eu + "</code>", parse_mode='HTML')
         content = requests.get(urleu)
-        time.sleep(12)
+        time.sleep(3)
         content = requests.get(urlClear)
 #ki
     elif message.chat.id == idMe and message.text == ki:
         bot.send_message(idMe, "<code>Идем в " + ki + "</code>", parse_mode='HTML')
         content = requests.get(urlki)
-        time.sleep(12)
+        time.sleep(3)
         content = requests.get(urlClear)
 
 
