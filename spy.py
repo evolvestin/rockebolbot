@@ -2,10 +2,14 @@
 #equip
 
 import telebot
+from telebot import types
 import urllib3
 import requests
 import time
-from telebot import types
+from time import sleep
+import datetime
+from datetime import datetime
+import _thread
 
 #=================================================================
 token = "462725941:AAFxYxX0G_smCog6ZS-f2T_vqVfdUwCTRH4"
@@ -59,6 +63,12 @@ keyboard.row(gp, cy, va)
 keyboard.row(im, eu, ki)
 bot.send_message(idMe, "._.", reply_markup=keyboard)
 
+globtime = 0
+@bot.message_handler(commands=['time'])
+def handle_chas_command(message):  
+    global globtime
+    bot.send_message(message.chat.id, '<code>Время: ' + globtime + '</code>', parse_mode='HTML')
+
 @bot.message_handler(commands=['id'])
 def handle_id_command(message):  
     orbo = message.chat.id
@@ -81,6 +91,7 @@ def handle_start_px(message):
 
 @bot.message_handler(func=lambda message: message.text) #content_types=["text"]
 def repeat_all_messages(message):
+    global globtime
     if message.chat.id == idDBlack and message.forward_date is not None:
         if str(message.forward_from.username) == "CWRedBot":
             bot.send_message(idChatCommandirka, atk + im + "<code>: " + message.text + "</code>", parse_mode='HTML')
@@ -96,7 +107,7 @@ def repeat_all_messages(message):
         bot.send_message(idChatCommandirka, deff + im + "<code>: " + message.text + "</code>", parse_mode='HTML')
 	#bot.send_message(idChatPeregovorka, deff + im + "<code>: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idBlack:
-        bot.send_message(idChatCommandirka, atk + gp + "<code>: " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, atk + gp + '<code>: </code>' + message.text + ' <code> ' + globtime + '</code>', parse_mode='HTML')
 	#bot.send_message(idChatPeregovorka, atk + gp + "<code>: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idBlue:
         bot.send_message(idChatCommandirka, atk + eu + "<code>: " + message.text + "</code>", parse_mode='HTML')
@@ -118,65 +129,78 @@ def repeat_all_messages(message):
     elif message.chat.id == idMe and message.text == less + "Лес":
         bot.send_message(idMe, "<code>Идем в" + less + "Лес</code>", parse_mode='HTML')
         content = requests.get(urlles)
-        time.sleep(12)
+        time.sleep(1)
         content = requests.get(urlClear)
 #EqAtk
     elif message.chat.id == idMe and message.text == atk + "Шмот":
         bot.send_message(idMe, atk +"<code>Шмот надеваем</code>", parse_mode='HTML')
         content = requests.get(urlEqAtk)
-        time.sleep(4)
+        time.sleep(2)
         content = requests.get(urlEqLogAtk)
         content = requests.get(urlClear)
 #EqDef
     elif message.chat.id == idMe and message.text == deff + "Шмот":
         bot.send_message(idMe, deff +"<code>Шмот надеваем</code>", parse_mode='HTML')
         content = requests.get(urlEqDef)
-        time.sleep(4)
+        time.sleep(2)
         content = requests.get(urlEqLogDef)
         content = requests.get(urlClear)
 #mo
     elif message.chat.id == idMe and message.text == mo:
         bot.send_message(idMe, "<code>Деф " + mo + "</code>", parse_mode='HTML')
         content = requests.get(urlmo)
-        time.sleep(3)
+        time.sleep(1)
         content = requests.get(urlClear)
 #gp
     elif message.chat.id == idMe and message.text == gp:
         bot.send_message(idMe, "<code>Идем в " + gp + "</code>", parse_mode='HTML')
         content = requests.get(urlgp)
-        time.sleep(3)
+        time.sleep(1)
         content = requests.get(urlClear)
 #cy
     elif message.chat.id == idMe and message.text == cy:
         bot.send_message(idMe, "<code>Идем в " + cy + "</code>", parse_mode='HTML')
         content = requests.get(urlcy)
-        time.sleep(3)
+        time.sleep(1)
         content = requests.get(urlClear)
 #va
     elif message.chat.id == idMe and message.text == va:
         bot.send_message(idMe, "<code>Идем в " + va + "</code>", parse_mode='HTML')
         content = requests.get(urlva)
-        time.sleep(3)
+        time.sleep(1)
         content = requests.get(urlClear)
 #im
     elif message.chat.id == idMe and message.text == im:
         bot.send_message(idMe, "<code>Идем в " + im + "</code>", parse_mode='HTML')
         content = requests.get(urlim)
-        time.sleep(3)
+        time.sleep(1)
         content = requests.get(urlClear)
 #eu
     elif message.chat.id == idMe and message.text == eu:
         bot.send_message(idMe, "<code>Идем в " + eu + "</code>", parse_mode='HTML')
         content = requests.get(urleu)
-        time.sleep(3)
+        time.sleep(1)
         content = requests.get(urlClear)
 #ki
     elif message.chat.id == idMe and message.text == ki:
         bot.send_message(idMe, "<code>Идем в " + ki + "</code>", parse_mode='HTML')
         content = requests.get(urlki)
-        time.sleep(3)
+        time.sleep(1)
         content = requests.get(urlClear)
 
+def bitva_detector():
+    global globtime
+    while True:
+        try:
+            sleep(0.3)
+            curr_time = int(datetime.now().timestamp())
+            hours = datetime.utcfromtimestamp(int(curr_time)).strftime('%H')
+            hours = int(hours) + 3
+            minutes = datetime.utcfromtimestamp(int(curr_time)).strftime('%M')
+            seconds = datetime.utcfromtimestamp(int(curr_time)).strftime('%S')
+            globtime = str(hours) + ':' + str(minutes) + ':' + str(seconds)
+        except Exception as e:
+            sleep(0.3)
 
 def telepol():
     try:
@@ -186,6 +210,6 @@ def telepol():
         sleep(5)
         telepol()
 
-
 if __name__ == '__main__':
-     telepol()
+    _thread.start_new_thread(bitva_detector, ())
+    telepol() 
