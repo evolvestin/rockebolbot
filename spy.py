@@ -226,6 +226,9 @@ def repeat_all_messages(message):
 def bitva_detector():
     global globtime
     global clkwait
+    global hours
+    global minutes
+    global curr_time
     global zader
     global beatva
     while True:
@@ -259,9 +262,43 @@ def bitva_detector():
             else:
                 clkwait = 60 + 1 # плюс задержка
                 beatva = 'net'
+
             zader = clkwait - 1
         except Exception as e:
             sleep(0.3)
+
+def merc_detector():
+    global hours
+    global minutes
+    global curr_time
+    while True:
+        try:
+            sleep(1)
+            merc_sec = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%S'))
+            if hours == 3 or hours == 7 or hours == 11 or hours == 15 or hours == 19 or hours == 23:
+                if merc_sec == 25 and minutes == 59:
+                    bot.send_message(idChatCommandirka, "Woop-woop! That's the sound of da ebolbo-police!", parse_mode='HTML')
+                elif merc_sec == 30 and minutes == 59:
+                    bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                elif merc_sec == 35 and minutes == 59:
+                    bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                elif merc_sec == 40 and minutes == 59:
+                    bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                elif merc_sec == 45 and minutes == 59:
+                    bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                elif merc_sec == 50 and minutes == 59:
+                    bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                elif merc_sec == 55 and minutes == 59:
+                    bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+            elif hours == 4 or hours == 8 or hours == 12 or hours == 16 or hours == 20 or hours == 24:
+                if merc_sec == 0 and minutes == 0:
+                    bot.send_message(idChatCommandirka, '00:00', parse_mode='HTML')
+                elif merc_sec == 3 and minutes == 0:
+                    bot.send_message(idChatCommandirka, '<i>Опасность миновала. Можете продолжать ничего не делать.</i>', parse_mode='HTML')
+        except Exception as e:
+            sleep(1)
+
+
 
 def telepol():
     try:
@@ -273,4 +310,5 @@ def telepol():
 
 if __name__ == '__main__':
     _thread.start_new_thread(bitva_detector, ())
-    telepol() 
+    _thread.start_new_thread(merc_detector, ())
+    telepol()
