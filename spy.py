@@ -71,6 +71,11 @@ keyboard.row(gp, cy, va)
 keyboard.row(im, eu, ki)
 bot.send_message(idMe, "._.", reply_markup=keyboard)
 
+
+@bot.message_handler(commands=['back'])
+def handle_back(message):
+    bot.send_message(idMe, "._.", reply_markup=keyboard)
+    
 @bot.message_handler(commands=['fort'])
 def handle_fort(message):
     keyfort = types.ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=True)
