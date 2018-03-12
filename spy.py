@@ -19,6 +19,8 @@ bot = telebot.TeleBot(token)
 clkwait = 61
 
 less = '🌲'
+morfort = '⚓️'
+gori = '⛰'
 mo = '🇲🇴'
 gp = '🇬🇵'
 cy = '🇨🇾'
@@ -45,6 +47,7 @@ idChatPeregovorka = -1001175146945
 idChatCommandirka = -1001116128920
 
 urlClear = 'http://bitlux.ru/evolve.php?text=none'
+urldo = 'http://bitlux.ru/evolve.php?text='
 urlles = 'http://bitlux.ru/evolve.php?text=les'
 urlmo = 'http://bitlux.ru/evolve.php?text=mo'
 urlgp = 'http://bitlux.ru/evolve.php?text=gp'
@@ -68,13 +71,22 @@ keyboard.row(gp, cy, va)
 keyboard.row(im, eu, ki)
 bot.send_message(idMe, "._.", reply_markup=keyboard)
 
+@bot.message_handler(commands=['fort'])
+def handle_fort(message):
+    keyfort = types.ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=True)
+    keyfort.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
+    if message.chat.id == idMe:
+        bot.send_message(idMe, "Форты:", reply_markup=keyfort)
+    else:
+        bot.send_message(message.chat.id, '<code>хм</code>', parse_mode='HTML')
+
 globtime = 0
 beatva = 0
 @bot.message_handler(commands=['time'])
 def handle_chas_command(message):  
     global globtime
     global beatva
-    if message.chat.id == idChatPeregovorka and beatva == 'da':
+    if beatva == 'da':
         bot.send_message(message.chat.id, '<b>БИТВА СКОРО</b><code>! Смотрите время тикает: ' + globtime + '</code>', parse_mode='HTML')
     else:
         bot.send_message(message.chat.id, '<code>Время: ' + globtime + '</code>', parse_mode='HTML')
@@ -117,22 +129,22 @@ def repeat_all_messages(message):
         #bot.send_message(idChatPeregovorka, atk + im + "<code>(Dareten): " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idDRed:
         bot.send_message(idChatCommandirka, deff + im + "<code>: " + message.text + "</code>", parse_mode='HTML')
-	#bot.send_message(idChatPeregovorka, deff + im + "<code>: " + message.text + "</code>", parse_mode='HTML')
+        #bot.send_message(idChatPeregovorka, deff + im + "<code>: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idBlack:
         bot.send_message(idChatCommandirka, atk + gp + '<code>: </code>' + message.text + ' <code> ' + globtime + '</code>', parse_mode='HTML')
-	#bot.send_message(idChatPeregovorka, atk + gp + "<code>: " + message.text + "</code>", parse_mode='HTML')
+        #bot.send_message(idChatPeregovorka, atk + gp + "<code>: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idBlue:
         bot.send_message(idChatCommandirka, atk + eu + "<code>: " + message.text + "</code>", parse_mode='HTML')
         #bot.send_message(idChatPeregovorka, atk + eu + "<code>: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idDYellow:
         bot.send_message(idChatCommandirka, deff + va + "<code>: " + message.text + "</code>", parse_mode='HTML')
-	#bot.send_message(idChatPeregovorka, deff + va + "<code>: " + message.text + "</code>", parse_mode='HTML')
+        #bot.send_message(idChatPeregovorka, deff + va + "<code>: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idWhite:
         bot.send_message(idChatCommandirka, atk + cy + "<code>: " + message.text + "</code>", parse_mode='HTML')
-	#bot.send_message(idChatPeregovorka, atk + cy + "<code>: " + message.text + "</code>", parse_mode='HTML')    
+        #bot.send_message(idChatPeregovorka, atk + cy + "<code>: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idDTwilight:
         bot.send_message(idChatCommandirka, deff + ki + "<code>: " + message.text + "</code>", parse_mode='HTML')
-	#bot.send_message(idChatPeregovorka, deff + ki + "<code>: " + message.text + "</code>", parse_mode='HTML')
+        #bot.send_message(idChatPeregovorka, deff + ki + "<code>: " + message.text + "</code>", parse_mode='HTML')
     elif message.chat.id == idTwilight:
         bot.send_message(idChatCommandirka, ki + "<code>: " + message.text + "</code>", parse_mode='HTML')
         #bot.send_message(idChatPeregovorka, ki + "<code>: " + message.text + "</code>", parse_mode='HTML')
@@ -144,6 +156,32 @@ def repeat_all_messages(message):
         time.sleep(clkwait)
         content = requests.get(urlClear)
         bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+
+#lesfort
+    elif message.chat.id == idMe and message.text == less + 'Лесной форт':
+        fort = urldo + 'lesfort'
+        bot.send_message(idMe, 'Идем в ' + less + 'Лесной форт <code>(' + str(zader) + ')</code>', parse_mode='HTML')
+        content = requests.get(fort)
+        time.sleep(clkwait)
+        content = requests.get(urlClear)
+        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+#morfort
+    elif message.chat.id == idMe and message.text == morfort + 'Морской форт':
+        fort = urldo + 'morfort'
+        bot.send_message(idMe, 'Идем в ' + morfort + 'Морской форт <code>(' + str(zader) + ')</code>', parse_mode='HTML')
+        content = requests.get(fort)
+        time.sleep(clkwait)
+        content = requests.get(urlClear)
+        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+#gorifort
+    elif message.chat.id == idMe and message.text == gori + 'Горный форт':
+        fort = urldo + 'gorifort'
+        bot.send_message(idMe, 'Идем в ' + gori + 'Горный форт <code>(' + str(zader) + ')</code>', parse_mode='HTML')
+        content = requests.get(fort)
+        time.sleep(clkwait)
+        content = requests.get(urlClear)
+        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+
 #EqAtk
     elif message.chat.id == idMe and message.text == atk + 'Шмот':
         bot.send_message(idMe, atk + 'Шмот надеваем <code>(' + str(zader) + ')</code>', parse_mode='HTML')
