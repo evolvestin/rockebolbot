@@ -69,7 +69,7 @@ keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=Tr
 keyboard.row(less + 'Лес', mo, atk + 'Шмот', deff + 'Шмот')
 keyboard.row(gp, cy, va)
 keyboard.row(im, eu, ki)
-keyfort.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
+keyboard.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
 bot.send_message(idMe, "._.", reply_markup=keyboard)
 
 @bot.message_handler(commands=['battle'])
@@ -88,7 +88,7 @@ def handle_chas_command(message):
     if beatva == 'da':
         bot.send_message(message.chat.id, '<b>БИТВА СКОРО</b><code>! Смотрите время тикает: ' + globtime + '</code>', parse_mode='HTML')
     else:
-        bot.send_message(message.chat.id, '<code>Время: ' + globtime + '</code>', parse_mode='HTML')
+        bot.send_message(message.chat.id, '<code>Время: ' + str(globtime) + '</code>', parse_mode='HTML')
 
 
 @bot.message_handler(commands=['id'])
