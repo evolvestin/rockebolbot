@@ -69,21 +69,15 @@ keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=Tr
 keyboard.row(less + 'Лес', mo, atk + 'Шмот', deff + 'Шмот')
 keyboard.row(gp, cy, va)
 keyboard.row(im, eu, ki)
+keyfort.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
 bot.send_message(idMe, "._.", reply_markup=keyboard)
 
-
-@bot.message_handler(commands=['back'])
-def handle_back(message):
-    bot.send_message(idMe, "._.", reply_markup=keyboard)
-    
-@bot.message_handler(commands=['fort'])
-def handle_fort(message):
-    keyfort = types.ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=True)
-    keyfort.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
+@bot.message_handler(commands=['battle'])
+def handle_chas_command(message):
     if message.chat.id == idMe:
-        bot.send_message(idMe, "Форты:", reply_markup=keyfort)
+        bot.send_message(idMe, "._.", reply_markup=keyboard)
     else:
-        bot.send_message(message.chat.id, '<code>хм</code>', parse_mode='HTML')
+        bot.send_message(message.chat.id, '<code>Ты не король, чтобы отдавать приказы</code>', parse_mode='HTML')
 
 globtime = 0
 beatva = 0
