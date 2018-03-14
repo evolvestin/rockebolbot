@@ -15,8 +15,10 @@ import _thread
 token = "462725941:AAFxYxX0G_smCog6ZS-f2T_vqVfdUwCTRH4"
 bot = telebot.TeleBot(token)
 
-#globtime = ''
 clkwait = 61
+globtime = 0
+beatva = 0
+timefort = 0
 
 less = '🌲'
 morfort = '⚓️'
@@ -30,6 +32,7 @@ eu = '🇪🇺'
 ki = '🇰🇮'
 atk = '⚔️'
 deff = '🛡'
+eq = '🎽'
 
 idMe = 396978030
 idBlack = 394850016
@@ -64,57 +67,81 @@ urlEqLogDef = 'http://bitlux.ru/equip.php?eq=Defend'
 urlcoldonate = 'http://bitlux.ru/donate.php?donate='
 urlEqcheck = 'http://bitlux.ru/equip.html'
 #====================================================================================
+starttime = int(datetime.utcfromtimestamp(int(int(datetime.now().timestamp()) + 3 * 60 * 60)).strftime('%H'))
+if starttime == 16 or starttime == 17 or starttime == 18 or starttime == 19:
+    keyboardst = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+    keyboardst.row(less + 'Лес', mo, eq + 'Экипировка')
+    keyboardst.row(gp, cy, va)
+    keyboardst.row(im, eu, ki)
+    keyboardst.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
+else:
+    keyboardst = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+    keyboardst.row(less + 'Лес', mo, eq + 'Экипировка')
+    keyboardst.row(gp, cy, va)
+    keyboardst.row(im, eu, ki)
+bot.send_message(idMe, "<i>._.</i>", reply_markup=keyboardst, parse_mode='HTML')
 
-keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=True)
-keyboard.row(less + 'Лес', mo, atk + 'Шмот', deff + 'Шмот')
-keyboard.row(gp, cy, va)
-keyboard.row(im, eu, ki)
-keyboard.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
-bot.send_message(idMe, "._.", reply_markup=keyboard)
 
-@bot.message_handler(commands=['battle'])
-def handle_chas_command(message):
-    if message.chat.id == idMe:
-        bot.send_message(idMe, "._.", reply_markup=keyboard)
-    else:
-        bot.send_message(message.chat.id, '<code>Ты не король, чтобы отдавать приказы</code>', parse_mode='HTML')
-
-globtime = 0
-beatva = 0
 @bot.message_handler(commands=['time'])
-def handle_chas_command(message):  
+def handle_chas_command(message):
     global globtime
     global beatva
+    global timefort
     if beatva == 'da':
         bot.send_message(message.chat.id, '<b>БИТВА СКОРО</b><code>! Смотрите время тикает: ' + globtime + '</code>', parse_mode='HTML')
     else:
         bot.send_message(message.chat.id, '<code>Время: ' + str(globtime) + '</code>', parse_mode='HTML')
+        bot.send_message(message.chat.id, '<code>timefort: ' + str(timefort) + '</code>', parse_mode='HTML')
 
 
 @bot.message_handler(commands=['id'])
-def handle_id_command(message):  
+def handle_id_command(message):
     orbo = message.chat.id
     if orbo > 0:
         bot.send_message(message.chat.id, "Твой ID: " + str(orbo))
     elif orbo < 0:
         bot.send_message(message.chat.id, "ID этой группы: " + str(orbo))
 
-@bot.message_handler(commands=['equip'])
-def handle_start_px(message):
-    equips = requests.get(urlEqcheck)
-    equip = equips.text
-    if message.chat.id == idMe and equip == 'Attack':
-        bot.send_message(idMe, '<code>Атакерский</code>', parse_mode='HTML')
-    elif message.chat.id == idMe and equip == 'Defend':
-        bot.send_message(idMe, '<code>Деферский</code>', parse_mode='HTML')
-    elif message.chat.id != idMe:
-        bot.send_message(message.chat.id, '<code>А ты кто? Думаешь мы тут шутки шутим? А ну не трожь.</code>', parse_mode='HTML')
+@bot.callback_query_handler(func=lambda call: True)
+def callback_equip(call):
+    global clkwait
+    global keyboard
+    global zader
+    if call.message.chat.id == idMe and call.data == 'attack':
+        bot.edit_message_text(chat_id=call.message.chat.id, text=atk + 'Шмот надеваем <code>(' + str(zader) + ')</code>', message_id=call.message.message_id, parse_mode='HTML')
+        content = requests.get(urlEqAtk)
+        time.sleep(clkwait)
+        content = requests.get(urlEqLogAtk)
+        content = requests.get(urlClear)
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
+    elif call.message.chat.id == idMe and call.data == 'defend':
+        bot.edit_message_text(chat_id=call.message.chat.id, text=deff + 'Шмот надеваем <code>(' + str(zader) + ')</code>', message_id=call.message.message_id, parse_mode='HTML')
+        content = requests.get(urlEqDef)
+        time.sleep(clkwait)
+        content = requests.get(urlEqLogDef)
+        content = requests.get(urlClear)
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
+
 
 @bot.message_handler(func=lambda message: message.text) #content_types=["text"]
 def repeat_all_messages(message):
     global globtime
     global clkwait
     global zader
+    global keyboard
+    global timefort
+    if timefort == 0:
+        keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+        keyboard.row(less + 'Лес', mo, eq + 'Экипировка')
+        keyboard.row(gp, cy, va)
+        keyboard.row(im, eu, ki)
+    else:
+        keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+        keyboard.row(less + 'Лес', mo, eq + 'Экипировка')
+        keyboard.row(gp, cy, va)
+        keyboard.row(im, eu, ki)
+        keyboard.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
+
     if message.chat.id == idDBlack and message.forward_date is not None:
         if str(message.forward_from.username) == "CWRedBot":
             bot.send_message(idChatCommandirka, atk + im + "<code>: " + message.text + "</code>", parse_mode='HTML')
@@ -154,8 +181,7 @@ def repeat_all_messages(message):
         content = requests.get(urlles)
         time.sleep(clkwait)
         content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
-
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
 #lesfort
     elif message.chat.id == idMe and message.text == less + 'Лесной форт':
         fort = urldo + 'lesfort'
@@ -163,7 +189,7 @@ def repeat_all_messages(message):
         content = requests.get(fort)
         time.sleep(clkwait)
         content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
 #morfort
     elif message.chat.id == idMe and message.text == morfort + 'Морской форт':
         fort = urldo + 'morfort'
@@ -171,7 +197,7 @@ def repeat_all_messages(message):
         content = requests.get(fort)
         time.sleep(clkwait)
         content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
 #gorifort
     elif message.chat.id == idMe and message.text == gori + 'Горный форт':
         fort = urldo + 'gorifort'
@@ -179,24 +205,21 @@ def repeat_all_messages(message):
         content = requests.get(fort)
         time.sleep(clkwait)
         content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
-
-#EqAtk
-    elif message.chat.id == idMe and message.text == atk + 'Шмот':
-        bot.send_message(idMe, atk + 'Шмот надеваем <code>(' + str(zader) + ')</code>', parse_mode='HTML')
-        content = requests.get(urlEqAtk)
-        time.sleep(clkwait)
-        content = requests.get(urlEqLogAtk)
-        content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
-#EqDef
-    elif message.chat.id == idMe and message.text == deff + 'Шмот':
-        bot.send_message(idMe, deff + 'Шмот надеваем <code>(' + str(zader) + ')</code>', parse_mode='HTML')
-        content = requests.get(urlEqDef)
-        time.sleep(clkwait)
-        content = requests.get(urlEqLogDef)
-        content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
+#Equip
+    elif message.chat.id == idMe and message.text == eq + 'Экипировка':
+        equips = requests.get(urlEqcheck)
+        equip = equips.text
+        if message.chat.id == idMe and equip == 'Attack':
+            equip = atk + 'Атакерская'
+        elif message.chat.id == idMe and equip == 'Defend':
+            equip = deff + 'Деферская'
+        keyroad = types.InlineKeyboardMarkup(row_width=2)
+        buttons = []
+        buttons.append(types.InlineKeyboardButton(text=atk + 'Шмот', callback_data="attack"))
+        buttons.append(types.InlineKeyboardButton(text=deff + 'Шмот', callback_data="defend"))
+        keyroad.add(*buttons)
+        bot.send_message(idMe, eq + 'Экипировка: ' + equip, reply_markup=keyroad, parse_mode='HTML')
 #donate
     elif message.chat.id == idMe and str(message.text).startswith('/donate'):
         donate = message.text
@@ -209,56 +232,57 @@ def repeat_all_messages(message):
         bot.send_message(idMe, 'Вдонатить ~' + donate + ' <code> (' + str(zader) + ')</code>', parse_mode='HTML')
         time.sleep(clkwait)
         content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
-    #mo
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
+#mo
     elif message.chat.id == idMe and message.text == mo:
         bot.send_message(idMe, 'Деф ' + mo + '<code>(' + str(zader) + ')</code>', parse_mode='HTML')
         content = requests.get(urlmo)
         time.sleep(clkwait)
         content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
 #gp
     elif message.chat.id == idMe and message.text == gp:
         bot.send_message(idMe, 'Идем в ' + gp + '<code>(' + str(zader) + ')</code>', parse_mode='HTML')
         content = requests.get(urlgp)
         time.sleep(clkwait)
         content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
 #cy
     elif message.chat.id == idMe and message.text == cy:
         bot.send_message(idMe, 'Идем в ' + cy + '<code>(' + str(zader) + ')</code>', parse_mode='HTML')
         content = requests.get(urlcy)
         time.sleep(clkwait)
         content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
 #va
     elif message.chat.id == idMe and message.text == va:
         bot.send_message(idMe, 'Идем в ' + va + '<code>(' + str(zader) + ')</code>', parse_mode='HTML')
         content = requests.get(urlva)
         time.sleep(clkwait)
         content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
 #im
     elif message.chat.id == idMe and message.text == im:
         bot.send_message(idMe, 'Идем в ' + im + '<code>(' + str(zader) + ')</code>', parse_mode='HTML')
         content = requests.get(urlim)
         time.sleep(clkwait)
         content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
 #eu
     elif message.chat.id == idMe and message.text == eu:
         bot.send_message(idMe, 'Идем в ' + eu + '<code>(' + str(zader) + ')</code>', parse_mode='HTML')
         content = requests.get(urleu)
         time.sleep(clkwait)
         content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
 #ki
     elif message.chat.id == idMe and message.text == ki:
         bot.send_message(idMe, 'Идем в ' + ki + '<code>(' + str(zader) + ')</code>', parse_mode='HTML')
         content = requests.get(urlki)
         time.sleep(clkwait)
         content = requests.get(urlClear)
-        bot.send_message(idMe, '<i>Исполнено</i>', parse_mode='HTML')
+        bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
+
 
 def bitva_detector():
     global globtime
@@ -304,10 +328,12 @@ def bitva_detector():
         except Exception as e:
             sleep(0.3)
 
+
 def merc_detector():
     global hours
     global minutes
     global curr_time
+    global keyboard
     while True:
         try:
             sleep(1)
@@ -336,6 +362,18 @@ def merc_detector():
             sleep(1)
 
 
+def fort_detector():
+    global timefort
+    global hours
+    while True:
+        try:
+            sleep(60)
+            if hours == 14 or hours == 17 or hours == 18 or hours == 19:
+                timefort = 1
+            else:
+                timefort = 0
+        except Exception as e:
+            sleep(60)
 
 def telepol():
     try:
@@ -347,5 +385,6 @@ def telepol():
 
 if __name__ == '__main__':
     _thread.start_new_thread(bitva_detector, ())
+    _thread.start_new_thread(fort_detector, ())
     _thread.start_new_thread(merc_detector, ())
     telepol()
