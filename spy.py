@@ -89,7 +89,7 @@ def handle_chas_command(message):
     global beatva
     global timefort
     if beatva == 'da':
-        bot.send_message(message.chat.id, '<b>БИТВА СКОРО!</b>\nСмотрите время тикает: ' + globtime)
+        bot.send_message(message.chat.id, '<b>БИТВА СКОРО!</b>\nСмотрите время тикает: ' + globtime, parse_mode='HTML')
     else:
         bot.send_message(message.chat.id, 'Время: ' + str(globtime))
 
