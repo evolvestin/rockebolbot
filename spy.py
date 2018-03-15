@@ -33,6 +33,7 @@ ki = '🇰🇮'
 atk = '⚔️'
 deff = '🛡'
 eq = '🎽'
+dotdot = ': '
 
 idMe = 396978030
 idBlack = 394850016
@@ -88,10 +89,9 @@ def handle_chas_command(message):
     global beatva
     global timefort
     if beatva == 'da':
-        bot.send_message(message.chat.id, '<b>БИТВА СКОРО</b><code>! Смотрите время тикает: ' + globtime + '</code>', parse_mode='HTML')
+        bot.send_message(message.chat.id, '<b>БИТВА СКОРО!</b>\nСмотрите время тикает: ' + globtime)
     else:
-        bot.send_message(message.chat.id, '<code>Время: ' + str(globtime) + '</code>', parse_mode='HTML')
-        bot.send_message(message.chat.id, '<code>timefort: ' + str(timefort) + '</code>', parse_mode='HTML')
+        bot.send_message(message.chat.id, 'Время: ' + str(globtime))
 
 
 @bot.message_handler(commands=['id'])
@@ -130,6 +130,15 @@ def repeat_all_messages(message):
     global zader
     global keyboard
     global timefort
+    if message.forward_date is not None:
+        origmes = message.forward_date
+        origmesH = datetime.utcfromtimestamp(int(origmes + 3 * 60 * 60)).strftime('%H')
+        origmesM = datetime.utcfromtimestamp(int(origmes)).strftime('%M')
+        origmesS = datetime.utcfromtimestamp(int(origmes)).strftime('%S')
+        origtime = ' <code> ' + str(origmesH) + ':' + str(origmesM) + ':' + str(origmesS) + '[F]</code>'
+    else:
+        origtime = ' <code> ' + str(globtime) + '</code>'
+
     if timefort == 0:
         keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
         keyboard.row(less + 'Лес', mo, eq + 'Экипировка')
@@ -144,36 +153,33 @@ def repeat_all_messages(message):
 
     if message.chat.id == idDBlack and message.forward_date is not None:
         if str(message.forward_from.username) == "CWRedBot":
-            bot.send_message(idChatCommandirka, atk + im + "<code>: " + message.text + "</code>", parse_mode='HTML')
-            #bot.send_message(idChatPeregovorka, atk + im + "<code>: " + message.text + "</code>", parse_mode='HTML')
+            bot.send_message(idChatCommandirka, atk + im + dotdot + message.text + origtime, parse_mode='HTML')
         elif str(message.forward_from.username) == "ToweRobot":
-            bot.send_message(idChatCommandirka, deff + gp + "<code>: " + message.text + "</code>", parse_mode='HTML')
-            #bot.send_message(idChatPeregovorka, deff + gp + "<code>: " + message.text + "</code>", parse_mode='HTML')
+            bot.send_message(idChatCommandirka, deff + gp + dotdot + message.text + origtime, parse_mode='HTML')
 
     elif message.chat.id == idRed:
-        bot.send_message(idChatCommandirka, atk + im + "<code>(Dareten): " + message.text + "</code>", parse_mode='HTML')
-        #bot.send_message(idChatPeregovorka, atk + im + "<code>(Dareten): " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, atk + im + '<code>(Dareten): </code>' + message.text + origtime, parse_mode='HTML')
+
     elif message.chat.id == idDRed:
-        bot.send_message(idChatCommandirka, deff + im + "<code>: " + message.text + "</code>", parse_mode='HTML')
-        #bot.send_message(idChatPeregovorka, deff + im + "<code>: " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, deff + im + dotdot + message.text + origtime, parse_mode='HTML')
+
     elif message.chat.id == idBlack:
-        bot.send_message(idChatCommandirka, atk + gp + '<code>: </code>' + message.text + ' <code> ' + globtime + '</code>', parse_mode='HTML')
-        #bot.send_message(idChatPeregovorka, atk + gp + "<code>: " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, atk + gp + dotdot + message.text + origtime, parse_mode='HTML')
+
     elif message.chat.id == idBlue:
-        bot.send_message(idChatCommandirka, atk + eu + "<code>: " + message.text + "</code>", parse_mode='HTML')
-        #bot.send_message(idChatPeregovorka, atk + eu + "<code>: " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, atk + eu + dotdot + message.text + origtime, parse_mode='HTML')
+
     elif message.chat.id == idDYellow:
-        bot.send_message(idChatCommandirka, deff + va + "<code>: " + message.text + "</code>", parse_mode='HTML')
-        #bot.send_message(idChatPeregovorka, deff + va + "<code>: " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, deff + va + dotdot + message.text + origtime, parse_mode='HTML')
+
     elif message.chat.id == idWhite:
-        bot.send_message(idChatCommandirka, atk + cy + "<code>: " + message.text + "</code>", parse_mode='HTML')
-        #bot.send_message(idChatPeregovorka, atk + cy + "<code>: " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, atk + cy + dotdot + message.text + origtime, parse_mode='HTML')
+
     elif message.chat.id == idDTwilight:
-        bot.send_message(idChatCommandirka, deff + ki + "<code>: " + message.text + "</code>", parse_mode='HTML')
-        #bot.send_message(idChatPeregovorka, deff + ki + "<code>: " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, deff + ki + dotdot + message.text + origtime, parse_mode='HTML')
+
     elif message.chat.id == idTwilight:
-        bot.send_message(idChatCommandirka, ki + "<code>: " + message.text + "</code>", parse_mode='HTML')
-        #bot.send_message(idChatPeregovorka, ki + "<code>: " + message.text + "</code>", parse_mode='HTML')
+        bot.send_message(idChatCommandirka, ki + dotdot + message.text + origtime, parse_mode='HTML')
 
 #less
     elif message.chat.id == idMe and message.text == less + 'Лес':
