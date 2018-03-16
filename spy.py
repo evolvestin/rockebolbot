@@ -16,6 +16,7 @@ token = "462725941:AAFxYxX0G_smCog6ZS-f2T_vqVfdUwCTRH4"
 bot = telebot.TeleBot(token)
 
 clkwait = 61
+coltwink = 22
 globtime = 0
 beatva = 0
 timefort = 0
@@ -41,7 +42,7 @@ idDBlack = 200299701 #MISSSPACEX
 idBlue = 491625180
 idDYellow = 485591553
 idWhite = 430602902
-idRed = 555979421 #DARETEN
+idRed = 519673442 #DARETEN
 idRed2 = 200299701 #MISSSPACEX
 idDRed = 497892874
 idTwilight = 462139760 #NAMI_LEE
@@ -89,7 +90,7 @@ def handle_chas_command(message):
     global beatva
     global timefort
     if beatva == 'da':
-        bot.send_message(message.chat.id, '<b>БИТВА СКОРО!</b>\nСмотрите время тикает: ' + globtime, parse_mode='HTML')
+        bot.send_message(message.chat.id, '<b>БИТВА СКОРО!</b>\nСмотрите время тикает: ' + globtime)
     else:
         bot.send_message(message.chat.id, 'Время: ' + str(globtime))
 
@@ -233,7 +234,7 @@ def repeat_all_messages(message):
         donateform = urlcoldonate + donate
         content = requests.get(urldonate)
         content = requests.get(donateform)
-        donate = int(donate) * 18
+        donate = int(donate) * coltwink
         donate = str(donate)
         bot.send_message(idMe, 'Вдонатить ~' + donate + ' <code> (' + str(zader) + ')</code>', parse_mode='HTML')
         time.sleep(clkwait)
@@ -374,7 +375,7 @@ def fort_detector():
     while True:
         try:
             sleep(60)
-            if hours == 14 or hours == 17 or hours == 18 or hours == 19:
+            if hours == 16 or hours == 17 or hours == 18 or hours == 19:
                 timefort = 1
             else:
                 timefort = 0
