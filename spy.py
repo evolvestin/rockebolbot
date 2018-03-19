@@ -201,19 +201,24 @@ def repeat_all_messages(message):
     elif message.chat.id == idDTwilight:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + ki + specmessage, parse_mode='HTML')
-        if str(message.forward_from.username) == 'ChatWarsBot':
+        elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         elif str(message.forward_from.username) == 'TwilightCastleBot':
-            bot.send_message(idMe, prikazTwilight(message), parse_mode='HTML')
+            bot.send_message(idChatCommandirka, deff + ki + prikazTwilight(message), parse_mode='HTML')
 
     elif message.chat.id == idTwilight:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, ki + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsBot':
-            bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-
+        if message.forward_from is not None:
+            if str(message.forward_from.username) == 'ChatWarsBot':
+                bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
+                bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
+            elif str(message.forward_from.username) == 'TwilightCastleBot':
+                bot.send_message(idChatCommandirka, ki + prikazTwilight(message), parse_mode='HTML')
+            else:
+                bot.send_message(idChatCommandirka, ki + specmessage, parse_mode='HTML')
+        
     elif message.chat.id == idMe:
         if message.text == less + 'Лес':
             bot.send_message(idMe, 'Идем в' + less + 'Лес <code>(' + str(zader) + ')</code>', parse_mode='HTML')
@@ -276,13 +281,26 @@ def repeat_all_messages(message):
 
 
 def prikazTwilight(message):
-    search = re.search('(Готовность)' + '\n(@)' + '(.+)', message.text)
+    origmes = message.forward_date
+    origmesH = datetime.utcfromtimestamp(int(origmes + 3 * 60 * 60)).strftime('%H')
+    origmesM = datetime.utcfromtimestamp(int(origmes)).strftime('%M')
+    origmesS = datetime.utcfromtimestamp(int(origmes)).strftime('%S')
+    origtime = ' <code> ' + str(origmesH) + ':' + str(origmesM) + ':' + str(origmesS) + '[F]</code>'
+    search = re.search('(\n\nГотовность\n)', message.text)
     if search:
         delprikaz = message.text.replace(search.group(1), '')
+        i = 1
+        srch = re.search("(@.*)", delprikaz)
+        while srch:
+            delprikaz = delprikaz.replace(srch.group(1), '')
+            srch = re.search("(@.*)", delprikaz)
+        delprikaz = '<code>: </code>' + delprikaz + origtime
+
         return delprikaz
     else:
-        delprikaz = 'хм'
+        delprikaz = '<code>: </code>' + message.text + origtime
         return delprikaz
+
 
 def report(message):
     search = re.search('(' + mo + '|' + gp + '|' + im + '|' + cy + '|' + va + '|' + eu + '|' + ki + ')(.+)' + atk + ':', message.text)
