@@ -162,6 +162,8 @@ def repeat_all_messages(message):
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
+        else:
+            bot.send_message(idChatCommandirka, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idDRed:
         if message.forward_from is None:
@@ -169,6 +171,8 @@ def repeat_all_messages(message):
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
+        else:
+            bot.send_message(idChatCommandirka, deff + im + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idBlack:
         if message.forward_from is None:
@@ -176,6 +180,8 @@ def repeat_all_messages(message):
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
+        else:
+            bot.send_message(idChatCommandirka, atk + gp + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idBlue:
         if message.forward_from is None:
@@ -183,6 +189,8 @@ def repeat_all_messages(message):
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
+        else:
+            bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idDYellow:
         if message.forward_from is None:
@@ -190,6 +198,8 @@ def repeat_all_messages(message):
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
+        else:
+            bot.send_message(idChatCommandirka, deff + va + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idWhite:
         if message.forward_from is None:
@@ -197,6 +207,8 @@ def repeat_all_messages(message):
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
+        else:
+            bot.send_message(idChatCommandirka, atk + cy + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idDTwilight:
         if message.forward_from is None:
@@ -206,6 +218,8 @@ def repeat_all_messages(message):
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         elif str(message.forward_from.username) == 'TwilightCastleBot':
             bot.send_message(idChatCommandirka, deff + ki + prikazTwilight(message), parse_mode='HTML')
+        else:
+            bot.send_message(idChatCommandirka, deff + ki + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idTwilight:
         if message.forward_from is None:
@@ -218,7 +232,7 @@ def repeat_all_messages(message):
                 bot.send_message(idChatCommandirka, ki + prikazTwilight(message), parse_mode='HTML')
             else:
                 bot.send_message(idChatCommandirka, ki + specmessage, parse_mode='HTML')
-        
+
     elif message.chat.id == idMe:
         if message.text == less + 'Лес':
             bot.send_message(idMe, 'Идем в' + less + 'Лес <code>(' + str(zader) + ')</code>', parse_mode='HTML')
@@ -324,7 +338,7 @@ def report(message):
         if repdateH > 15 and repdateH < 20:
             repchas = '16 часов'
         if repdateH > 19 and repdateH < 24:
-            repchas = 'pidor часов'
+            repchas = '20 часов'
         repdate = repdateD + '.' + repdateM + '.' + repdateY + ' в ' + repchas
         report = search.group(1) + xreport + '\n <code>Битва ' + str(repdate) + '</code>'
         return report
