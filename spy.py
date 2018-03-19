@@ -219,9 +219,6 @@ def repeat_all_messages(message):
             content = requests.get(urldo + 'les')
             prikaz()
 
-        elif str(message.forward_from.username) == 'ChatWarsBot':
-            bot.send_message(idMe, report(message), parse_mode='HTML')
-
         elif message.text == less + 'Лесной форт':
             bot.send_message(idMe, 'Идем в ' + less + 'Лесной форт <code>(' + str(zader) + ')</code>', parse_mode='HTML')
             content = requests.get(urldo + 'lesfort')
