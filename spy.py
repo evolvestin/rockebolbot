@@ -36,6 +36,8 @@ atk = '⚔️'
 deff = '🛡'
 eq = '🎽'
 gold = '💰'
+moon = '🌑'
+hmm = '🤔'
 
 idMe = 396978030
 idBlack = 394850016
@@ -48,6 +50,7 @@ idRed2 = 200299701 #MISSSPACEX
 idDRed = 497892874
 idTwilight = 462139760 #NAMI_LEE
 idDTwilight = 350037139
+idMoon = 130875246 #RDVRK
 
 idChatPeregovorka = -1001175146945
 idChatCommandirka = -1001116128920
@@ -233,6 +236,14 @@ def repeat_all_messages(message):
                 bot.send_message(idChatCommandirka, ki + prikazTwilight(message), parse_mode='HTML')
             else:
                 bot.send_message(idChatCommandirka, ki + specmessage, parse_mode='HTML')
+
+    elif message.chat.id == idMoon:
+        if message.forward_from is None:
+            bot.send_message(message.chat.id, 'Без форварда' + hmm + ' Ладно, отправлю.', parse_mode='HTML')
+            bot.send_message(idMe, moon + specmessage, parse_mode='HTML')
+        elif str(message.forward_from.username) == 'MoonlightCastleBot':
+            bot.send_message(idMe, moon + specmessage, parse_mode='HTML')
+            bot.send_message(message.chat.id, '<i>Отправлено</i>', parse_mode='HTML')
 
     elif message.chat.id == idMe:
         if message.text == less + 'Лес':
