@@ -35,6 +35,7 @@ ki = '🇰🇮'
 atk = '⚔️'
 deff = '🛡'
 eq = '🎽'
+gold = '💰'
 
 idMe = 396978030
 idBlack = 394850016
@@ -153,14 +154,14 @@ def repeat_all_messages(message):
         elif str(message.forward_from.username) == 'ToweRobot':
             bot.send_message(idChatCommandirka, deff + gp + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
-            bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
+            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
 
     elif message.chat.id == idRed:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
-            bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
+            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
@@ -169,7 +170,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + im + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
-            bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
+            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, deff + im + specmessage, parse_mode='HTML')
@@ -178,7 +179,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + gp + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
-            bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
+            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, atk + gp + specmessage, parse_mode='HTML')
@@ -187,7 +188,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
-            bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
+            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
@@ -196,7 +197,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + va + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
-            bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
+            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, deff + va + specmessage, parse_mode='HTML')
@@ -205,7 +206,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + cy + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
-            bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
+            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, atk + cy + specmessage, parse_mode='HTML')
@@ -214,7 +215,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + ki + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
-            bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
+            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         elif str(message.forward_from.username) == 'TwilightCastleBot':
             bot.send_message(idChatCommandirka, deff + ki + prikazTwilight(message), parse_mode='HTML')
@@ -226,7 +227,7 @@ def repeat_all_messages(message):
             bot.send_message(idChatCommandirka, ki + specmessage, parse_mode='HTML')
         if message.forward_from is not None:
             if str(message.forward_from.username) == 'ChatWarsBot':
-                bot.send_message(idChatCommandirka, report(message), parse_mode='HTML')
+                bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
                 bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
             elif str(message.forward_from.username) == 'TwilightCastleBot':
                 bot.send_message(idChatCommandirka, ki + prikazTwilight(message), parse_mode='HTML')
@@ -238,6 +239,10 @@ def repeat_all_messages(message):
             bot.send_message(idMe, 'Идем в' + less + 'Лес <code>(' + str(zader) + ')</code>', parse_mode='HTML')
             content = requests.get(urldo + 'les')
             prikaz()
+
+        elif message.forward_from is not None:
+            if str(message.forward_from.username) == 'ChatWarsBot':
+                bot.send_message(idMe, forwardCW(message), parse_mode='HTML')
 
         elif message.text == less + 'Лесной форт':
             bot.send_message(idMe, 'Идем в ' + less + 'Лесной форт <code>(' + str(zader) + ')</code>', parse_mode='HTML')
@@ -316,34 +321,47 @@ def prikazTwilight(message):
         return delprikaz
 
 
-def report(message):
-    search = re.search('(' + mo + '|' + gp + '|' + im + '|' + cy + '|' + va + '|' + eu + '|' + ki + ')(.+)' + atk + ':', message.text)
-    if search:
-        repsearch = re.search('(.+)' + atk, message.text)
-        xreport = message.text.replace(repsearch.group(1), '')
-        reptime = message.forward_date
-        # repdateW = str(datetime.utcfromtimestamp(int(reptime)).strftime('%a'))
-        repdateD = str(datetime.utcfromtimestamp(int(reptime)).strftime('%d'))
-        repdateM = str(datetime.utcfromtimestamp(int(reptime)).strftime('%m'))
-        repdateY = str(datetime.utcfromtimestamp(int(reptime)).strftime('%Y'))
-        repdateH = int(datetime.utcfromtimestamp(int(reptime + 3 * 60 * 60)).strftime('%H'))
-        if repdateH > -1 and repdateH < 4:
+def forwardCW(message):
+    zamki = '(' + mo + '|' + gp + '|' + im + '|' + cy + '|' + va + '|' + eu + '|' + ki + ')'
+    repsearch = re.search(zamki + '(.+)' + atk + ':', message.text)
+    kazsearch = re.search(zamki + '(.+)( замок)', message.text)
+    CWtime = message.forward_date
+    CWtimeD = str(datetime.utcfromtimestamp(int(CWtime)).strftime('%d'))
+    CWtimeM = str(datetime.utcfromtimestamp(int(CWtime)).strftime('%m'))
+    CWtimeY = str(datetime.utcfromtimestamp(int(CWtime)).strftime('%Y'))
+    CWtimeH = int(datetime.utcfromtimestamp(int(CWtime + 3 * 60 * 60)).strftime('%H'))
+    CWtimeHour = datetime.utcfromtimestamp(int(CWtime + 3 * 60 * 60)).strftime('%H')
+    CWtimeMin = datetime.utcfromtimestamp(int(CWtime)).strftime('%M')
+    CWtimeS = datetime.utcfromtimestamp(int(CWtime)).strftime('%S')
+    if repsearch:
+        report = message.text.replace(repsearch.group(2), '')
+        if CWtimeH > -1 and CWtimeH < 4:
             repchas = '0 часов'
-        if repdateH > 3 and repdateH < 8:
+        if CWtimeH > 3 and CWtimeH < 8:
             repchas = '4 часа'
-        if repdateH > 7 and repdateH < 12:
+        if CWtimeH > 7 and CWtimeH < 12:
             repchas = '8 часов'
-        if repdateH > 11 and repdateH < 16:
+        if CWtimeH > 11 and CWtimeH < 16:
             repchas = '12 часов'
-        if repdateH > 15 and repdateH < 20:
+        if CWtimeH > 15 and CWtimeH < 20:
             repchas = '16 часов'
-        if repdateH > 19 and repdateH < 24:
+        if CWtimeH > 19 and CWtimeH < 24:
             repchas = '20 часов'
-        repdate = repdateD + '.' + repdateM + '.' + repdateY + ' в ' + repchas
-        report = search.group(1) + xreport + '\n <code>Битва ' + str(repdate) + '</code>'
+        repdate = CWtimeD + '.' + CWtimeM + '.' + CWtimeY + ' в ' + repchas
+        report = report + '\n <code>Битва ' + str(repdate) + '</code>'
         return report
+    elif kazsearch:
+        kazflag = kazsearch.group(1)
+        kazname = kazsearch.group(2)
+        kazsearch = re.search('(Казна замка:\n)([0-9]+)' + gold + ' ([0-9]+)' + less + ' ([0-9]+)' + gori, message.text)
+        if kazsearch:
+            kaznatime = '<code>' + str(CWtimeHour) + ':' + str(CWtimeMin) + ':' + str(CWtimeS) + '[F]</code>'
+            kazna = kazflag + kazname + ':' + '\n' + kazsearch.group(2) + gold + ' ' + kazsearch.group(3) + less + ' ' + kazsearch.group(4) + gori + '\n' + kaznatime
+            return kazna
+        kazna = 'Странная у тебя казна...'
+        return kazna
     else:
-        report = 'Форварды из ЧВ отключены (кроме репортов), ради вашей безопасности'
+        report = 'Форварды из ЧВ отключены (кроме репортов и казны), ради вашей безопасности'
         return report
 
 
