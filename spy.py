@@ -97,7 +97,7 @@ def handle_chas_command(message):
 def handle_berman_command(message):
     global globtime
     global seconds
-    if seconds == 0 or seconds == 10 or seconds == 20 or seconds == 30 or seconds == 40 or seconds == 50:
+    if seconds == 0 or seconds == 10 or seconds == 11 or seconds == 20 or seconds == 21 or seconds == 30 or seconds == 31 or seconds == 40 or seconds == 41 or seconds == 50 or seconds == 51:
         bot.send_message(message.chat.id, 'Только что в мире умер один человек, почтим его память тремя секундами перемирия')
         sleep(3)
         bot.send_message(message.chat.id, 'Траур завершен, у вас есть 7 секунд, чтобы успеть повоевать')
