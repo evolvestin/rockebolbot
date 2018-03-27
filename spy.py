@@ -3,7 +3,6 @@
 
 import telebot
 from telebot import types
-from SQLighter import SQLighter
 import urllib3
 import re
 import requests
