@@ -3,6 +3,7 @@
 
 import telebot
 from telebot import types
+from SQLighter import SQLighter
 import urllib3
 import re
 import requests
@@ -93,6 +94,26 @@ def handle_chas_command(message):
         bot.send_message(message.chat.id, 'Время: ' + str(globtime))
 
 
+@bot.message_handler(commands=['berman'])
+def handle_chas_command(message):
+    global globtime
+    global seconds
+    if seconds == 0 or seconds == 10 or seconds == 20 or seconds == 30 or seconds == 40 or seconds == 50:
+        bot.send_message(message.chat.id, 'Только что в мире умер один человек, почтим его память тремя секундами перемирия')
+        sleep(3)
+        bot.send_message(message.chat.id, 'Траур завершен, у вас есть 7 секунд, чтобы успеть повоевать')
+    else:
+        bot.send_message(message.chat.id, 'Траур завершен, у вас есть ~7 секунд, чтобы успеть повоевать')
+
+
+@bot.message_handler(commands=['col'])
+def handle_col_command(message):
+    db = SQLighter('spec.db')
+    db.create_row('1', 'pidor')
+    mytwink = db.get_coltwink(1)
+    bot.send_message(idMe, str(mytwink[1]))
+
+
 @bot.message_handler(commands=['id'])
 def handle_id_command(message):
     orbo = message.chat.id
@@ -119,6 +140,11 @@ def callback_equip(call):
             prikaz()
             content = requests.get(urleqlog + 'Defend')
 
+@bot.message_handler(content_types=["new_chat_members"])
+def get_new_member(message):
+    if message.new_chat_member is not None and message.new_chat_member.username == 'whgklwehgwklejw_bot':
+        bot.send_message(message.chat.id, 'Меня добавили в какой-то чат, пидорасы')
+        bot.send_message(idMe, 'Меня добавили в какой-то чат, пидорасы')
 
 @bot.message_handler(func=lambda message: message.text)
 def repeat_all_messages(message):
@@ -228,7 +254,7 @@ def repeat_all_messages(message):
     elif message.chat.id == idTwilight:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, ki + specmessage, parse_mode='HTML')
-        if message.forward_from is not None:
+        elif message.forward_from is not None:
             if str(message.forward_from.username) == 'ChatWarsBot':
                 bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
                 bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
@@ -384,6 +410,7 @@ def bitva_detector():
     global curr_time
     global zader
     global beatva
+    global seconds
     while True:
         try:
             sleep(0.3)
