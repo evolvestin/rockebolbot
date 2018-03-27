@@ -95,7 +95,7 @@ def handle_chas_command(message):
 
 
 @bot.message_handler(commands=['berman'])
-def handle_chas_command(message):
+def handle_berman_command(message):
     global globtime
     global seconds
     if seconds == 0 or seconds == 10 or seconds == 20 or seconds == 30 or seconds == 40 or seconds == 50:
