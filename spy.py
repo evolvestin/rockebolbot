@@ -224,7 +224,7 @@ def repeat_all_messages(message):
 
     elif message.chat.id == idDBlue:
         if message.forward_from is None:
-            bot.send_message(idChatCommandirka, deff + eu + specmessage, parse_mode='HTML')
+            bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
