@@ -43,6 +43,7 @@ idMe = 396978030
 idBlack = 394850016
 idDBlack = 200299701 #MISSSPACEX
 idBlue = 491625180
+idDBlue = 541062392 #NAMI_LEE
 idDYellow = 485591553
 idWhite = 430602902
 idRed = 555979421 #DARETEN
@@ -215,6 +216,15 @@ def repeat_all_messages(message):
     elif message.chat.id == idBlue:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
+        elif str(message.forward_from.username) == 'ChatWarsBot':
+            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
+            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
+        else:
+            bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
+
+    elif message.chat.id == idDBlue:
+        if message.forward_from is None:
+            bot.send_message(idChatCommandirka, deff + eu + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
