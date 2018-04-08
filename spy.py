@@ -45,6 +45,7 @@ idDBlack = 200299701 #MISSSPACEX
 idBlue = 491625180
 idDBlue = 541062392 #NAMI_LEE
 idYellow = 392562894 #Gummy
+idYellow2 = 242839185 #M_ONYA
 idDYellow = 485591553
 idWhite = 430602902
 idRed = 555979421 #DARETEN
@@ -232,7 +233,7 @@ def repeat_all_messages(message):
         else:
             bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
 
-    elif message.chat.id == idYellow:
+    elif message.chat.id == idYellow or message.chat.id == idYellow2:
         if str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
