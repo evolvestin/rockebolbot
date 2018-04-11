@@ -240,7 +240,10 @@ def repeat_all_messages(message):
             bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idYellow or message.chat.id == idYellow2:
-        if str(message.forward_from.username) == 'ChatWarsBot':
+        if message.forward_from is None:
+            bot.send_message(idChatCommandirka, atk + va + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + va + specmessage, parse_mode='HTML')
+        elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
