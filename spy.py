@@ -57,6 +57,7 @@ idMoon = 130875246 #RDVRK
 
 idChatPeregovorka = -1001175146945
 idChatCommandirka = -1001116128920
+idChannelPins = -1001290002880
 
 urlClear = 'http://bitlux.ru/evolve.php?text=none'
 urldo = 'http://bitlux.ru/evolve.php?text='
@@ -107,13 +108,6 @@ def handle_berman_command(message):
     else:
         bot.send_message(message.chat.id, 'Траур завершен, у вас есть ~7 секунд, чтобы успеть повоевать')
 
-
-@bot.message_handler(commands=['col'])
-def handle_col_command(message):
-    db = SQLighter('spec.db')
-    db.create_row('1', 'pidor')
-    mytwink = db.get_coltwink(1)
-    bot.send_message(idMe, str(mytwink[1]))
 
 
 @bot.message_handler(commands=['id'])
@@ -182,8 +176,10 @@ def repeat_all_messages(message):
     if message.chat.id == idDBlack and message.forward_date is not None:
         if str(message.forward_from.username) == 'CWRedBot':
             bot.send_message(idChatCommandirka, atk + im + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + im + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ToweRobot':
             bot.send_message(idChatCommandirka, deff + gp + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, deff + gp + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
@@ -191,47 +187,57 @@ def repeat_all_messages(message):
     elif message.chat.id == idRed:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idDRed:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + im + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, deff + im + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, deff + im + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, deff + im + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idBlack:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + gp + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + gp + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, atk + gp + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + gp + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idBlue:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idDBlue:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idYellow or message.chat.id == idYellow2:
         if str(message.forward_from.username) == 'ChatWarsBot':
@@ -239,47 +245,59 @@ def repeat_all_messages(message):
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, atk + va + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + va + specmessage, parse_mode='HTML')
+
 
     elif message.chat.id == idDYellow:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + va + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, deff + va + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, deff + va + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, deff + va + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idWhite:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + cy + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + cy + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
             bot.send_message(idChatCommandirka, atk + cy + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + cy + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idDTwilight:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + ki + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, deff + ki + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         elif str(message.forward_from.username) == 'TwilightCastleBot':
             bot.send_message(idChatCommandirka, deff + ki + prikazTwilight(message), parse_mode='HTML')
+            bot.send_message(idChannelPins, deff + ki + prikazTwilight(message), parse_mode='HTML')
         else:
             bot.send_message(idChatCommandirka, deff + ki + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, deff + ki + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idTwilight:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, ki + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, ki + specmessage, parse_mode='HTML')
         elif message.forward_from is not None:
             if str(message.forward_from.username) == 'ChatWarsBot':
                 bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
                 bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
             elif str(message.forward_from.username) == 'TwilightCastleBot':
                 bot.send_message(idChatCommandirka, ki + prikazTwilight(message), parse_mode='HTML')
+                bot.send_message(idChannelPins, ki + prikazTwilight(message), parse_mode='HTML')
             else:
                 bot.send_message(idChatCommandirka, ki + specmessage, parse_mode='HTML')
+                bot.send_message(idChannelPins, ki + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idMoon:
         if message.forward_from is None:
