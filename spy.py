@@ -142,6 +142,18 @@ def get_new_member(message):
         bot.send_message(message.chat.id, 'Меня добавили в какой-то чат, пидорасы')
         bot.send_message(idMe, 'Меня добавили в какой-то чат, пидорасы')
 
+@bot.message_handler(content_types=['audio', 'video', 'document', 'text', 'location', 'contact', 'sticker'])
+def repeat_all_messages(message):
+    if message.chat.id == idChatCommandirka:
+        vahtertime = int(datetime.utcfromtimestamp(int(int(datetime.now().timestamp()) + 3 * 60 * 60)).strftime('%H'))
+        vahterminute = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%M'))
+        if vahtertime == 3 or vahtertime == 7 or vahtertime == 11 or \
+                            vahtertime == 15 or vahtertime == 19 or vahtertime == 23:
+            if vahterminute == 55 or vahterminute == 56 or vahterminute == 57 or vahterminute == 58 or vahterminute == 59:
+                bot.delete_message(message.chat.id, message.message_id)
+
+
+
 @bot.message_handler(func=lambda message: message.text)
 def repeat_all_messages(message):
     global globtime
@@ -240,10 +252,7 @@ def repeat_all_messages(message):
             bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idYellow or message.chat.id == idYellow2:
-        if message.forward_from is None:
-            bot.send_message(idChatCommandirka, atk + va + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + va + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsBot':
+        if str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
