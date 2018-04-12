@@ -51,6 +51,7 @@ idWhite = 430602902
 idRed = 555979421 #DARETEN
 idRed2 = 200299701 #MISSSPACEX
 idDRed = 497892874
+idDRed2 = 137929821 #MyB0ss
 idTwilight = 462139760 #NAMI_LEE
 idDTwilight = 350037139
 idMoon = 130875246 #RDVRK
@@ -209,7 +210,7 @@ def repeat_all_messages(message):
             bot.send_message(idChatCommandirka, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
 
-    elif message.chat.id == idDRed:
+    elif message.chat.id == idDRed or message.chat.id == idDRed2:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + im + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + im + specmessage, parse_mode='HTML')
@@ -567,4 +568,3 @@ if __name__ == '__main__':
     _thread.start_new_thread(fort_detector, ())
     _thread.start_new_thread(merc_detector, ())
     telepol()
-   
