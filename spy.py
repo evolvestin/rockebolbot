@@ -142,16 +142,18 @@ def get_new_member(message):
         bot.send_message(message.chat.id, 'Меня добавили в какой-то чат, пидорасы')
         bot.send_message(idMe, 'Меня добавили в какой-то чат, пидорасы')
 
-@bot.message_handler(content_types=['audio', 'video', 'document', 'text', 'location', 'contact', 'sticker'])
-def repeat_all_messages(message):
-    if message.chat.id == idChatCommandirka:
+
+@bot.message_handler(content_types=['audio', 'video', 'document', 'location', 'contact', 'sticker'])
+def redmessages(message):
+    x = message.chat.id
+    if x == idChatCommandirka and message.from_user.id != 205356091 \
+        and message.from_user.id != 105907720:
         vahtertime = int(datetime.utcfromtimestamp(int(int(datetime.now().timestamp()) + 3 * 60 * 60)).strftime('%H'))
         vahterminute = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%M'))
         if vahtertime == 3 or vahtertime == 7 or vahtertime == 11 or \
                             vahtertime == 15 or vahtertime == 19 or vahtertime == 23:
             if vahterminute == 55 or vahterminute == 56 or vahterminute == 57 or vahterminute == 58 or vahterminute == 59:
                 bot.delete_message(message.chat.id, message.message_id)
-
 
 
 @bot.message_handler(func=lambda message: message.text)
@@ -318,6 +320,16 @@ def repeat_all_messages(message):
         elif str(message.forward_from.username) == 'MoonlightCastleBot':
             bot.send_message(idMe, moon + specmessage, parse_mode='HTML')
             bot.send_message(message.chat.id, '<i>Отправлено</i>', parse_mode='HTML')
+
+    x = message.chat.id
+    if x == idChatCommandirka and message.from_user.id != 205356091 \
+            and message.from_user.id != 105907720:
+        vahtertime = int(datetime.utcfromtimestamp(int(int(datetime.now().timestamp()) + 3 * 60 * 60)).strftime('%H'))
+        vahterminute = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%M'))
+        if vahtertime == 3 or vahtertime == 7 or vahtertime == 11 or \
+                vahtertime == 15 or vahtertime == 19 or vahtertime == 23:
+            if vahterminute == 55 or vahterminute == 56 or vahterminute == 57 or vahterminute == 58 or vahterminute == 59:
+                bot.delete_message(message.chat.id, message.message_id)
 
     elif message.chat.id == idMe:
         if message.text == less + 'Лес':
@@ -555,3 +567,4 @@ if __name__ == '__main__':
     _thread.start_new_thread(fort_detector, ())
     _thread.start_new_thread(merc_detector, ())
     telepol()
+   
