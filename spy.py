@@ -47,6 +47,7 @@ idDBlue = 541062392 #NAMI_LEE
 idYellow = 392562894 #Gummy
 idYellow2 = 242839185 #M_ONYA
 idDYellow = 485591553
+idDYellow2 = 478977400 #telegram -1
 idWhite = 430602902
 idRed = 555979421 #DARETEN
 idRed2 = 200299701 #MISSSPACEX
@@ -263,7 +264,7 @@ def repeat_all_messages(message):
             bot.send_message(idChannelPins, atk + va + specmessage, parse_mode='HTML')
 
 
-    elif message.chat.id == idDYellow:
+    elif message.chat.id == idDYellow or message.chat.id == idDYellow2:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + va + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + va + specmessage, parse_mode='HTML')
