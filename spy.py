@@ -138,6 +138,7 @@ def callback_equip(call):
             prikaz()
             content = requests.get(urleqlog + 'Defend')
 
+
 @bot.message_handler(content_types=["new_chat_members"])
 def get_new_member(message):
     if message.new_chat_member is not None and message.new_chat_member.username == 'whgklwehgwklejw_bot':
@@ -325,7 +326,8 @@ def repeat_all_messages(message):
 
     x = message.chat.id
     if x == idChatCommandirka and message.from_user.id != 205356091 \
-            and message.from_user.id != 105907720:
+            and message.from_user.id != 105907720 \
+            and message.from_user.id != 280993442:
         vahtertime = int(datetime.utcfromtimestamp(int(int(datetime.now().timestamp()) + 3 * 60 * 60)).strftime('%H'))
         vahterminute = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%M'))
         if vahtertime == 3 or vahtertime == 7 or vahtertime == 11 or \
@@ -524,19 +526,26 @@ def merc_detector():
                     bot.send_message(idChatCommandirka, "Woop-woop! That's the sound of da ebolbo-police!", parse_mode='HTML')
                 elif merc_sec == 30 and minutes == 59:
                     bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
                 elif merc_sec == 35 and minutes == 59:
                     bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
                 elif merc_sec == 40 and minutes == 59:
                     bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
                 elif merc_sec == 45 and minutes == 59:
                     bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
                 elif merc_sec == 50 and minutes == 59:
                     bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
                 elif merc_sec == 55 and minutes == 59:
                     bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
             elif hours == 4 or hours == 8 or hours == 12 or hours == 16 or hours == 20 or hours == 24:
                 if merc_sec == 0 and minutes == 0:
                     bot.send_message(idChatCommandirka, '00:00', parse_mode='HTML')
+                    bot.send_message(idChannelPins, '00:00. Приехали', parse_mode='HTML')
                 elif merc_sec == 3 and minutes == 0:
                     bot.send_message(idChatCommandirka, '<i>Опасность миновала. Можете продолжать ничего не делать.</i>', parse_mode='HTML')
         except Exception as e:
