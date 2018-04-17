@@ -290,8 +290,9 @@ def repeat_all_messages(message):
                     keyrinka.row(im, eu, ki)
                     keyrinka.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
                 bot.send_message(message.chat.id, 'ну, привет епта)', reply_markup=keyrinka)
-            bot.send_message(idChatCommandirka, atk + ki + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + ki + specmessage, parse_mode='HTML')
+            else:
+                bot.send_message(idChatCommandirka, atk + ki + specmessage, parse_mode='HTML')
+                bot.send_message(idChannelPins, atk + ki + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ChatWarsBot':
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
