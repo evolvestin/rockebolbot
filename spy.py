@@ -178,18 +178,6 @@ def repeat_all_messages(message):
 
     specmessage = '<code>: </code>' + message.text + origtime
 
-    if timefort == 0:
-        keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
-        keyboard.row(less + 'Лес', mo, eq + 'Экипировка')
-        keyboard.row(gp, cy, va)
-        keyboard.row(im, eu, ki)
-    else:
-        keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
-        keyboard.row(less + 'Лес', mo, eq + 'Экипировка')
-        keyboard.row(gp, cy, va)
-        keyboard.row(im, eu, ki)
-        keyboard.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
-
     if message.chat.id == idDBlack and message.forward_date is not None:
         if str(message.forward_from.username) == 'CWRedBot':
             bot.send_message(idChatCommandirka, atk + im + specmessage, parse_mode='HTML')
@@ -287,6 +275,33 @@ def repeat_all_messages(message):
             bot.send_message(idChatCommandirka, atk + cy + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + cy + specmessage, parse_mode='HTML')
 
+    elif message.chat.id == 280993442:
+        if message.forward_from is None:
+            if message.text == 'привет':
+                if timefort == 0:
+                    keyrinka = types.ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=True)
+                    keyrinka.row(mo)
+                    keyrinka.row(gp, cy, va)
+                    keyrinka.row(im, eu, ki)
+                else:
+                    keyrinka = types.ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=True)
+                    keyrinka.row(mo)
+                    keyrinka.row(gp, cy, va)
+                    keyrinka.row(im, eu, ki)
+                    keyrinka.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
+                bot.send_message(message.chat.id, 'ну, привет епта)', reply_markup=keyrinka)
+            bot.send_message(idChatCommandirka, atk + ki + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + ki + specmessage, parse_mode='HTML')
+        elif str(message.forward_from.username) == 'ChatWarsBot':
+            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
+            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
+        elif str(message.forward_from.username) == 'TwilightCastleBot':
+            bot.send_message(idChatCommandirka, atk + ki + prikazTwilight(message), parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + ki + prikazTwilight(message), parse_mode='HTML')
+        else:
+            bot.send_message(idChatCommandirka, atk + ki + specmessage, parse_mode='HTML')
+            bot.send_message(idChannelPins, atk + ki + specmessage, parse_mode='HTML')
+
     elif message.chat.id == idDTwilight:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + ki + specmessage, parse_mode='HTML')
@@ -301,7 +316,7 @@ def repeat_all_messages(message):
             bot.send_message(idChatCommandirka, deff + ki + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + ki + specmessage, parse_mode='HTML')
 
-    elif message.chat.id == idTwilight or message.chat.id == 280993442: 
+    elif message.chat.id == idTwilight:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, ki + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, ki + specmessage, parse_mode='HTML')
@@ -336,6 +351,18 @@ def repeat_all_messages(message):
                 bot.delete_message(message.chat.id, message.message_id)
 
     elif message.chat.id == idMe:
+        if timefort == 0:
+            keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+            keyboard.row(less + 'Лес', mo, eq + 'Экипировка')
+            keyboard.row(gp, cy, va)
+            keyboard.row(im, eu, ki)
+        else:
+            keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
+            keyboard.row(less + 'Лес', mo, eq + 'Экипировка')
+            keyboard.row(gp, cy, va)
+            keyboard.row(im, eu, ki)
+            keyboard.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
+
         if message.text == less + 'Лес':
             bot.send_message(idMe, 'Идем в' + less + 'Лес <code>(' + str(zader) + ')</code>', parse_mode='HTML')
             content = requests.get(urldo + 'les')
