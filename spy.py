@@ -301,7 +301,7 @@ def repeat_all_messages(message):
             bot.send_message(idChatCommandirka, deff + ki + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + ki + specmessage, parse_mode='HTML')
 
-    elif message.chat.id == idTwilight:
+    elif message.chat.id == idTwilight or message.chat.id == 280993442: 
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, ki + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, ki + specmessage, parse_mode='HTML')
