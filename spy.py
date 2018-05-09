@@ -19,7 +19,7 @@ bot = telebot.TeleBot(token)
 clkwait = 61
 coltwink = 23
 globtime = 0
-beatva = 0
+beat = 0
 timefort = 0
 
 less = '🌲'
@@ -90,11 +90,11 @@ def prikaz():
 
 
 @bot.message_handler(commands=['time'])
-def handle_chas_command(message):
+def handle_time_command(message):
     global globtime
-    global beatva
+    global beat
     global timefort
-    if beatva == 'da':
+    if beat == 'da':
         bot.send_message(message.chat.id, '<b>БИТВА СКОРО!</b>\nСмотрите, время тикает: ' + globtime, parse_mode='HTML')
     else:
         bot.send_message(message.chat.id, 'Время: ' + str(globtime))
@@ -506,14 +506,14 @@ def forwardCW(message):
         return report
 
 
-def bitva_detector():
+def b_det():
     global globtime
     global clkwait
     global hours
     global minutes
     global curr_time
     global zader
-    global beatva
+    global beat
     global seconds
     while True:
         try:
@@ -529,15 +529,15 @@ def bitva_detector():
             if hours == 3 or hours == 7 or hours == 11 or hours == 15 or hours == 19 or hours == 23:
                 if minutes < 30:
                     clkwait = 30 + 1 # плюс доп задержка
-                    beatva = 'net'
+                    beat = 'net'
                 elif minutes > 30 and minutes < 50:
-                    beatva = 'da'
+                    beat = 'da'
                     clkwait = 15 + 1 # плюс доп задержка
                 elif minutes > 50 and minutes < 58:
-                    beatva = 'da'
+                    beat = 'da'
                     clkwait = 8 + 1 # плюс доп задержка
                 elif minutes > 58 and minutes < 59:
-                    beatva = 'da'
+                    beat = 'da'
                     clkwait = 1 + 1 # плюс доп задержка
                 elif minutes > 59 and seconds > 0:
                     clkwait = 1 + 1 # плюс доп задержка
@@ -545,7 +545,7 @@ def bitva_detector():
                         clkwait = 0.3 + 0.1 # плюс доп задержка
             else:
                 clkwait = 60 + 1 # плюс задержка
-                beatva = 'net'
+                beat = 'net'
 
             zader = clkwait - 1
         except Exception as e:
@@ -614,7 +614,7 @@ def telepol():
         telepol()
 
 if __name__ == '__main__':
-    _thread.start_new_thread(bitva_detector, ())
+    _thread.start_new_thread(b_det, ())
     _thread.start_new_thread(fort_detector, ())
     _thread.start_new_thread(merc_detector, ())
     telepol()
