@@ -113,6 +113,10 @@ def handle_berman_command(message):
         bot.send_message(message.chat.id, 'Траур завершен, у вас есть ~7 секунд, чтобы успеть повоевать')
 
 
+@bot.message_handler(commands=['beatva'])
+def handle_beatva_command(message):
+    bot.send_document(message.chat.id, 'CgADAgAD8wAD98PZSHzfkafMNpkqAg')
+
 
 @bot.message_handler(commands=['id'])
 def handle_id_command(message):
@@ -213,7 +217,7 @@ def repeat_all_messages(message):
             bot.send_message(idChatCommandirka, deff + im + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + im + specmessage, parse_mode='HTML')
 
-    elif message.chat.id == idBlack or idBlack3:
+    elif message.chat.id == idBlack or message.chat.id == idBlack3:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + gp + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + gp + specmessage, parse_mode='HTML')
@@ -264,7 +268,6 @@ def repeat_all_messages(message):
         else:
             bot.send_message(idChatCommandirka, atk + va + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + va + specmessage, parse_mode='HTML')
-
 
     elif message.chat.id == idDYellow or message.chat.id == idDYellow2:
         if message.forward_from is None:
@@ -356,7 +359,8 @@ def repeat_all_messages(message):
     x = message.chat.id
     if x == idChatCommandirka and message.from_user.id != 205356091 \
             and message.from_user.id != 105907720 \
-            and message.from_user.id != 280993442:
+            and message.from_user.id != 280993442 \
+            and message.from_user.id != idMe:
         vahtertime = int(datetime.utcfromtimestamp(int(int(datetime.now().timestamp()) + 3 * 60 * 60)).strftime('%H'))
         vahterminute = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%M'))
         if vahtertime == 3 or vahtertime == 7 or vahtertime == 11 or \
@@ -560,11 +564,11 @@ def merc_detector():
     global keyboard
     while True:
         try:
-            sleep(1)
+            sleep(0.7)
             merc_sec = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%S'))
             if hours == 3 or hours == 7 or hours == 11 or hours == 15 or hours == 19 or hours == 23:
                 if merc_sec == 25 and minutes == 59:
-                    bot.send_message(idChatCommandirka, "Woop-woop! That's the sound of da ebolbo-police!", parse_mode='HTML')
+                    bot.send_document(idChatCommandirka, 'CgADAgAD8wAD98PZSHzfkafMNpkqAg')
                 elif merc_sec == 30 and minutes == 59:
                     bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
