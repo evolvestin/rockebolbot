@@ -114,8 +114,8 @@ def handle_berman_command(message):
 
 
 @bot.message_handler(commands=['beatva'])
-def handle_beatva_command(message):
-    bot.send_document(message.chat.id, 'CgADAgAD8wAD98PZSHzfkafMNpkqAg')
+def handle_beatvas_command(message):
+    bot.send_document(message.chat.id, 'CgADAgAD8wAD98PZSC9Zvi1HJzyRAg')
 
 
 @bot.message_handler(commands=['id'])
@@ -163,6 +163,10 @@ def redmessages(message):
                             vahtertime == 15 or vahtertime == 19 or vahtertime == 23:
             if vahterminute == 55 or vahterminute == 56 or vahterminute == 57 or vahterminute == 58 or vahterminute == 59:
                 bot.delete_message(message.chat.id, message.message_id)
+
+    elif message.chat.id == idMe:
+        if message.document:
+            bot.send_message(message.chat.id, 'file_id: ' + str(message.document.file_id))
 
 
 @bot.message_handler(func=lambda message: message.text)
