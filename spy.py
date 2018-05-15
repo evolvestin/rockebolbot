@@ -42,6 +42,7 @@ hmm = '🤔'
 idMe = 396978030
 idBlack = 394850016
 idBlack2 = 238296233 #RICHARD
+idBlack3 = 510578122 #CHUNK
 idDBlack = 200299701 #MISSSPACEX
 idBlue = 491625180
 idDBlue = 541062392 #NAMI_LEE
@@ -212,7 +213,7 @@ def repeat_all_messages(message):
             bot.send_message(idChatCommandirka, deff + im + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + im + specmessage, parse_mode='HTML')
 
-    elif message.chat.id == idBlack:
+    elif message.chat.id == idBlack or idBlack3:
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + gp + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + gp + specmessage, parse_mode='HTML')
@@ -563,7 +564,7 @@ def merc_detector():
             merc_sec = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%S'))
             if hours == 3 or hours == 7 or hours == 11 or hours == 15 or hours == 19 or hours == 23:
                 if merc_sec == 25 and minutes == 59:
-                    bot.send_message(idChatCommandirka, "Чик-чирик говно блять", parse_mode='HTML')
+                    bot.send_message(idChatCommandirka, "Woop-woop! That's the sound of da ebolbo-police!", parse_mode='HTML')
                 elif merc_sec == 30 and minutes == 59:
                     bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
