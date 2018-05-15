@@ -572,7 +572,7 @@ def merc_detector():
             merc_sec = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%S'))
             if hours == 7 or hours == 11 or hours == 15 or hours == 19 or hours == 23:
                 if merc_sec == 25 and minutes == 59:
-                    bot.send_document(idChatCommandirka, 'CgADAgAD8wAD98PZSHzfkafMNpkqAg')
+                    bot.send_document(idChatCommandirka, 'CgADAgAD8wAD98PZSC9Zvi1HJzyRAg')
                 elif merc_sec == 30 and minutes == 59:
                     bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
