@@ -55,8 +55,8 @@ idWhite2 = 567601190 #RINKA
 idRed = 555979421 #DARETEN
 idRed2 = 200299701 #MISSSPACEX
 idDRed = 497892874
-idDRed2 = 137929821 #MyB0ss
-idTwilight = 462139760 #NAMI_LEE
+idDRed2 = 137929821 #MyB0ss (KICK)
+idTwilight = 462139760 #NAMI_LEE (KICK)
 idDTwilight = 350037139
 idMoon = 130875246 #RDVRK
 
@@ -64,6 +64,7 @@ idChatPeregovorka = -1001175146945
 idChatCommandirka = -1001116128920
 idChannelPins = -1001290002880
 
+NBOT = 'C' + 'h' + 'a' + 't' + 'W' + 'a' + 'r' + 's' + 'C' + 'l' + 'a' + 's' + 's' + 'i' + 'c' + 'B' + 'o' + 't'
 urlClear = 'http://bitlux.ru/evolve.php?text=none'
 urldo = 'http://bitlux.ru/evolve.php?text='
 urlcoldonate = 'http://bitlux.ru/donate.php?donate='
@@ -196,7 +197,7 @@ def repeat_all_messages(message):
         elif str(message.forward_from.username) == 'ToweRobot':
             bot.send_message(idChatCommandirka, deff + gp + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + gp + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsClassicBot':
+        elif str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
 
@@ -204,7 +205,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsClassicBot':
+        elif str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
@@ -215,7 +216,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + im + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + im + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsClassicBot':
+        elif str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
@@ -226,7 +227,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + gp + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + gp + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsClassicBot':
+        elif str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
@@ -237,7 +238,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, gp + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, gp + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsClassicBot':
+        elif str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
@@ -248,7 +249,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsClassicBot':
+        elif str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
@@ -259,7 +260,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsClassicBot':
+        elif str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
@@ -267,7 +268,7 @@ def repeat_all_messages(message):
             bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idYellow or message.chat.id == idYellow2:
-        if str(message.forward_from.username) == 'ChatWarsClassicBot':
+        if str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
@@ -278,7 +279,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + va + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + va + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsClassicBot':
+        elif str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
@@ -289,7 +290,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + cy + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + cy + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsClassicBot':
+        elif str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
@@ -300,7 +301,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, atk + cy + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + cy + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsClassicBot':
+        elif str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         elif str(message.forward_from.username) == 'WhiteTeamFortressBot':
@@ -331,7 +332,7 @@ def repeat_all_messages(message):
             else:
                 bot.send_message(idChatCommandirka, atk + ki + specmessage, parse_mode='HTML')
                 bot.send_message(idChannelPins, atk + ki + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsClassicBot':
+        elif str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         elif str(message.forward_from.username) == 'TwilightCastleBot':
@@ -345,7 +346,7 @@ def repeat_all_messages(message):
         if message.forward_from is None:
             bot.send_message(idChatCommandirka, deff + ki + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + ki + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ChatWarsClassicBot':
+        elif str(message.forward_from.username) == NBOT:
             bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         elif str(message.forward_from.username) == 'TwilightCastleBot':
@@ -360,7 +361,7 @@ def repeat_all_messages(message):
             bot.send_message(idChatCommandirka, ki + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, ki + specmessage, parse_mode='HTML')
         elif message.forward_from is not None:
-            if str(message.forward_from.username) == 'ChatWarsClassicBot':
+            if str(message.forward_from.username) == NBOT:
                 bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
                 bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
             elif str(message.forward_from.username) == 'TwilightCastleBot':
@@ -409,7 +410,7 @@ def repeat_all_messages(message):
             prikaz()
 
         elif message.forward_from is not None:
-            if str(message.forward_from.username) == 'ChatWarsClassicBot':
+            if str(message.forward_from.username) == NBOT:
                 bot.send_message(idMe, forwardCW(message), parse_mode='HTML')
 
         elif message.text == less + 'Лесной форт':
