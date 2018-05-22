@@ -38,6 +38,7 @@ eq = '🎽'
 gold = '💰'
 moon = '🌑'
 hmm = '🤔'
+gov = 0
 
 idMe = 396978030
 idBlack = 394850016
@@ -154,21 +155,31 @@ def get_new_member(message):
         bot.send_message(idMe, 'Меня добавили в какой-то чат, пидорасы')
 
 
-@bot.message_handler(content_types=['audio', 'video', 'document', 'location', 'contact', 'sticker'])
+@bot.message_handler(content_types=['audio', 'video', 'document', 'location', 'contact', 'sticker', 'voice'])
 def redmessages(message):
-    x = message.chat.id
-    if x == idChatCommandirka and message.from_user.id != 205356091 \
-        and message.from_user.id != 105907720:
+    global gov
+    if message.chat.id == idChatCommandirka and message.from_user.id != 205356091 \
+            and message.from_user.id != 105907720 \
+            and message.from_user.id != 280993442 \
+            and message.from_user.id != idMe:
         vahtertime = int(datetime.utcfromtimestamp(int(int(datetime.now().timestamp()) + 3 * 60 * 60)).strftime('%H'))
         vahterminute = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%M'))
         if vahtertime == 3 or vahtertime == 7 or vahtertime == 11 or \
                             vahtertime == 15 or vahtertime == 19 or vahtertime == 23:
-            if vahterminute == 55 or vahterminute == 56 or vahterminute == 57 or vahterminute == 58 or vahterminute == 59:
+            if vahterminute == 50 or vahterminute == 51 or vahterminute == 52 or vahterminute == 53 or vahterminute == 54:
+                gov = message.message_id
+                bot.send_message(idMe, str(gov))
+            elif vahterminute == 55:
                 bot.delete_message(message.chat.id, message.message_id)
+            elif vahterminute == 56 or vahterminute == 57 or vahterminute == 58 or vahterminute == 59:
+                bot.delete_message(message.chat.id, message.message_id)
+                gov = 0
 
     elif message.chat.id == idMe:
         if message.document:
             bot.send_message(message.chat.id, 'file_id: ' + str(message.document.file_id))
+        if message.voice:
+            bot.send_message(message.chat.id, 'file_id: ' + str(message.voice.file_id))
 
 
 @bot.message_handler(func=lambda message: message.text)
@@ -178,6 +189,7 @@ def repeat_all_messages(message):
     global zader
     global keyboard
     global timefort
+    global gov
 
     if message.forward_date is not None:
         origmes = message.forward_date
@@ -379,17 +391,27 @@ def repeat_all_messages(message):
             bot.send_message(idMe, moon + specmessage, parse_mode='HTML')
             bot.send_message(message.chat.id, '<i>Отправлено</i>', parse_mode='HTML')
 
-    x = message.chat.id
-    if x == idChatCommandirka and message.from_user.id != 205356091 \
-            and message.from_user.id != 105907720 \
-            and message.from_user.id != 280993442 \
-            and message.from_user.id != idMe:
-        vahtertime = int(datetime.utcfromtimestamp(int(int(datetime.now().timestamp()) + 3 * 60 * 60)).strftime('%H'))
-        vahterminute = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%M'))
-        if vahtertime == 3 or vahtertime == 7 or vahtertime == 11 or \
-                vahtertime == 15 or vahtertime == 19 or vahtertime == 23:
-            if vahterminute == 55 or vahterminute == 56 or vahterminute == 57 or vahterminute == 58 or vahterminute == 59:
-                bot.delete_message(message.chat.id, message.message_id)
+    if message.chat.id == idChatCommandirka:
+        if message.from_user.id == idMe and message.reply_to_message:
+                if message.text == 'не пиши' or message.text == 'пидорас' or message.text == 'говно':
+                    bot.send_voice(idChatCommandirka, 'AwADAgADXAEAAu7TEEgf1EPuPuzXrgI',
+                                   reply_to_message_id=message.reply_to_message.message_id)
+
+        elif message.from_user.id != 205356091 \
+                and message.from_user.id != 105907720 \
+                and message.from_user.id != 280993442 \
+                and message.from_user.id != idMe:
+            vahtertime = int(datetime.utcfromtimestamp(int(int(datetime.now().timestamp()) + 3 * 60 * 60)).strftime('%H'))
+            vahterminute = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%M'))
+            if vahtertime == 3 or vahtertime == 7 or vahtertime == 11 or \
+                    vahtertime == 15 or vahtertime == 19 or vahtertime == 23:
+                if vahterminute == 50 or vahterminute == 51 or vahterminute == 52 or vahterminute == 53 or vahterminute == 54:
+                    gov = message.message_id
+                elif vahterminute == 55:
+                    bot.delete_message(message.chat.id, message.message_id)
+                elif vahterminute == 56 or vahterminute == 57 or vahterminute == 58 or vahterminute == 59:
+                    bot.delete_message(message.chat.id, message.message_id)
+                    gov = 0
 
     elif message.chat.id == idMe:
         if timefort == 0:
@@ -585,11 +607,17 @@ def merc_detector():
     global minutes
     global curr_time
     global keyboard
+    global gov
     while True:
         try:
-            sleep(0.7)
+            sleep(0.8)
             merc_sec = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%S'))
             if hours == 7 or hours == 11 or hours == 15 or hours == 19 or hours == 23:
+                if merc_sec == 0 and minutes == 55:
+                    if gov == 0:
+                        gov = 0
+                    else:
+                        bot.send_voice(idChatCommandirka, 'AwADAgADXAEAAu7TEEgf1EPuPuzXrgI', reply_to_message_id=gov)
                 if merc_sec == 25 and minutes == 59:
                     bot.send_document(idChatCommandirka, 'CgADAgAD8wAD98PZSC9Zvi1HJzyRAg')
                 elif merc_sec == 30 and minutes == 59:
@@ -639,6 +667,7 @@ def fort_detector():
         except Exception as e:
             sleep(60)
 
+
 def telepol():
     try:
         bot.polling(none_stop=True, timeout=60)
@@ -646,6 +675,7 @@ def telepol():
         bot.stop_polling()
         sleep(5)
         telepol()
+
 
 if __name__ == '__main__':
     _thread.start_new_thread(b_det, ())
