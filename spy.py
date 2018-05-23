@@ -620,6 +620,7 @@ def merc_detector():
                         bot.send_voice(idChatCommandirka, 'AwADAgADXAEAAu7TEEgf1EPuPuzXrgI', reply_to_message_id=gov)
                 if merc_sec == 25 and minutes == 59:
                     bot.send_document(idChatCommandirka, 'CgADAgAD8wAD98PZSC9Zvi1HJzyRAg')
+                    gov = 0
                 elif merc_sec == 30 and minutes == 59:
                     bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
@@ -648,8 +649,10 @@ def merc_detector():
                 if merc_sec == 0 and minutes == 0:
                     bot.send_message(idChatCommandirka, '00:00', parse_mode='HTML')
                     bot.send_message(idChannelPins, '00:00. Приехали', parse_mode='HTML')
+                    gov = 0
                 elif merc_sec == 3 and minutes == 0:
                     bot.send_message(idChatCommandirka, '<i>Опасность миновала. Можете продолжать ничего не делать.</i>', parse_mode='HTML')
+                    gov = 0
         except Exception as e:
             sleep(1)
 
