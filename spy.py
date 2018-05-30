@@ -13,8 +13,8 @@ from datetime import datetime
 import _thread
 
 #=================================================================
-token = "462725941:AAFxYxX0G_smCog6ZS-f2T_vqVfdUwCTRH4"
-bot = telebot.TeleBot(token)
+uzri = "618455414:AAHInDoXgrbzYS2qCu8gNXKTmCgiTxdFx28"
+bot = telebot.TeleBot(uzri)
 
 clkwait = 61
 coltwink = 23
@@ -62,8 +62,8 @@ idDTwilight = 350037139
 idMoon = 130875246 #RDVRK
 
 idChatPeregovorka = -1001175146945
-idChatCommandirka = -1001116128920
-idChannelPins = -1001290002880
+idChatCommandirka = -1001332836839
+idChannelPins = -1001218234200
 
 NBOT = 'C' + 'h' + 'a' + 't' + 'W' + 'a' + 'r' + 's' + 'C' + 'l' + 'a' + 's' + 's' + 'i' + 'c' + 'B' + 'o' + 't'
 urlClear = 'http://bitlux.ru/evolve.php?text=none'
@@ -118,7 +118,7 @@ def handle_berman_command(message):
 
 @bot.message_handler(commands=['beatva'])
 def handle_beatvas_command(message):
-    bot.send_document(message.chat.id, 'CgADAgAD8wAD98PZSC9Zvi1HJzyRAg')
+    bot.send_document(message.chat.id, 'CgADAgAD8wAD98PZSEpxdZ5jnUKlAg')
 
 
 @bot.message_handler(commands=['id'])
@@ -394,7 +394,7 @@ def repeat_all_messages(message):
     if message.chat.id == idChatCommandirka:
         if message.from_user.id == idMe and message.reply_to_message:
                 if message.text == 'не пиши' or message.text == 'пидорас' or message.text == 'говно':
-                    bot.send_voice(idChatCommandirka, 'AwADAgADXAEAAu7TEEgf1EPuPuzXrgI',
+                    bot.send_voice(idChatCommandirka, 'AwADAgADXAEAAu7TEEiU1v4upM88swI',
                                    reply_to_message_id=message.reply_to_message.message_id)
 
         elif message.from_user.id != 205356091 \
@@ -617,9 +617,9 @@ def merc_detector():
                     if gov == 0:
                         gov = 0
                     else:
-                        bot.send_voice(idChatCommandirka, 'AwADAgADXAEAAu7TEEgf1EPuPuzXrgI', reply_to_message_id=gov)
+                        bot.send_voice(idChatCommandirka, 'AwADAgADXAEAAu7TEEiU1v4upM88swI', reply_to_message_id=gov)
                 if merc_sec == 25 and minutes == 59:
-                    bot.send_document(idChatCommandirka, 'CgADAgAD8wAD98PZSC9Zvi1HJzyRAg')
+                    bot.send_document(idChatCommandirka, 'CgADAgAD8wAD98PZSEpxdZ5jnUKlAg')
                     gov = 0
                 elif merc_sec == 30 and minutes == 59:
                     bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
