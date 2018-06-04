@@ -63,6 +63,7 @@ idMoon = 130875246 #RDVRK
 
 idChatPeregovorka = -1001223745230
 idChatCommandirka = -1001332836839
+idChatOldComand = -1001116128920
 idChannelPins = -1001218234200
 
 NBOT = 'C' + 'h' + 'a' + 't' + 'W' + 'a' + 'r' + 's' + 'C' + 'l' + 'a' + 's' + 's' + 'i' + 'c' + 'B' + 'o' + 't'
@@ -619,39 +620,39 @@ def merc_detector():
                     else:
                         bot.send_voice(idChatCommandirka, 'AwADAgADXAEAAu7TEEiU1v4upM88swI', reply_to_message_id=gov)
                 if merc_sec == 25 and minutes == 59:
-                    bot.send_document(idChatCommandirka, 'CgADAgAD8wAD98PZSEpxdZ5jnUKlAg')
+                    #bot.send_document(idChatCommandirka, 'CgADAgAD8wAD98PZSEpxdZ5jnUKlAg')
                     gov = 0
                 elif merc_sec == 30 and minutes == 59:
-                    bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                    bot.send_message(idChatOldComand, '59:' + str(merc_sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
                 elif merc_sec == 35 and minutes == 59:
-                    bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                    bot.send_message(idChatOldComand, '59:' + str(merc_sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
                 elif merc_sec == 40 and minutes == 59:
-                    bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                    bot.send_message(idChatOldComand, '59:' + str(merc_sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
                 elif merc_sec == 45 and minutes == 59:
-                    bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                    bot.send_message(idChatOldComand, '59:' + str(merc_sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
                 elif merc_sec == 50 and minutes == 59:
-                    bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                    bot.send_message(idChatOldComand, '59:' + str(merc_sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
                 elif merc_sec == 55 and minutes == 59:
-                    bot.send_message(idChatCommandirka, '59:' + str(merc_sec), parse_mode='HTML')
+                    bot.send_message(idChatOldComand, '59:' + str(merc_sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
             elif hours == 3:
                 if merc_sec == 25 and minutes == 59:
-                    bot.send_message(idChatCommandirka, 'Опасности не предвидится 🌝', parse_mode='HTML')
+                    bot.send_message(idChatOldComand, 'Опасности не предвидится 🌝', parse_mode='HTML')
             elif hours == 4:
                 if merc_sec == 3 and minutes == 0:
-                    bot.send_message(idChatCommandirka, 'Я же говорил 🌚', parse_mode='HTML')
+                    bot.send_message(idChatOldComand, 'Я же говорил 🌚', parse_mode='HTML')
             elif hours == 8 or hours == 12 or hours == 16 or hours == 20 or hours == 24:
                 if merc_sec == 0 and minutes == 0:
-                    bot.send_message(idChatCommandirka, '00:00', parse_mode='HTML')
+                    bot.send_message(idChatOldComand, '00:00', parse_mode='HTML')
                     bot.send_message(idChannelPins, '00:00. Приехали', parse_mode='HTML')
                     gov = 0
                 elif merc_sec == 3 and minutes == 0:
-                    bot.send_message(idChatCommandirka, '<i>Опасность миновала. Можете продолжать ничего не делать.</i>', parse_mode='HTML')
+                    bot.send_message(idChatOldComand, '<i>Опасность миновала. Можете продолжать ничего не делать.</i>', parse_mode='HTML')
                     gov = 0
         except Exception as e:
             sleep(1)
