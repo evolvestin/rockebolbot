@@ -159,7 +159,7 @@ def get_new_member(message):
 @bot.message_handler(content_types=['audio', 'video', 'document', 'location', 'contact', 'sticker', 'voice'])
 def redmessages(message):
     global gov
-    if message.chat.id == idChatCommandirka and message.from_user.id != 205356091 \
+    if message.chat.id == idChatOldComand and message.from_user.id != 205356091 \
             and message.from_user.id != 105907720 \
             and message.from_user.id != 280993442 \
             and message.from_user.id != idMe:
@@ -208,10 +208,10 @@ def repeat_all_messages(message):
             bot.send_message(idChatPeregovorka, atk + im + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + im + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == 'ToweRobot':
-            bot.send_message(idChatCommandirka, deff + gp + specmessage, parse_mode='HTML')
+            bot.send_message(idChatOldComand, deff + gp + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + gp + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
+            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
 
     elif message.chat.id == idRed:
@@ -238,65 +238,65 @@ def repeat_all_messages(message):
 
     elif message.chat.id == idBlack or message.chat.id == idBlack3:
         if message.forward_from is None:
-            bot.send_message(idChatCommandirka, atk + gp + specmessage, parse_mode='HTML')
+            bot.send_message(idChatOldComand, atk + gp + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + gp + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
+            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
-            bot.send_message(idChatCommandirka, atk + gp + specmessage, parse_mode='HTML')
+            bot.send_message(iidChatOldComand, atk + gp + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + gp + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idBlack2:
         if message.forward_from is None:
-            bot.send_message(idChatCommandirka, gp + specmessage, parse_mode='HTML')
+            bot.send_message(idChatOldComand, gp + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, gp + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
+            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
-            bot.send_message(idChatCommandirka, gp + specmessage, parse_mode='HTML')
+            bot.send_message(idChatOldComand, gp + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, gp + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idBlue:
         if message.forward_from is None:
-            bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
+            bot.send_message(idChatOldComand, atk + eu + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
+            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
-            bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
+            bot.send_message(idChatOldComand, atk + eu + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idDBlue:
         if message.forward_from is None:
-            bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
+            bot.send_message(idChatOldComand, atk + eu + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
+            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
-            bot.send_message(idChatCommandirka, atk + eu + specmessage, parse_mode='HTML')
+            bot.send_message(idChatOldComand, atk + eu + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idYellow or message.chat.id == idYellow2:
         if str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
+            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
-            bot.send_message(idChatCommandirka, atk + va + specmessage, parse_mode='HTML')
+            bot.send_message(idChatOldComand, atk + va + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + va + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idDYellow or message.chat.id == idDYellow2:
         if message.forward_from is None:
-            bot.send_message(idChatCommandirka, deff + va + specmessage, parse_mode='HTML')
+            bot.send_message(idChatOldComand, deff + va + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + va + specmessage, parse_mode='HTML')
         elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatCommandirka, forwardCW(message), parse_mode='HTML')
+            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
-            bot.send_message(idChatCommandirka, deff + va + specmessage, parse_mode='HTML')
+            bot.send_message(idChatOldComand, deff + va + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, deff + va + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idWhite:
