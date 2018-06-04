@@ -392,7 +392,7 @@ def repeat_all_messages(message):
             bot.send_message(idMe, moon + specmessage, parse_mode='HTML')
             bot.send_message(message.chat.id, '<i>Отправлено</i>', parse_mode='HTML')
 
-    if message.chat.id == idChatCommandirka:
+    if message.chat.id == idChatOldComand:
         if message.from_user.id == idMe and message.reply_to_message:
                 if message.text == 'не пиши' or message.text == 'пидорас' or message.text == 'говно':
                     bot.send_voice(idChatCommandirka, 'AwADAgADXAEAAu7TEEiU1v4upM88swI',
