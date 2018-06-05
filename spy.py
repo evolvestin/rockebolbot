@@ -244,7 +244,7 @@ def repeat_all_messages(message):
             bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
             bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
         else:
-            bot.send_message(iidChatOldComand, atk + gp + specmessage, parse_mode='HTML')
+            bot.send_message(idChatOldComand, atk + gp + specmessage, parse_mode='HTML')
             bot.send_message(idChannelPins, atk + gp + specmessage, parse_mode='HTML')
 
     elif message.chat.id == idBlack2:
