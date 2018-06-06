@@ -94,6 +94,7 @@ for new in list1:
 spycorp_spec = list2
 spycorp_tower = list3
 spycorp_version = list4
+bot.send_message(idMe, str(spycorp_version))
 
 a_union = [ambr, oplt, skal]
 a_towers = [skal, bats, turt, oplt, rose, farm, ambr]
@@ -751,14 +752,14 @@ def repeat_all_messages(message):
                     if message.text == 'не пиши' or message.text == 'пидорас' or message.text == 'говно':
                         bot.send_voice(chat, 'AwADAgADXAEAAu7TEEiU1v4upM88swI',
                                        reply_to_message_id=message.reply_to_message.message_id)
-            elif message.from_user.id == idMe and message.reply_to_message and message.text == 'пин':
-                try:
-                    bot.pin_chat_message(message.chat.id, message.reply_to_message.message_id)
-                except:
-                    try:
-                        bot.send_message(message.from_user.id, 'Я не админ в чате, чтобы пинить, учти это')
-                    except:
-                        temp = 0
+                    elif message.text == 'пин':
+                        try:
+                            bot.pin_chat_message(message.chat.id, message.reply_to_message.message_id)
+                        except:
+                            try:
+                                bot.send_message(message.from_user.id, 'Я не админ в чате, чтобы пинить, учти это')
+                            except:
+                                temp = 0
 
             elif message.from_user.id != 205356091 \
                     and message.from_user.id != 105907720 \
