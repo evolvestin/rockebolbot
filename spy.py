@@ -38,7 +38,7 @@ except:
     list2 = 0
     list3 = 0
     list4 = 0
-tkn = chats1[0]
+tkn = '429683355:AAF3GReDyewByK-WRLQ44xpCNKIsYg1G8X0'#chats1[0]
 bot = telebot.TeleBot(tkn)
 
 less = '🌲'
@@ -94,7 +94,6 @@ for new in list1:
 spycorp_spec = list2
 spycorp_tower = list3
 spycorp_version = list4
-bot.send_message(idMe, str(spycorp_version))
 
 a_union = [ambr, oplt, skal]
 a_towers = [skal, bats, turt, oplt, rose, farm, ambr]
@@ -665,7 +664,7 @@ def repeat_all_messages(message):
             if message.chat.id == i:
                 spec_inarray = spycorp_spec[spycorp_ids.index(i)]
                 tower = spycorp_tower[spycorp_ids.index(i)]
-                version = spycorp_version[spycorp_ids.index(i)]
+                version = str(spycorp_version[spycorp_ids.index(i)])
                 if spec_inarray == '_':
                     spec = ''
                 elif spec_inarray == 'atk':
