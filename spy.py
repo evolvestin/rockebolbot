@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -336,7 +336,7 @@ def handle_status_command(message):
 
         text = 'Группа: ' + str(chatname) + ' (<code>' + str(message.chat.id) + '</code>)'
 
-        if chatname != '???':
+        if chatname != '???' or message.from_user.id == idMe:
             text = text + '\n' \
                 'Пины приходят сюда: <b>' + chatpins + '</b>\n' + \
                 'Детектор битвы здесь: <b>' + chatdetector + '</b>\n' + \
