@@ -250,12 +250,12 @@ def edit_chats(key, id):
         me = 0
     if me == 1:
         try:
-            listsheet1 = client1.open('list').sheet1
+            sheet1 = client1.open('chats').sheet1
         except:
             creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
             client1 = gspread.authorize(creds1)
-            listsheet1 = client1.open('list').sheet1
-        listsheet1.update_cell(key + 2, 1, id)
+            sheet1 = client1.open('chats').sheet1
+        sheet1.update_cell(key + 2, 1, id)
     chat_ids[key] = id
     return me
 
@@ -732,7 +732,7 @@ def repeat_all_messages(message):
                     except:
                         creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
                         client1 = gspread.authorize(creds1)
-                        sheet1 = client1.open('list').sheet1
+                        sheet1 = client1.open('chats').sheet1
                         google = sheet1.col_values(1)
                     for g in google:
                         if str(message.chat.id) == g:
