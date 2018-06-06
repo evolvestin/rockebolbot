@@ -1,6 +1,7 @@
-# -*- coding: utf-8 -*-
-#equip
+﻿# -*- coding: utf-8 -*-
 
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 import telebot
 from telebot import types
 import urllib3
@@ -11,20 +12,41 @@ from time import sleep
 import datetime
 from datetime import datetime
 import _thread
+import random
 
-#=================================================================
-uzri = "618455414:AAHInDoXgrbzYS2qCu8gNXKTmCgiTxdFx28"
-bot = telebot.TeleBot(uzri)
-
-clkwait = 61
-coltwink = 23
-globtime = 0
-beat = 0
-timefort = 0
+# ======================================================================================================================
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
+creds2 = ServiceAccountCredentials.from_json_keyfile_name('worker2.json', scope)
+client1 = gspread.authorize(creds1)
+client2 = gspread.authorize(creds2)
+sheet1 = client1.open('chats').sheet1
+sheet2 = client2.open('chats').sheet1
+listsheet1 = client1.open('list').sheet1
+listsheet2 = client2.open('list').sheet1
+try:
+    chats1 = sheet1.col_values(1)
+    chats2 = sheet2.col_values(2)
+    list1 = listsheet1.col_values(1)
+    list2 = listsheet1.col_values(2)
+    list3 = listsheet2.col_values(3)
+    list4 = listsheet2.col_values(4)
+except:
+    chats1 = 0
+    chats2 = 0
+    list1 = 0
+    list2 = 0
+    list3 = 0
+    list4 = 0
+tkn = chats1[0]
+bot = telebot.TeleBot(tkn)
 
 less = '🌲'
-morfort = '⚓️'
 gori = '⛰'
+gold = '💰'
+
+atk = '⚔️'
+deff = '🛡'
 mo = '🇲🇴'
 gp = '🇬🇵'
 cy = '🇨🇾'
@@ -32,149 +54,574 @@ va = '🇻🇦'
 im = '🇮🇲'
 eu = '🇪🇺'
 ki = '🇰🇮'
-atk = '⚔️'
-deff = '🛡'
-eq = '🎽'
-gold = '💰'
-moon = '🌑'
-hmm = '🤔'
-gov = 0
+skal = '🖤'
+bats = '🦇'
+turt = '🐢'
+oplt = '☘️'
+rose = '🌹'
+farm = '🍆'
+ambr = '🍁'
+
+plus = 3  # часовой пояс
+retro = int(chats2[0])
+split_bots = ''
+split_spec = ''
+split_version = ''
+global_split = ['', '', '', '', 0]
 
 idMe = 396978030
-idBlack = 394850016
-idBlack2 = 238296233 #RICHARD
-idBlack3 = 510578122 #CHUNK
-idDBlack = 200299701 #MISSSPACEX
-idBlue = 491625180
-idDBlue = 541062392 #NAMI_LEE
-idYellow = 392562894 #Gummy
-idYellow2 = 242839185 #M_ONYA
-idDYellow = 485591553
-idDYellow2 = 478977400 #telegram -1
-idWhite = 430602902
-idWhite2 = 567601190 #RINKA
-idRed = 555979421 #DARETEN
-idRed2 = 200299701 #MISSSPACEX
-idDRed = 497892874
-idDRed2 = 137929821 #MyB0ss (KICK)
-idTwilight = 462139760 #NAMI_LEE (KICK)
-idDTwilight = 350037139
-idMoon = 130875246 #RDVRK
 
-idChatPeregovorka = -1001223745230
-idChatCommandirka = -1001332836839
-idChatOldComand = -1001116128920
+idChatDevelopment = -1001309670055
 idChannelPins = -1001218234200
 
-NBOT = 'C' + 'h' + 'a' + 't' + 'W' + 'a' + 'r' + 's' + 'C' + 'l' + 'a' + 's' + 's' + 'i' + 'c' + 'B' + 'o' + 't'
-urlClear = 'http://bitlux.ru/evolve.php?text=none'
-urldo = 'http://bitlux.ru/evolve.php?text='
-urlcoldonate = 'http://bitlux.ru/donate.php?donate='
-urleq = 'http://bitlux.ru/equip.html'
-urleqlog = 'http://bitlux.ru/equip.php?eq='
-#====================================================================================
-starttime = int(datetime.utcfromtimestamp(int(int(datetime.now().timestamp()) + 3 * 60 * 60)).strftime('%H'))
-if starttime == 16 or starttime == 17 or starttime == 18 or starttime == 19:
-    keyboardst = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
-    keyboardst.row(less + 'Лес', mo, eq + 'Экипировка')
-    keyboardst.row(gp, cy, va)
-    keyboardst.row(im, eu, ki)
-    keyboardst.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
-else:
-    keyboardst = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
-    keyboardst.row(less + 'Лес', mo, eq + 'Экипировка')
-    keyboardst.row(gp, cy, va)
-    keyboardst.row(im, eu, ki)
-bot.send_message(idMe, "<i>._.</i>", reply_markup=keyboardst, parse_mode='HTML')
+srch_towers = '(' + skal + '|' + bats + '|' + turt + '|' + oplt + '|' + rose + '|' + farm + '|' + ambr + ')'
+srch_retrotowers = '(' + mo + '|' + gp + '|' + im + '|' + cy + '|' + va + '|' + eu + '|' + ki + ')'
+
+chat_ids = [int(chats1[1]), int(chats1[2]), int(chats1[3]), int(chats1[4]), int(chats1[5]), int(chats1[6])]
+chat_names = [chats2[1], chats2[2], chats2[3], chats2[4], chats2[5], chats2[6]]
+idChatPinsUnion = chat_ids[0]
+idChatPinsEnemy = chat_ids[1]
+idChatDetector = chat_ids[2]
+idChatRetroPinsUnion = chat_ids[3]
+idChatRetroPinsEnemy = chat_ids[4]
+idChatRetroDetector = chat_ids[5]
+
+fraze25 = ['...', '-cCc-', '..', '.', '....', 'сСс..']
+
+spycorp_ids = []
+for new in list1:
+    spycorp_ids.append(int(new))
+spycorp_spec = list2
+spycorp_tower = list3
+spycorp_version = list4
+
+a_union = [ambr, oplt, skal]
+a_towers = [skal, bats, turt, oplt, rose, farm, ambr]
+a_retrounion = [mo, gp, va, eu]
+a_retrotowers = [mo, gp, cy, va, im, eu, ki]
 
 
-def prikaz():
-    time.sleep(clkwait)
-    content = requests.get(urlClear)
-    bot.send_message(idMe, '<i>Исполнено</i>', reply_markup=keyboard, parse_mode='HTML')
+NBOT = 'C' + 'h' + 'a' + 't' + 'W' + 'a' + 'r' + 's' + 'B' + 'o' + 't'
+# ======================================================================================================================
+bot.send_message(idMe, '🤤')
+
+
+def spadder(key):
+    if key == 1:
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        button = []
+        button.append(types.InlineKeyboardButton(text='CW1', callback_data='CW1'))
+        button.append(types.InlineKeyboardButton(text='CW3', callback_data='CW3'))
+        button.append(types.InlineKeyboardButton(text='⚡️Сплит', callback_data='Split'))
+        button.append(types.InlineKeyboardButton(text='🙄Отмена', callback_data='brake_ext'))
+        button.append(types.InlineKeyboardButton(text='😈Отвергнуть', callback_data='brake'))
+        keyboard.add(*button)
+    elif key == 2:
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        button = []
+        button.append(types.InlineKeyboardButton(text='Все', callback_data='all_cw1'))
+        button.append(types.InlineKeyboardButton(text=atk, callback_data='atk_cw1'))
+        button.append(types.InlineKeyboardButton(text=deff, callback_data='deff_cw1'))
+        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        keyboard.add(*button)
+    elif key == 3:
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        button = []
+        button.append(types.InlineKeyboardButton(text='Все', callback_data='all_cw3'))
+        button.append(types.InlineKeyboardButton(text=atk, callback_data='atk_cw3'))
+        button.append(types.InlineKeyboardButton(text=deff, callback_data='deff_cw3'))
+        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        keyboard.add(*button)
+
+    elif key == 4:
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        button = []
+        button.append(types.InlineKeyboardButton(text=mo, callback_data=mo))
+        button.append(types.InlineKeyboardButton(text=gp, callback_data=gp))
+        button.append(types.InlineKeyboardButton(text=cy, callback_data=cy))
+        button.append(types.InlineKeyboardButton(text=va, callback_data=va))
+        button.append(types.InlineKeyboardButton(text=im, callback_data=im))
+        button.append(types.InlineKeyboardButton(text=eu, callback_data=eu))
+        button.append(types.InlineKeyboardButton(text=ki, callback_data=ki))
+        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        keyboard.add(*button)
+    elif key == 5:
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        button = []
+        button.append(types.InlineKeyboardButton(text=skal, callback_data=skal))
+        button.append(types.InlineKeyboardButton(text=bats, callback_data=bats))
+        button.append(types.InlineKeyboardButton(text=turt, callback_data=turt))
+        button.append(types.InlineKeyboardButton(text=oplt, callback_data=oplt))
+        button.append(types.InlineKeyboardButton(text=rose, callback_data=rose))
+        button.append(types.InlineKeyboardButton(text=farm, callback_data=farm))
+        button.append(types.InlineKeyboardButton(text=ambr, callback_data=ambr))
+        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        keyboard.add(*button)
+    elif key == 6:
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        button = []
+        button.append(types.InlineKeyboardButton(text='👌Добавить', callback_data='good'))
+        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        keyboard.add(*button)
+    elif key == 7:
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        button = []
+        button.append(types.InlineKeyboardButton(text='👌Добавить', callback_data='good'))
+        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        keyboard.add(*button)
+    elif key == 8:
+        keyboard = types.InlineKeyboardMarkup(row_width=1)
+        button = []
+        button.append(types.InlineKeyboardButton(text='Ввести ботов', callback_data='split_bots'))
+        button.append(types.InlineKeyboardButton(text='Ввести специализацию + замок', callback_data='split_spec'))
+        button.append(types.InlineKeyboardButton(text='Ввести маркировку CW', callback_data='split_version'))
+        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        keyboard.add(*button)
+    return keyboard
+
+
+def rawtime(stamp):
+    rtime = []
+    weekday = datetime.utcfromtimestamp(int(stamp + plus * 60 * 60)).strftime('%a')
+    if weekday == 'Mon':
+        weekday = 'Пн'
+    elif weekday == 'Tue':
+        weekday = 'Вт'
+    elif weekday == 'Wed':
+        weekday = 'Ср'
+    elif weekday == 'Thu':
+        weekday = 'Чт'
+    elif weekday == 'Fri':
+        weekday = 'Пт'
+    elif weekday == 'Sat':
+        weekday = 'Сб'
+    elif weekday == 'Sun':
+        weekday = 'Вс'
+    day = datetime.utcfromtimestamp(int(stamp + plus * 60 * 60)).strftime('%d')
+    month = datetime.utcfromtimestamp(int(stamp + plus * 60 * 60)).strftime('%m')
+    year = datetime.utcfromtimestamp(int(stamp + plus * 60 * 60)).strftime('%Y')
+    hours = datetime.utcfromtimestamp(int(stamp + plus * 60 * 60)).strftime('%H')
+    minutes = datetime.utcfromtimestamp(int(stamp)).strftime('%M')
+    seconds = datetime.utcfromtimestamp(int(stamp)).strftime('%S')
+    rtime.append(weekday)
+    rtime.append(day)
+    rtime.append(month)
+    rtime.append(year)
+    rtime.append(hours)
+    rtime.append(minutes)
+    rtime.append(seconds)
+    return rtime
+
+
+def rawtime_lite(stamp):
+    rtime = []
+    hours = datetime.utcfromtimestamp(int(stamp + plus * 60 * 60)).strftime('%H')
+    minutes = datetime.utcfromtimestamp(int(stamp)).strftime('%M')
+    seconds = datetime.utcfromtimestamp(int(stamp)).strftime('%S')
+    rtime.append(hours)
+    rtime.append(minutes)
+    rtime.append(seconds)
+    return rtime
+
+
+def edit_chats(key, id):
+    global idChatPinsUnion
+    global idChatPinsEnemy
+    global idChatDetector
+    global idChatRetroPinsUnion
+    global idChatRetroPinsEnemy
+    global idChatRetroDetector
+    global chat_ids
+    global client1
+    me = 1
+    if key == 0:
+        idChatPinsUnion = id
+    elif key == 1:
+        idChatPinsEnemy = id
+    elif key == 2:
+        idChatDetector = id
+    elif key == 3:
+        idChatRetroPinsUnion = id
+    elif key == 4:
+        idChatRetroPinsEnemy = id
+    elif key == 5:
+        idChatRetroDetector = id
+    else:
+        me = 0
+    if me == 1:
+        try:
+            listsheet1 = client1.open('list').sheet1
+        except:
+            creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
+            client1 = gspread.authorize(creds1)
+            listsheet1 = client1.open('list').sheet1
+        listsheet1.update_cell(key + 2, 1, id)
+    chat_ids[key] = id
+    return me
 
 
 @bot.message_handler(commands=['time'])
 def handle_time_command(message):
-    global globtime
-    global beat
-    global timefort
-    if beat == 'da':
-        bot.send_message(message.chat.id, '<b>БИТВА СКОРО!</b>\nСмотрите, время тикает: ' + globtime, parse_mode='HTML')
-    else:
-        bot.send_message(message.chat.id, 'Время: ' + str(globtime))
-
-
-@bot.message_handler(commands=['berman'])
-def handle_berman_command(message):
-    global globtime
-    global seconds
-    if seconds == 0 or seconds == 10 or seconds == 11 or seconds == 20 or seconds == 21 or seconds == 30 or seconds == 31 or seconds == 40 or seconds == 41 or seconds == 50 or seconds == 51:
-        bot.send_message(message.chat.id, 'Только что в мире умер один человек, почтим его память тремя секундами перемирия')
-        sleep(3)
-        bot.send_message(message.chat.id, 'Траур завершен, у вас есть 7 секунд, чтобы успеть повоевать')
-    else:
-        bot.send_message(message.chat.id, 'Траур завершен, у вас есть ~7 секунд, чтобы успеть повоевать')
-
-
-@bot.message_handler(commands=['beatva'])
-def handle_beatvas_command(message):
-    bot.send_document(message.chat.id, 'CgADAgAD8wAD98PZSEpxdZ5jnUKlAg')
+    time = rawtime(int(datetime.now().timestamp()))
+    text = 'Время: ' + str(time[4]) + ':' + str(time[5]) + ':' + str(time[6]) + \
+        ' <code>(' + str(time[0]) + ' ' + str(time[1] + '.' + str(time[2]) + '.' + \
+        str(time[3])) + ', GMT+' + str(plus) + ')</code>'
+    bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 
 @bot.message_handler(commands=['id'])
 def handle_id_command(message):
-    orbo = message.chat.id
-    if orbo > 0:
-        bot.send_message(message.chat.id, "Твой ID: " + str(orbo))
-    elif orbo < 0:
-        bot.send_message(message.chat.id, "ID этой группы: " + str(orbo))
+    if message.reply_to_message is None:
+        text = 'Твой ID: <code>' + str(message.from_user.id) + '</code>\n'
+        if message.chat.id < 0:
+            text = text + 'Group ID: <code>' + str(message.chat.id) + '</code>'
+    elif message.reply_to_message:
+        id = str(message.reply_to_message.from_user.id)
+        if message.reply_to_message.from_user.username:
+            username = '@' + str(message.reply_to_message.from_user.username)
+        else:
+            username = ''
+        if message.reply_to_message.from_user.first_name:
+            firstname = str(message.reply_to_message.from_user.first_name)
+        else:
+            firstname = ''
+        if message.reply_to_message.from_user.last_name:
+            lastname = str(message.reply_to_message.from_user.last_name)
+        else:
+            lastname = ''
+
+        signature = str(message.reply_to_message.from_user.is_bot)
+        isbot = 'Тип: '
+        if signature == 'True' and username == '@rockebolbot':
+            isbot = isbot + '<b>Ето я</b>🖤'
+        elif signature == 'True':
+            isbot = isbot + '<b>Бот</b>'
+        elif signature == 'False':
+            isbot = isbot + '<b>Человек</b>'
+        else:
+            isbot = ''
+
+        text = firstname + ' ' + lastname + ' [<b>' + username + '</b>]\n' + \
+            'ID: <code>' + id + '</code>\n' + isbot
+
+    bot.send_message(message.chat.id, text, parse_mode='HTML')
+
+
+@bot.message_handler(commands=['status'])
+def handle_status_command(message):
+    if message.chat.id < 0:
+        chatname = '???'
+        chatpins = 'Нет'
+        chatdetector = 'Нет'
+        chatretropins = 'Нет'
+        chatretrodetector = 'Нет'
+        for i in chat_ids:
+            if message.chat.id == i:
+                chatname = chat_names[chat_ids.index(i)]
+            if message.chat.id == idChatPinsUnion or message.chat.id == idChatPinsEnemy:
+                chatpins = 'Да'
+            if message.chat.id == idChatDetector:
+                chatdetector = 'Да'
+            if message.chat.id == idChatRetroPinsUnion or message.chat.id == idChatRetroPinsEnemy:
+                chatretropins = 'Да'
+            if message.chat.id == idChatRetroDetector:
+                chatretrodetector = 'Да'
+        if retro == 1:
+            rstatus = 'Активен'
+            retroUI = '       Ретро-пины  здесь: <b>' + chatretropins + '</b>\n' \
+                      '       Ретро-детектор здесь: <b>' + chatretrodetector + '</b>\n'
+        else:
+            rstatus = 'Деактивирован'
+            retroUI = ''
+
+        text = 'Группа: ' + str(chatname) + ' (<code>' + str(message.chat.id) + '</code>)'
+
+        if chatname != '???':
+            text = text + '\n' \
+                'Пины приходят сюда: <b>' + chatpins + '</b>\n' + \
+                'Детектор битвы здесь: <b>' + chatdetector + '</b>\n' + \
+                'Ретро-режим: <b>' + rstatus + '</b>\n' + retroUI
+
+        bot.send_message(message.chat.id, text, parse_mode='HTML')
+
+
+@bot.message_handler(commands=['start'])
+def handle_start_command(message):
+    if message.chat.id > 0:
+        keyboard = types.InlineKeyboardMarkup(row_width=2)
+        button = []
+        button.append(types.InlineKeyboardButton(text='Я шпион🕵🏿', callback_data='Spy'))
+        button.append(types.InlineKeyboardButton(text='Нет😡', callback_data='NoSpy'))
+        spy = 0
+        for i in spycorp_ids:
+            if message.chat.id == i:
+                spy = 1
+        if spy == 1:
+            text = 'Привет шпион\n' \
+                   'Зачем жмякаешь /start? Впрочем, не важно. Думаю, ты продолжишь слать мне пины исправно🤤'
+            button = []
+        else:
+            text = 'Привет. Не будем всё усложнять, ладно? Просто скажи, будешь ли ты для нас шпионом?'
+        keyboard.add(*button)
+        bot.send_message(message.chat.id, text, reply_markup=keyboard)
+
+
+@bot.message_handler(commands=['berman'])
+def handle_berman_command(message):
+    if retro == 1:
+        rsec = rawtime_lite(int(datetime.now().timestamp()))
+        seconds = int(rsec[2])
+        if seconds == 0 or seconds == 10 or seconds == 11 or seconds == 20 or seconds == 21 or seconds == 30 or seconds == 31 or seconds == 40 or seconds == 41 or seconds == 50 or seconds == 51:
+            bot.send_message(message.chat.id, 'Только что в мире умер один человек, почтим его память тремя секундами перемирия')
+            sleep(3)
+            bot.send_message(message.chat.id, 'Траур завершен, у вас есть 7 секунд, чтобы успеть повоевать')
+        else:
+            bot.send_message(message.chat.id, 'Траур завершен, у вас есть ~7 секунд, чтобы успеть повоевать')
+
+
+@bot.message_handler(commands=['beatva'])
+def handle_beatvas_command(message):
+    if retro == 1:
+        bot.send_document(message.chat.id, 'CgADAgAD8wAD98PZSEpxdZ5jnUKlAg')
 
 
 @bot.callback_query_handler(func=lambda call: True)
-def callback_equip(call):
-    global clkwait
-    global keyboard
-    global zader
-    if call.message.chat.id == idMe:
-        if call.data == 'attack':
-            bot.edit_message_text(chat_id=call.message.chat.id, text=atk + 'Шмот надеваем <code>(' + str(zader) + ')</code>', message_id=call.message.message_id, parse_mode='HTML')
-            content = requests.get(urldo + 'Attack')
-            prikaz()
-            content = requests.get(urleqlog + 'Attack')
-        elif call.data == 'defend':
-            bot.edit_message_text(chat_id=call.message.chat.id, text=deff + 'Шмот надеваем <code>(' + str(zader) + ')</code>', message_id=call.message.message_id, parse_mode='HTML')
-            content = requests.get(urldo + 'Defend')
-            prikaz()
-            content = requests.get(urleqlog + 'Defend')
+def callbacks(call):
+    global global_split
+    global spycorp_ids
+    global spycorp_spec
+    global spycorp_tower
+    global spycorp_version
+    if call.message.chat.id > 0:
+        if call.data == 'Spy':
+            keyboard = spadder(1)
+            if call.message.chat.username:
+                username = ' @' + str(call.message.chat.username)
+            else:
+                username = ''
+            if call.message.chat.first_name:
+                firstname = str(call.message.chat.first_name) + ' '
+            else:
+                firstname = ''
+            if call.message.chat.last_name:
+                lastname = str(call.message.chat.last_name)
+            else:
+                lastname = ''
+            devtext = str(call.message.chat.id) + '.   ' + firstname + lastname + username
+            text = 'А ты мне нравишься😍\nДанные твои я отправил моему Повелителю, подожди, никуда не уходи.'
+
+            bot.send_message(idChatDevelopment, devtext, reply_markup=keyboard)
+            bot.edit_message_text(chat_id=call.message.chat.id, text=text, message_id=call.message.message_id)
+        elif call.data == 'NoSpy':
+            text = 'Пидора ответ😡 Ну и зачем ты зашел сюда? Я шпион-бот, ' \
+                   'больше ничо не умею...\nНу может и умею, но тебе не расскажу точно, бака😑\n\n' \
+                   'Если вдруг, ты захочешь нам пошпионить всё-таки, то прожми /start и выбери другой стул.'
+
+            bot.edit_message_text(chat_id=call.message.chat.id, text=text, message_id=call.message.message_id)
+    if call.message.chat.id < 0:
+        if call.message.chat.id == idChatDevelopment:
+            if call.data == 'brake':
+                text = '<b>Повелитель</b> посчитал вас недостойным права быть шпионом. You have been banned forever.'
+                search = re.search('(\d+)\.', call.message.text)
+                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + '\n🤤Отвергнут', message_id=call.message.message_id)
+                try:
+                    bot.send_message(search.group(1), text, parse_mode='HTML')
+                except:
+                    bot.send_message(call.message.chat.id, 'Сообщение об отмене доставить не удалось😤')
+            elif call.data == 'brake_ext':
+                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + '\n🙄Отменен',
+                                      message_id=call.message.message_id)
+            elif call.data == 'CW1':
+                keyboard = spadder(2)
+                text = '\n------\nТип: ' + call.data
+                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
+                                      reply_markup=keyboard, message_id=call.message.message_id)
+            elif call.data == 'CW3':
+                keyboard = spadder(3)
+                text = '\n------\nТип: ' + call.data
+                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
+                                      reply_markup=keyboard, message_id=call.message.message_id)
+            elif call.data == 'Split':
+                keyboard = spadder(8)
+                global_split[0] = call.message.text + '\n------\nТип: ' + 'Сплит'
+                bot.edit_message_text(chat_id=call.message.chat.id, text=global_split[0],
+                                      reply_markup=keyboard, message_id=call.message.message_id)
+            elif call.data == 'otmena':
+                keyboard = spadder(1)
+                search = re.search('(.*)(\n------\n)(.*)', call.message.text)
+                text = search.group(1)
+                global_split = ['', '', '', '', 0]
+                bot.edit_message_text(chat_id=call.message.chat.id, text=text,
+                                      reply_markup=keyboard, message_id=call.message.message_id)
+
+            elif call.data == 'all_cw1':
+                keyboard = spadder(4)
+                text = '\nСпециализация: ' + 'Все'
+                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
+                                      reply_markup=keyboard, message_id=call.message.message_id)
+            elif call.data == 'atk_cw1':
+                keyboard = spadder(4)
+                text = '\nСпециализация: ' + atk
+                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
+                                      reply_markup=keyboard, message_id=call.message.message_id)
+            elif call.data == 'deff_cw1':
+                keyboard = spadder(4)
+                text = '\nСпециализация: ' + deff
+                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
+                                      reply_markup=keyboard, message_id=call.message.message_id)
+            elif call.data == 'all_cw3':
+                keyboard = spadder(5)
+                text = '\nСпециализация: ' + 'Все'
+                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
+                                      reply_markup=keyboard, message_id=call.message.message_id)
+            elif call.data == 'atk_cw3':
+                keyboard = spadder(5)
+                text = '\nСпециализация: ' + atk
+                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
+                                      reply_markup=keyboard, message_id=call.message.message_id)
+            elif call.data == 'deff_cw3':
+                keyboard = spadder(5)
+                text = '\nСпециализация: ' + deff
+                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
+                                      reply_markup=keyboard, message_id=call.message.message_id)
+            elif call.data == mo or call.data == gp or call.data == cy or \
+                 call.data == va or call.data == im or call.data == eu or call.data == ki:
+                keyboard = spadder(6)
+                text = '\nЗамок: ' + call.data
+                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
+                                      reply_markup=keyboard, message_id=call.message.message_id)
+            elif call.data == skal or call.data == bats or call.data == turt or \
+                call.data == oplt or call.data == rose or call.data == farm or call.data == ambr:
+                keyboard = spadder(6)
+                text = '\nЗамок: ' + call.data
+                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
+                                      reply_markup=keyboard, message_id=call.message.message_id)
+
+            elif call.data == 'split_bots':
+                text = 'Ввести юзернеймы ботов, разделяя запятыми каждый из Сплита'
+                global_split[4] = 1
+                bot.send_message(call.message.chat.id, text)
+            elif call.data == 'split_spec':
+                text = 'Ввести специализации и замок, разделяя запятыми каждый из Сплита' + \
+                    '\nСпециализации: ' + atk + deff + '\nЗамки:\n' + \
+                    skal + bats + turt + oplt + rose + farm + ambr + '\n' + \
+                    mo + gp + cy + va + im + eu + ki + '\n\nНапример:' + atk + mo + '.' + farm
+                global_split[4] = 2
+                bot.send_message(call.message.chat.id, text)
+            elif call.data == 'split_version':
+                text = 'Ввести маркировку CW (CW1 = 1, CW3 = 3), разделяя запятыми каждый из Сплита\n' + \
+                    'Например: 1.3'
+                global_split[4] = 3
+                bot.send_message(call.message.chat.id, text)
+            elif call.data == 'good':
+                global spycorp_ids
+                global spycorp_spec
+                global spycorp_tower
+                global spycorp_version
+                key = 0
+                idsearch = re.search('(\d+)\.', call.message.text)
+                typesearch = re.search('\n------\nТип: (.*)\n', call.message.text)
+                specsearch = re.search('\nСпециализация: (.*)', call.message.text)
+                towersearch = re.search('\nЗамок: (.*)', call.message.text)
+
+                if specsearch.group(1) == atk:
+                    spec = 'atk'
+                elif specsearch.group(1) == deff:
+                    spec = 'deff'
+                elif specsearch.group(1) == 'Все':
+                    spec = '_'
+                else:
+                    spec = specsearch.group(1)
+
+                if typesearch.group(1) == 'CW1':
+                    version = 1
+                elif typesearch.group(1) == 'CW3':
+                    version = 3
+                elif typesearch.group(1) == 'Сплит':
+                    versearch = re.search('\nМаркировка: (.*)', call.message.text)
+                    version = versearch.group(1)
+
+                for i in spycorp_ids:
+                    if int(idsearch.group(1)) == i:
+                        key = 1
+                if key != 1:
+                    global client1
+                    togoogle = [str(idsearch.group(1)), spec, towersearch.group(1), version]
+                    spycorp_ids.append(int(idsearch.group(1)))
+                    spycorp_spec.append(spec)
+                    spycorp_tower.append(towersearch.group(1))
+                    spycorp_version.append(version)
+                    try:
+                        listsheet1 = client1.open('list').sheet1
+                    except:
+                        creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
+                        client1 = gspread.authorize(creds1)
+                        listsheet1 = client1.open('list').sheet1
+                    listsheet1.insert_row(togoogle, 1)
+
+                    worktext = '😈Хе-хе! <b>Повелителю</b> ты понравился. Теперь ты принят на работу. ' \
+                               'Так что, начиная с этого момента, всё, что ты сюда пришлешь, ' \
+                               'будет отправлено в нужные <i>места</i>.\n\n' \
+                               '<b>ВАЖНО!</b> Пусть мы и дали тебе удобную клавиатуру для отправки пина, ' \
+                               'старайся использовать именно <b>форвард</b> приказа, так ты повышаешь шансы понять ' \
+                               'ситуацию и принять верное решение.' \
+
+                    text = '\nСтатус: 🎽Принят на работу'
+                    bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
+                                          message_id=call.message.message_id)
+                    try:
+                        bot.send_message(int(idsearch.group(1)), worktext, parse_mode='HTML')
+                    except:
+                        bot.send_message(call.message.chat.id, 'Сообщение c поздравлениями доставить не удалось😱')
+                else:
+                    text = 'Человек с таким id уже есть в системе, если нужно, используй:\n' \
+                           '/del_' + str(idsearch.group(1)) + '\n' \
+                           'Это удалит его из системы и ты сможешь нажать кнопку повторно.'
+                    bot.send_message(call.message.chat.id, text)
 
 
 @bot.message_handler(content_types=["new_chat_members"])
 def get_new_member(message):
-    if message.new_chat_member is not None and message.new_chat_member.username == 'whgklwehgwklejw_bot':
-        bot.send_message(message.chat.id, 'Меня добавили в какой-то чат, пидорасы')
-        bot.send_message(idMe, 'Меня добавили в какой-то чат, пидорасы')
+    if message.chat.title:
+        title = str(message.chat.title) + ' ('
+    else:
+        title = ' ('
+    user_id = str(message.from_user.id)
+    chat_id = str(message.chat.id)
+    if message.from_user.username:
+        chat_user = '@' + str(message.from_user.username) + ' / '
+    else:
+        if message.from_user.first_name:
+            firstname = str(message.from_user.first_name)
+        else:
+            firstname = ''
+        if message.from_user.last_name:
+            lastname = str(message.from_user.last_name) + ' '
+        else:
+            lastname = ''
+        chat_user = firstname + ' ' + lastname
+
+    if message.new_chat_member is not None and message.new_chat_member.username == 'rockebolbot':
+        bot.send_message(idChatDevelopment,
+                         chat_user + user_id + ': Добавил бота в чат: ' + title + chat_id + ')')
 
 
 @bot.message_handler(content_types=['audio', 'video', 'document', 'location', 'contact', 'sticker', 'voice'])
 def redmessages(message):
-    global gov
-    if message.chat.id == idChatOldComand and message.from_user.id != 205356091 \
+    if message.from_user.id != 205356091 \
             and message.from_user.id != 105907720 \
             and message.from_user.id != 280993442 \
             and message.from_user.id != idMe:
-        vahtertime = int(datetime.utcfromtimestamp(int(int(datetime.now().timestamp()) + 3 * 60 * 60)).strftime('%H'))
-        vahterminute = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%M'))
-        if vahtertime == 3 or vahtertime == 7 or vahtertime == 11 or \
-                            vahtertime == 15 or vahtertime == 19 or vahtertime == 23:
-            if vahterminute == 50 or vahterminute == 51 or vahterminute == 52 or vahterminute == 53 or vahterminute == 54:
-                gov = message.message_id
-                bot.send_message(idMe, str(gov))
-            elif vahterminute == 55:
+        temp = rawtime_lite(int(datetime.now().timestamp()))
+        hour = int(temp[0])
+        min = int(temp[1])
+        if hour == 0 or hour == 8 or hour == 16:
+            if min > 54:
                 bot.delete_message(message.chat.id, message.message_id)
-            elif vahterminute == 56 or vahterminute == 57 or vahterminute == 58 or vahterminute == 59:
-                bot.delete_message(message.chat.id, message.message_id)
-                gov = 0
+        if retro == 1:
+            if hour == 3 or hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
+                if min > 54:
+                    bot.delete_message(message.chat.id, message.message_id)
 
     elif message.chat.id == idMe:
         if message.document:
@@ -185,491 +632,354 @@ def redmessages(message):
 
 @bot.message_handler(func=lambda message: message.text)
 def repeat_all_messages(message):
-    global globtime
-    global clkwait
-    global zader
-    global keyboard
-    global timefort
-    global gov
-
-    if message.forward_date is not None:
-        origmes = message.forward_date
-        origmesH = datetime.utcfromtimestamp(int(origmes + 3 * 60 * 60)).strftime('%H')
-        origmesM = datetime.utcfromtimestamp(int(origmes)).strftime('%M')
-        origmesS = datetime.utcfromtimestamp(int(origmes)).strftime('%S')
-        origtime = ' <code> ' + str(origmesH) + ':' + str(origmesM) + ':' + str(origmesS) + '[F]</code>'
-    else:
-        origtime = ' <code> ' + str(globtime) + '</code>'
-
-    specmessage = '<code>: </code>' + message.text + origtime
-
-    if message.chat.id == idDBlack and message.forward_date is not None:
-        if str(message.forward_from.username) == 'CWRedBot':
-            bot.send_message(idChatPeregovorka, atk + im + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + im + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'ToweRobot':
-            bot.send_message(idChatOldComand, deff + gp + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, deff + gp + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-
-    elif message.chat.id == idRed:
-        if message.forward_from is None:
-            bot.send_message(idChatPeregovorka, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatPeregovorka, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
+    global global_split
+    if message.chat.id > 0:
+        if message.forward_date is not None:
+            ftime = ''
+            adder = '  '
+            forwarded = message.forward_date
+            stamp = int(datetime.now().timestamp())
+            forwardedD = datetime.utcfromtimestamp(int(forwarded + plus * 60 * 60)).strftime('%d')
+            currentday = datetime.utcfromtimestamp(int(stamp + plus * 60 * 60)).strftime('%d')
+            time = rawtime_lite(forwarded)
+            if currentday != forwardedD:
+                time_all = rawtime(forwarded)
+                ftime = '\n<code>' + str(time_all[0]) + ' ' + str(time_all[1] + '.' + \
+                    str(time_all[2]) + '.' + str(time_all[3])) + '</code>  '
+            if str(message.forward_from.username) == NBOT or \
+                    str(message.forward_from.username) == 'ChatWarsClassicBot':
+                temp = forwardCW(message)
+                text = temp[0]
+                adder = temp[1]
+            else:
+                text = pin_analizer(message)
+            messagetime = adder + ftime + '<code>' + str(time[0]) + ':' + str(time[1]) + ':' + str(time[2]) + '[F]</code>'
         else:
-            bot.send_message(idChatPeregovorka, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + im + '<code>(Dareten)</code>' + specmessage, parse_mode='HTML')
+            text = pin_analizer(message)
+            time = rawtime_lite(int(datetime.now().timestamp()))
+            messagetime = ' <code> ' + str(time[0]) + ':' + str(time[1]) + ':' + str(time[2]) + '</code>'
+        specmessage = '<code>: </code>' + text + messagetime
 
-    elif message.chat.id == idDRed or message.chat.id == idDRed2:
-        if message.forward_from is None:
-            bot.send_message(idChatPeregovorka, deff + im + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, deff + im + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatPeregovorka, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-        else:
-            bot.send_message(idChatPeregovorka, deff + im + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, deff + im + specmessage, parse_mode='HTML')
-
-    elif message.chat.id == idBlack or message.chat.id == idBlack3:
-        if message.forward_from is None:
-            bot.send_message(idChatOldComand, atk + gp + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + gp + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-        else:
-            bot.send_message(idChatOldComand, atk + gp + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + gp + specmessage, parse_mode='HTML')
-
-    elif message.chat.id == idBlack2:
-        if message.forward_from is None:
-            bot.send_message(idChatOldComand, gp + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, gp + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-        else:
-            bot.send_message(idChatOldComand, gp + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, gp + specmessage, parse_mode='HTML')
-
-    elif message.chat.id == idBlue:
-        if message.forward_from is None:
-            bot.send_message(idChatOldComand, atk + eu + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-        else:
-            bot.send_message(idChatOldComand, atk + eu + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
-
-    elif message.chat.id == idDBlue:
-        if message.forward_from is None:
-            bot.send_message(idChatOldComand, atk + eu + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-        else:
-            bot.send_message(idChatOldComand, atk + eu + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + eu + specmessage, parse_mode='HTML')
-
-    elif message.chat.id == idYellow or message.chat.id == idYellow2:
-        if str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-        else:
-            bot.send_message(idChatOldComand, atk + va + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + va + specmessage, parse_mode='HTML')
-
-    elif message.chat.id == idDYellow or message.chat.id == idDYellow2:
-        if message.forward_from is None:
-            bot.send_message(idChatOldComand, deff + va + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, deff + va + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatOldComand, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-        else:
-            bot.send_message(idChatOldComand, deff + va + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, deff + va + specmessage, parse_mode='HTML')
-
-    elif message.chat.id == idWhite:
-        if message.forward_from is None:
-            bot.send_message(idChatPeregovorka, atk + cy + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + cy + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatPeregovorka, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-        else:
-            bot.send_message(idChatPeregovorka, atk + cy + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + cy + specmessage, parse_mode='HTML')
-
-    elif message.chat.id == idWhite2:
-        if message.forward_from is None:
-            bot.send_message(idChatPeregovorka, atk + cy + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + cy + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatPeregovorka, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-        elif str(message.forward_from.username) == 'WhiteTeamFortressBot':
-            bot.send_message(idChatPeregovorka, atk + cy + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + cy + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'WhiteTeamFortressOrdersBot':
-            bot.send_message(idChatPeregovorka, deff + cy + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, deff + cy + specmessage, parse_mode='HTML')
-        else:
-            bot.send_message(idChatPeregovorka, cy + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, cy + specmessage, parse_mode='HTML')
-
-    elif message.chat.id == 280993442:
-        if message.forward_from is None:
-            if message.text == 'привет':
-                if timefort == 0:
-                    keyrinka = types.ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=True)
-                    keyrinka.row(mo)
-                    keyrinka.row(gp, cy, va)
-                    keyrinka.row(im, eu, ki)
+        for i in spycorp_ids:
+            if message.chat.id == i:
+                spec_inarray = spycorp_spec[spycorp_ids.index(i)]
+                tower = spycorp_tower[spycorp_ids.index(i)]
+                version = spycorp_version[spycorp_ids.index(i)]
+                if spec_inarray == '_':
+                    spec = ''
+                elif spec_inarray == 'atk':
+                    spec = atk
+                elif spec_inarray == 'def':
+                    spec = deff
                 else:
-                    keyrinka = types.ReplyKeyboardMarkup(one_time_keyboard=False, resize_keyboard=True)
-                    keyrinka.row(mo)
-                    keyrinka.row(gp, cy, va)
-                    keyrinka.row(im, eu, ki)
-                    keyrinka.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
-                bot.send_message(message.chat.id, 'ну, привет епта)', reply_markup=keyrinka)
-            else:
-                bot.send_message(idChatPeregovorka, atk + ki + specmessage, parse_mode='HTML')
-                bot.send_message(idChannelPins, atk + ki + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatPeregovorka, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-        elif str(message.forward_from.username) == 'TwilightCastleBot':
-            bot.send_message(idChatPeregovorka, atk + ki + prikazTwilight(message), parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + ki + prikazTwilight(message), parse_mode='HTML')
-        else:
-            bot.send_message(idChatPeregovorka, atk + ki + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, atk + ki + specmessage, parse_mode='HTML')
+                    spec_grand = spec_inarray.split('.')
+                    tower_grand = tower.split('.')
+                    version_grand = version.split('.')
+                    tower = tower_grand[0]
+                    version = version_grand[0]
+                    if message.forward_from:
+                        for z in spec_grand:
+                            if str(message.forward_from.username) == z:
+                                tower = tower_grand[spec_grand.index(z)]
+                                version = version_grand[spec_grand.index(z)]
+                    search = re.search(srch_towers, tower)
+                    retrosearch = re.search(srch_retrotowers, tower)
+                    if search:
+                        spec = tower.replace(search.group(1), '')
+                        tower = search.group(1)
+                    elif retrosearch:
+                        spec = tower.replace(retrosearch.group(1), '')
+                        tower = retrosearch.group(1)
 
-    elif message.chat.id == idDTwilight:
-        if message.forward_from is None:
-            bot.send_message(idChatPeregovorka, deff + ki + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, deff + ki + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == NBOT:
-            bot.send_message(idChatPeregovorka, forwardCW(message), parse_mode='HTML')
-            bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-        elif str(message.forward_from.username) == 'TwilightCastleBot':
-            bot.send_message(idChatPeregovorka, deff + ki + prikazTwilight(message), parse_mode='HTML')
-            bot.send_message(idChannelPins, deff + ki + prikazTwilight(message), parse_mode='HTML')
-        else:
-            bot.send_message(idChatPeregovorka, deff + ki + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, deff + ki + specmessage, parse_mode='HTML')
+                if version == '3':
+                    adress = idChatPinsEnemy
+                    for v in a_union:
+                        if tower == v:
+                            adress = idChatPinsUnion
+                elif version == '1':
+                    adress = idChatRetroPinsEnemy
+                    for v in a_retrounion:
+                        if tower == v:
+                            adress = idChatRetroPinsUnion
+                else:
+                    adress = idChatPinsUnion
 
-    elif message.chat.id == idTwilight:
-        if message.forward_from is None:
-            bot.send_message(idChatPeregovorka, ki + specmessage, parse_mode='HTML')
-            bot.send_message(idChannelPins, ki + specmessage, parse_mode='HTML')
-        elif message.forward_from is not None:
-            if str(message.forward_from.username) == NBOT:
-                bot.send_message(idChatPeregovorka, forwardCW(message), parse_mode='HTML')
-                bot.send_message(message.chat.id, 'Ваш репорт был отправлен куда нужно, но без указания ника. Вы в безопасности')
-            elif str(message.forward_from.username) == 'TwilightCastleBot':
-                bot.send_message(idChatPeregovorka, ki + prikazTwilight(message), parse_mode='HTML')
-                bot.send_message(idChannelPins, ki + prikazTwilight(message), parse_mode='HTML')
-            else:
-                bot.send_message(idChatPeregovorka, ki + specmessage, parse_mode='HTML')
-                bot.send_message(idChannelPins, ki + specmessage, parse_mode='HTML')
-
-    elif message.chat.id == idMoon:
-        if message.forward_from is None:
-            bot.send_message(message.chat.id, 'Без форварда' + hmm + ' Ладно, отправлю.', parse_mode='HTML')
-            bot.send_message(idMe, moon + specmessage, parse_mode='HTML')
-        elif str(message.forward_from.username) == 'MoonlightCastleBot':
-            bot.send_message(idMe, moon + specmessage, parse_mode='HTML')
-            bot.send_message(message.chat.id, '<i>Отправлено</i>', parse_mode='HTML')
-
-    if message.chat.id == idChatOldComand:
-        if message.from_user.id == idMe and message.reply_to_message:
-                if message.text == 'не пиши' or message.text == 'пидорас' or message.text == 'говно':
-                    bot.send_voice(idChatCommandirka, 'AwADAgADXAEAAu7TEEiU1v4upM88swI',
-                                   reply_to_message_id=message.reply_to_message.message_id)
-
-        elif message.from_user.id != 205356091 \
-                and message.from_user.id != 105907720 \
-                and message.from_user.id != 280993442 \
-                and message.from_user.id != idMe:
-            vahtertime = int(datetime.utcfromtimestamp(int(int(datetime.now().timestamp()) + 3 * 60 * 60)).strftime('%H'))
-            vahterminute = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%M'))
-            if vahtertime == 3 or vahtertime == 7 or vahtertime == 11 or \
-                    vahtertime == 15 or vahtertime == 19 or vahtertime == 23:
-                if vahterminute == 50 or vahterminute == 51 or vahterminute == 52 or vahterminute == 53 or vahterminute == 54:
-                    gov = message.message_id
-                elif vahterminute == 55:
-                    bot.delete_message(message.chat.id, message.message_id)
-                elif vahterminute == 56 or vahterminute == 57 or vahterminute == 58 or vahterminute == 59:
-                    bot.delete_message(message.chat.id, message.message_id)
-                    gov = 0
-
-    elif message.chat.id == idMe:
-        if timefort == 0:
-            keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
-            keyboard.row(less + 'Лес', mo, eq + 'Экипировка')
-            keyboard.row(gp, cy, va)
-            keyboard.row(im, eu, ki)
-        else:
-            keyboard = types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True)
-            keyboard.row(less + 'Лес', mo, eq + 'Экипировка')
-            keyboard.row(gp, cy, va)
-            keyboard.row(im, eu, ki)
-            keyboard.row(less + 'Лесной форт', gori + 'Горный форт', morfort + 'Морской форт')
-
-        if message.text == less + 'Лес':
-            bot.send_message(idMe, 'Идем в' + less + 'Лес <code>(' + str(zader) + ')</code>', parse_mode='HTML')
-            content = requests.get(urldo + 'les')
-            prikaz()
-
-        elif message.forward_from is not None:
-            if str(message.forward_from.username) == NBOT:
-                bot.send_message(idMe, forwardCW(message), parse_mode='HTML')
-
-        elif message.text == less + 'Лесной форт':
-            bot.send_message(idMe, 'Идем в ' + less + 'Лесной форт <code>(' + str(zader) + ')</code>', parse_mode='HTML')
-            content = requests.get(urldo + 'lesfort')
-            prikaz()
-        elif message.text == morfort + 'Морской форт':
-            bot.send_message(idMe, 'Идем в ' + morfort + 'Морской форт <code>(' + str(zader) + ')</code>', parse_mode='HTML')
-            content = requests.get(urldo + 'morfort')
-            prikaz()
-        elif message.text == gori + 'Горный форт':
-            bot.send_message(idMe, 'Идем в ' + gori + 'Горный форт <code>(' + str(zader) + ')</code>', parse_mode='HTML')
-            content = requests.get(urldo + 'gorifort')
-            prikaz()
-
-        elif str(message.text).startswith('/donate'):
-            donate = message.text
-            donate = donate.replace('/donate ', '')
-            donateform = urlcoldonate + donate
-            content = requests.get(urldo + 'donate')
-            content = requests.get(donateform)
-            donate = int(donate) * coltwink
-            bot.send_message(idMe, 'Вдонатить ~' + str(donate) + ' <code> (' + str(zader) + ')</code>', parse_mode='HTML')
-            prikaz()
-
-        elif message.text == eq + 'Экипировка':
-            equiplog = requests.get(urleq).text
-            if equiplog == 'Attack':
-                equiplog = atk + 'Атакерская'
-            elif equiplog == 'Defend':
-                equiplog = deff + 'Деферская'
-            keyroad = types.InlineKeyboardMarkup(row_width=2)
-            buttons = []
-            buttons.append(types.InlineKeyboardButton(text=atk + 'Шмот', callback_data='attack'))
-            buttons.append(types.InlineKeyboardButton(text=deff + 'Шмот', callback_data='defend'))
-            keyroad.add(*buttons)
-            bot.send_message(idMe, eq + 'Экипировка: ' + equiplog, reply_markup=keyroad, parse_mode='HTML')
-
-        elif message.text == mo or message.text == gp or message.text == cy or message.text == va or message.text == im or message.text == eu or message.text == ki:
-            bot.send_message(idMe, 'Идем в ' + message.text + '<code>(' + str(zader) + ')</code>', parse_mode='HTML')
-            if message.text == mo:
-                content = requests.get(urldo + 'mo')
-            elif message.text == gp:
-                content = requests.get(urldo + 'gp')
-            elif message.text == cy:
-                content = requests.get(urldo + 'cy')
-            elif message.text == va:
-                content = requests.get(urldo + 'va')
-            elif message.text == im:
-                content = requests.get(urldo + 'im')
-            elif message.text == eu:
-                content = requests.get(urldo + 'eu')
-            elif message.text == ki:
-                content = requests.get(urldo + 'ki')
-            prikaz()
-
-
-def prikazTwilight(message):
-    origmes = message.forward_date
-    origmesH = datetime.utcfromtimestamp(int(origmes + 3 * 60 * 60)).strftime('%H')
-    origmesM = datetime.utcfromtimestamp(int(origmes)).strftime('%M')
-    origmesS = datetime.utcfromtimestamp(int(origmes)).strftime('%S')
-    origtime = ' <code> ' + str(origmesH) + ':' + str(origmesM) + ':' + str(origmesS) + '[F]</code>'
-    search = re.search('(\n\nГотовность\n)', message.text)
-    if search:
-        delprikaz = message.text.replace(search.group(1), '')
-        i = 1
-        srch = re.search("(@.*)", delprikaz)
-        while srch:
-            delprikaz = delprikaz.replace(srch.group(1), '')
-            srch = re.search("(@.*)", delprikaz)
-        delprikaz = '<code>: </code>' + delprikaz + origtime
-
-        return delprikaz
+                bot.send_message(adress, spec + tower + specmessage, parse_mode='HTML')
     else:
-        delprikaz = '<code>: </code>' + message.text + origtime
-        return delprikaz
+        if message.from_user.id == idMe:
+            good = '✅Исполнено'
+            bad = 'Что-то пошло не так'
+            if str(message.text).startswith('/chat'):
+                try:
+                    key = int(message.text.replace('/chat ', ''))
+                except:
+                    key = 10
+                edit = edit_chats(key, message.chat.id)
+                if edit == 1:
+                    bot.send_message(message.chat.id, good)
+                else:
+                    bot.send_message(message.chat.id, bad)
+            if str(message.text).startswith('/name'):
+                global chat_names
+                try:
+                    name = message.text.replace('/name ', '')
+                except:
+                    name = 10
+                if name != 10:
+                    global sheet1
+                    try:
+                        google = sheet1.col_values(1)
+                    except:
+                        creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
+                        client1 = gspread.authorize(creds1)
+                        sheet1 = client1.open('list').sheet1
+                        google = sheet1.col_values(1)
+                    for g in google:
+                        if str(message.chat.id) == g:
+                            sheet1.update_cell(google.index(g) + 1, 2, str(name))
+
+                    for i in chat_ids:
+                        if message.chat.id == i:
+                            chat_names[chat_ids.index(i)] = name
+                    bot.send_message(message.chat.id, good)
+                else:
+                    bot.send_message(message.chat.id, bad)
+
+        if message.chat.id == idChatDetector or message.chat.id == idChatRetroDetector:
+            chat = message.chat.id
+            if message.from_user.id == idMe and message.reply_to_message:
+                    if message.text == 'не пиши' or message.text == 'пидорас' or message.text == 'говно':
+                        bot.send_voice(chat, 'AwADAgADXAEAAu7TEEiU1v4upM88swI',
+                                       reply_to_message_id=message.reply_to_message.message_id)
+            elif message.from_user.id == idMe and message.reply_to_message and message.text == 'пин':
+                try:
+                    bot.pin_chat_message(message.chat.id, message.reply_to_message.message_id)
+                except:
+                    try:
+                        bot.send_message(message.from_user.id, 'Я не админ в чате, чтобы пинить, учти это')
+                    except:
+                        temp = 0
+
+            elif message.from_user.id != 205356091 \
+                    and message.from_user.id != 105907720 \
+                    and message.from_user.id != 280993442 \
+                    and message.from_user.id != idMe:
+                temp = rawtime_lite(int(datetime.now().timestamp()))
+                hour = int(temp[0])
+                min = int(temp[1])
+                if hour == 0 or hour == 8 or hour == 16:
+                    if min > 54:
+                        bot.delete_message(message.chat.id, message.message_id)
+                if retro == 1:
+                    if hour == 3 or hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
+                        if min > 54:
+                            bot.delete_message(message.chat.id, message.message_id)
+        elif message.chat.id == idChatDevelopment:
+            if global_split[4] == 1:
+                keyboard = spadder(8)
+                if global_split[1] == '':
+                    global_split[0] = global_split[0] + '\nСпециализация: ' + message.text
+                    global_split[1] = message.text
+                temp = bot.send_message(message.chat.id, global_split[0], reply_markup=keyboard)
+            elif global_split[4] == 2:
+                keyboard = spadder(8)
+                if global_split[2] == '':
+                    global_split[0] = global_split[0] + '\nЗамок: ' + message.text
+                    global_split[2] = message.text
+                temp = bot.send_message(message.chat.id, global_split[0], reply_markup=keyboard)
+            elif global_split[4] == 3:
+                keyboard = spadder(8)
+                if global_split[3] == '':
+                    global_split[0] = global_split[0] + '\nМаркировка: ' + message.text
+                    global_split[3] = message.text
+                temp = bot.send_message(message.chat.id, global_split[0], reply_markup=keyboard)
+
+            if global_split[0] != '' and global_split[1] != '' and global_split[2] != '' and global_split[3] != '':
+                keyboard = spadder(7)
+                bot.edit_message_text(chat_id=temp.chat.id, text=temp.text,
+                                      reply_markup=keyboard, message_id=temp.message_id)
+            global_split[4] = 0
+
+            if str(message.text).startswith('/add'):
+                keyboard = spadder(1)
+                try:
+                    add = message.text.replace('/add_', '')
+                    search = re.search('(\w+)', add)
+                    text = str(search.group(1)) + '.'
+                    bot.send_message(message.chat.id, text, reply_markup=keyboard)
+                except:
+                    text = 'Введен не верный id'
+                    bot.send_message(message.chat.id, text)
+            elif str(message.text).startswith('/del'):
+                global listsheet1
+                delete = message.text.replace('/del_', '')
+                search = re.search('(\w+)', delete)
+                marker = 0
+                try:
+                    google = listsheet1.col_values(1)
+                except:
+                    creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
+                    client1 = gspread.authorize(creds1)
+                    listsheet1 = client1.open('list').sheet1
+                    google = listsheet1.col_values(1)
+                for m in google:
+                    if str(search.group(1)) == m:
+                        listsheet1.delete_row(google.index(m) + 1)
+                        marker = 1
+
+                for i in spycorp_ids:
+                    if int(search.group(1)) == i:
+                        spycorp_spec.pop(spycorp_ids.index(i))
+                        spycorp_tower.pop(spycorp_ids.index(i))
+                        spycorp_version.pop(spycorp_ids.index(i))
+                        spycorp_ids.pop(spycorp_ids.index(i))
+                        marker = 1
+                if marker != 0:
+                    text = '✅Человек удален из моих списков'
+                else:
+                    text = '❓Что-то пошло не так, не могу удалить человека из своих списков или его там и не было'
+                bot.send_message(message.chat.id, text)
+
+
+def pin_analizer(message):
+    search = re.search(srch_towers, message.text)
+    retro_search = re.search(srch_retrotowers, message.text)
+    text = message.text
+    if search:
+        deepsearch = re.search('( )', message.text)
+        if deepsearch:
+            text = message.text.replace(deepsearch.group(1), '')
+        deepsearch2 = re.search('(\n)', text)
+        if deepsearch2:
+            text = text.replace(deepsearch2.group(1), '  ')
+    else:
+        if retro_search:
+            text = retro_search.group(1)
+    return text
 
 
 def forwardCW(message):
-    zamki = '(' + mo + '|' + gp + '|' + im + '|' + cy + '|' + va + '|' + eu + '|' + ki + ')'
-    repsearch = re.search(zamki + '(.+)' + atk + ':', message.text)
-    kazsearch = re.search(zamki + '(.+)( замок)', message.text)
-    CWtime = message.forward_date
-    CWtimeD = str(datetime.utcfromtimestamp(int(CWtime)).strftime('%d'))
-    CWtimeM = str(datetime.utcfromtimestamp(int(CWtime)).strftime('%m'))
-    CWtimeY = str(datetime.utcfromtimestamp(int(CWtime)).strftime('%Y'))
-    CWtimeH = int(datetime.utcfromtimestamp(int(CWtime + 3 * 60 * 60)).strftime('%H'))
-    CWtimeHour = datetime.utcfromtimestamp(int(CWtime + 3 * 60 * 60)).strftime('%H')
-    CWtimeMin = datetime.utcfromtimestamp(int(CWtime)).strftime('%M')
-    CWtimeS = datetime.utcfromtimestamp(int(CWtime)).strftime('%S')
-    if repsearch:
-        report = message.text.replace(repsearch.group(2), '')
-        if CWtimeH > -1 and CWtimeH < 4:
-            repchas = '0 часов'
-        if CWtimeH > 3 and CWtimeH < 8:
-            repchas = '4 часа'
-        if CWtimeH > 7 and CWtimeH < 12:
-            repchas = '8 часов'
-        if CWtimeH > 11 and CWtimeH < 16:
-            repchas = '12 часов'
-        if CWtimeH > 15 and CWtimeH < 20:
-            repchas = '16 часов'
-        if CWtimeH > 19 and CWtimeH < 24:
-            repchas = '20 часов'
-        repdate = CWtimeD + '.' + CWtimeM + '.' + CWtimeY + ' в ' + repchas
-        report = report + '\n <code>Битва ' + str(repdate) + '</code>'
+    if str(message.forward_from.username) == 'ChatWarsClassicBot':
+        repsearch = re.search(srch_retrotowers + '(.+)' + atk + ':', message.text)
+        kazsearch = re.search(srch_retrotowers + '(.+)( замок)', message.text)
+        CWtime = message.forward_date
+        CWtimeH = int(datetime.utcfromtimestamp(int(CWtime + plus * 60 * 60)).strftime('%H'))
+        if repsearch:
+            report = message.text.replace(repsearch.group(2), '')
+            if CWtimeH > -1 and CWtimeH < 4:
+                repchas = '0 часов'
+            if CWtimeH > 3 and CWtimeH < 8:
+                repchas = '4 часа'
+            if CWtimeH > 7 and CWtimeH < 12:
+                repchas = '8 часов'
+            if CWtimeH > 11 and CWtimeH < 16:
+                repchas = '12 часов'
+            if CWtimeH > 15 and CWtimeH < 20:
+                repchas = '16 часов'
+            if CWtimeH > 19 and CWtimeH < 24:
+                repchas = '20 часов'
+            time = '\n<code>Битва в ' + str(repchas) + '.</code> '
+            report = [report, time]
+        elif kazsearch:
+            kazflag = kazsearch.group(1)
+            kazname = kazsearch.group(2)
+            kazsearch = re.search('(Казна замка:\n)([0-9]+)' + gold + ' ([0-9]+)' + less + ' ([0-9]+)' + gori, message.text)
+            if kazsearch:
+                report = kazflag + kazname + ':' + '\n' + kazsearch.group(2) + gold + \
+                         ' ' + kazsearch.group(3) + less + ' ' + kazsearch.group(4) + gori
+                report = [report, '\n']
+        else:
+            report = ['Форварды из ЧВ отключены (кроме репортов и казны), ради вашей безопасности🌝', '']
         return report
-    elif kazsearch:
-        kazflag = kazsearch.group(1)
-        kazname = kazsearch.group(2)
-        kazsearch = re.search('(Казна замка:\n)([0-9]+)' + gold + ' ([0-9]+)' + less + ' ([0-9]+)' + gori, message.text)
-        if kazsearch:
-            kaznatime = '<code>' + str(CWtimeHour) + ':' + str(CWtimeMin) + ':' + str(CWtimeS) + '[F]</code>'
-            kazna = kazflag + kazname + ':' + '\n' + kazsearch.group(2) + gold + ' ' + kazsearch.group(3) + less + ' ' + kazsearch.group(4) + gori + '\n' + kaznatime
-            return kazna
-        kazna = 'Странная у тебя казна...'
-        return kazna
-    else:
-        report = 'Форварды из ЧВ отключены (кроме репортов и казны), ради вашей безопасности'
+    elif str(message.forward_from.username) == NBOT:
+        text = srch_towers + '(.+) .+:.+ ' + deff + ':.+ Lvl: .+\nТвои результаты в бою:\n.+'
+        repsearch = re.search(text, message.text)
+        CWtime = message.forward_date
+        CWtimeH = int(datetime.utcfromtimestamp(int(CWtime + plus * 60 * 60)).strftime('%H'))
+        if repsearch:
+            report = message.text.replace(repsearch.group(2), 'Солдат')
+            if CWtimeH > 0 and CWtimeH <= 9:
+                repchas = '01 час'
+            if CWtimeH > 8 and CWtimeH < 17:
+                repchas = '09 часов'
+            if CWtimeH > 16 and CWtimeH < 25:
+                repchas = '17 часов'
+            time = '\n<code>Битва в ' + str(repchas) + '.</code> '
+            report = [report, time]
+        else:
+            report = ['Форварды из ЧВ отключены (кроме репортов), ради вашей безопасности🌚', '']
         return report
 
 
-def b_det():
-    global globtime
-    global clkwait
-    global hours
-    global minutes
-    global curr_time
-    global zader
-    global beat
-    global seconds
+def detector():
     while True:
         try:
-            sleep(0.3)
-            curr_time = int(datetime.now().timestamp())
-            hourso = datetime.utcfromtimestamp(int(curr_time + 3 * 60 * 60)).strftime('%H')
-            minuteso = datetime.utcfromtimestamp(int(curr_time)).strftime('%M')
-            secondso = datetime.utcfromtimestamp(int(curr_time)).strftime('%S')
-            hours = int(datetime.utcfromtimestamp(int(curr_time + 3 * 60 * 60)).strftime('%H'))
-            minutes = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%M'))
-            seconds = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%S'))
-            globtime = str(hourso) + ':' + str(minuteso) + ':' + str(secondso)
-            if hours == 3 or hours == 7 or hours == 11 or hours == 15 or hours == 19 or hours == 23:
-                if minutes < 30:
-                    clkwait = 30 + 1 # плюс доп задержка
-                    beat = 'net'
-                elif minutes > 30 and minutes < 50:
-                    beat = 'da'
-                    clkwait = 15 + 1 # плюс доп задержка
-                elif minutes > 50 and minutes < 58:
-                    beat = 'da'
-                    clkwait = 8 + 1 # плюс доп задержка
-                elif minutes > 58 and minutes < 59:
-                    beat = 'da'
-                    clkwait = 1 + 1 # плюс доп задержка
-                elif minutes > 59 and seconds > 0:
-                    clkwait = 1 + 1 # плюс доп задержка
-                    if seconds > 40:
-                        clkwait = 0.3 + 0.1 # плюс доп задержка
-            else:
-                clkwait = 60 + 1 # плюс задержка
-                beat = 'net'
-
-            zader = clkwait - 1
+            sleep(0.9)
+            temp = rawtime_lite(int(datetime.now().timestamp()))
+            hour = int(temp[0])
+            min = int(temp[1])
+            sec = int(temp[2])
+            if hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
+                if retro == 1:
+                    if sec == 25 and min == 59:
+                        rnd = random.randint(0, len(fraze25) - 1)
+                        bot.send_message(idChatRetroDetector, fraze25[rnd], parse_mode='HTML')
+                    elif sec == 30 and min == 59:
+                        bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                        bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
+                    elif sec == 35 and min == 59:
+                        bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                        bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
+                    elif sec == 40 and min == 59:
+                        bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                        bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
+                    elif sec == 45 and min == 59:
+                        bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                        bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
+                    elif sec == 50 and min == 59:
+                        bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                        bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
+                    elif sec == 55 and min == 59:
+                        bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                        bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
+            elif hour == 0 or hour == 8 or hour == 16:
+                if sec > 0 and min == 0 and retro == 1:
+                    bot.send_message(idChatRetroDetector, '00:00', parse_mode='HTML')
+                    bot.send_message(idChannelPins, '00:00' + str(sec), parse_mode='HTML')
+                    sleep(60)
+                if sec == 25 and min == 59:
+                    rnd = random.randint(0, len(fraze25) - 1)
+                    bot.send_message(idChatRetroDetector, fraze25[rnd], parse_mode='HTML')
+                elif sec == 30 and min == 59:
+                    bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
+                elif sec == 35 and min == 59:
+                    bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
+                elif sec == 40 and min == 59:
+                    bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
+                elif sec == 45 and min == 59:
+                    bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
+                elif sec == 50 and min == 59:
+                    bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
+                elif sec == 55 and min == 59:
+                    bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
+            elif hour == 12 or hour == 20:
+                if sec > 0 and min == 0 and retro == 1:
+                    bot.send_message(idChatRetroDetector, '00:00', parse_mode='HTML')
+                    bot.send_message(idChannelPins, '00:00' + str(sec), parse_mode='HTML')
+                    sleep(60)
+            elif hour == 2 or hour == 10 or hour == 18:
+                if sec > 0 and min == 0:
+                    bot.send_message(idChatRetroDetector, '00:00', parse_mode='HTML')
+                    bot.send_message(idChannelPins, '00:00' + str(sec), parse_mode='HTML')
+                    sleep(60)
         except Exception as e:
-            sleep(0.3)
-
-
-def merc_detector():
-    global hours
-    global minutes
-    global curr_time
-    global keyboard
-    global gov
-    while True:
-        try:
-            sleep(0.8)
-            merc_sec = int(datetime.utcfromtimestamp(int(curr_time)).strftime('%S'))
-            if hours == 7 or hours == 11 or hours == 15 or hours == 19 or hours == 23:
-                if merc_sec == 0 and minutes == 55:
-                    if gov == 0:
-                        gov = 0
-                    else:
-                        bot.send_voice(idChatCommandirka, 'AwADAgADXAEAAu7TEEiU1v4upM88swI', reply_to_message_id=gov)
-                if merc_sec == 25 and minutes == 59:
-                    #bot.send_document(idChatCommandirka, 'CgADAgAD8wAD98PZSEpxdZ5jnUKlAg')
-                    gov = 0
-                elif merc_sec == 30 and minutes == 59:
-                    bot.send_message(idChatOldComand, '59:' + str(merc_sec), parse_mode='HTML')
-                    bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
-                elif merc_sec == 35 and minutes == 59:
-                    bot.send_message(idChatOldComand, '59:' + str(merc_sec), parse_mode='HTML')
-                    bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
-                elif merc_sec == 40 and minutes == 59:
-                    bot.send_message(idChatOldComand, '59:' + str(merc_sec), parse_mode='HTML')
-                    bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
-                elif merc_sec == 45 and minutes == 59:
-                    bot.send_message(idChatOldComand, '59:' + str(merc_sec), parse_mode='HTML')
-                    bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
-                elif merc_sec == 50 and minutes == 59:
-                    bot.send_message(idChatOldComand, '59:' + str(merc_sec), parse_mode='HTML')
-                    bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
-                elif merc_sec == 55 and minutes == 59:
-                    bot.send_message(idChatOldComand, '59:' + str(merc_sec), parse_mode='HTML')
-                    bot.send_message(idChannelPins, '59:' + str(merc_sec), parse_mode='HTML')
-            elif hours == 3:
-                if merc_sec == 25 and minutes == 59:
-                    bot.send_message(idChatOldComand, 'Опасности не предвидится 🌝', parse_mode='HTML')
-            elif hours == 4:
-                if merc_sec == 3 and minutes == 0:
-                    bot.send_message(idChatOldComand, 'Я же говорил 🌚', parse_mode='HTML')
-            elif hours == 8 or hours == 12 or hours == 16 or hours == 20 or hours == 24:
-                if merc_sec == 0 and minutes == 0:
-                    bot.send_message(idChatOldComand, '00:00', parse_mode='HTML')
-                    bot.send_message(idChannelPins, '00:00. Приехали', parse_mode='HTML')
-                    gov = 0
-                elif merc_sec == 3 and minutes == 0:
-                    bot.send_message(idChatOldComand, '<i>Опасность миновала. Можете продолжать ничего не делать.</i>', parse_mode='HTML')
-                    gov = 0
-        except Exception as e:
-            sleep(1)
-
-
-def fort_detector():
-    global timefort
-    global hours
-    while True:
-        try:
-            sleep(60)
-            if hours == 16 or hours == 17 or hours == 18 or hours == 19:
-                timefort = 1
-            else:
-                timefort = 0
-        except Exception as e:
-            sleep(60)
+            sleep(0.9)
 
 
 def telepol():
@@ -677,12 +987,10 @@ def telepol():
         bot.polling(none_stop=True, timeout=60)
     except:
         bot.stop_polling()
-        sleep(5)
+        sleep(0.5)
         telepol()
 
 
 if __name__ == '__main__':
-    _thread.start_new_thread(b_det, ())
-    _thread.start_new_thread(fort_detector, ())
-    _thread.start_new_thread(merc_detector, ())
+    _thread.start_new_thread(detector, ())
     telepol()
