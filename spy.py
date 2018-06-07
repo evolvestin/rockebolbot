@@ -944,8 +944,8 @@ def detector():
                         bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
             elif hour == 0 or hour == 8 or hour == 16:
                 if sec > 0 and min == 0 and retro == 1:
-                    bot.send_message(idChatRetroDetector, '00:' + str(sec), parse_mode='HTML')
-                    bot.send_message(idChannelPins, '00:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChatRetroDetector, '00:0' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '00:0' + str(sec), parse_mode='HTML')
                     sleep(60)
                 elif sec == 25 and min == 59:
                     rnd = random.randint(0, len(fraze25) - 1)
