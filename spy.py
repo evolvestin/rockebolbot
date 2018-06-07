@@ -38,7 +38,7 @@ except:
     list2 = 0
     list3 = 0
     list4 = 0
-tkn = chats1[0]
+tkn = '429683355:AAF3GReDyewByK-WRLQ44xpCNKIsYg1G8X0'#chats1[0]
 bot = telebot.TeleBot(tkn)
 
 less = '🌲'
@@ -944,29 +944,29 @@ def detector():
                         bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
             elif hour == 0 or hour == 8 or hour == 16:
                 if sec > 0 and min == 0 and retro == 1:
-                    bot.send_message(idChatRetroDetector, '00:00', parse_mode='HTML')
-                    bot.send_message(idChannelPins, '00:00' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChatRetroDetector, '00:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChannelPins, '00:' + str(sec), parse_mode='HTML')
                     sleep(60)
                 if sec == 25 and min == 59:
                     rnd = random.randint(0, len(fraze25) - 1)
-                    bot.send_message(idChatRetroDetector, fraze25[rnd], parse_mode='HTML')
+                    bot.send_message(idChatDetector, fraze25[rnd], parse_mode='HTML')
                 elif sec == 30 and min == 59:
-                    bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
                 elif sec == 35 and min == 59:
-                    bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
                 elif sec == 40 and min == 59:
-                    bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
                 elif sec == 45 and min == 59:
-                    bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
                 elif sec == 50 and min == 59:
-                    bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
                 elif sec == 55 and min == 59:
-                    bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
+                    bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
             elif hour == 12 or hour == 20:
                 if sec > 0 and min == 0 and retro == 1:
@@ -975,7 +975,7 @@ def detector():
                     sleep(60)
             elif hour == 2 or hour == 10 or hour == 18:
                 if sec > 0 and min == 0:
-                    bot.send_message(idChatRetroDetector, '00:00', parse_mode='HTML')
+                    bot.send_message(idChatDetector, '00:00', parse_mode='HTML')
                     bot.send_message(idChannelPins, '00:00' + str(sec), parse_mode='HTML')
                     sleep(60)
         except Exception as e:
