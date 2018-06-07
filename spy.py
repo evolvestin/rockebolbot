@@ -38,7 +38,7 @@ except:
     list2 = 0
     list3 = 0
     list4 = 0
-tkn = '429683355:AAF3GReDyewByK-WRLQ44xpCNKIsYg1G8X0'#chats1[0]
+tkn = chats1[0]
 bot = telebot.TeleBot(tkn)
 
 less = '🌲'
