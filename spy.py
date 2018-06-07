@@ -943,7 +943,7 @@ def detector():
                         bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
                         bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
             elif hour == 0 or hour == 8 or hour == 16:
-                if sec > 0 and min == 0 and retro == 1:
+                if sec >= 0 and min == 0 and retro == 1:
                     bot.send_message(idChatRetroDetector, '00:0' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '00:0' + str(sec), parse_mode='HTML')
                     sleep(60)
@@ -969,12 +969,12 @@ def detector():
                     bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
             elif hour == 12 or hour == 20:
-                if sec > 0 and min == 0 and retro == 1:
+                if sec >= 0 and min == 0 and retro == 1:
                     bot.send_message(idChatRetroDetector, '00:0' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '00:0' + str(sec), parse_mode='HTML')
                     sleep(60)
             elif hour == 1 or hour == 9 or hour == 17:
-                if sec > 0 and min == 0:
+                if sec >= 0 and min == 0:
                     bot.send_message(idChatDetector, '00:0' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '00:0' + str(sec), parse_mode='HTML')
                     sleep(60)
