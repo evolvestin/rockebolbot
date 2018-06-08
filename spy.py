@@ -705,6 +705,7 @@ def repeat_all_messages(message):
                     adress = idChatPinsUnion
 
                 bot.send_message(adress, spec + tower + specmessage, parse_mode='HTML')
+                bot.send_message(idChannelPins, spec + tower + specmessage, parse_mode='HTML')
     else:
         if message.from_user.id == idMe:
             good = '✅Исполнено'
