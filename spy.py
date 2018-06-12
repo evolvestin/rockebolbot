@@ -618,7 +618,10 @@ def redmessages(message):
             min = int(temp[1])
             if hour == 0 or hour == 8 or hour == 16:
                 if min > 54:
-                    bot.delete_message(message.chat.id, message.message_id)
+                    try:
+                        bot.delete_message(message.chat.id, message.message_id)
+                    except:
+                        temp = 0
 
     elif message.chat.id == idChatRetroPinsUnion:
         if message.from_user.id != 205356091 \
@@ -631,7 +634,10 @@ def redmessages(message):
             if retro == 1:
                 if hour == 3 or hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
                     if min > 54:
-                        bot.delete_message(message.chat.id, message.message_id)
+                        try:
+                            bot.delete_message(message.chat.id, message.message_id)
+                        except:
+                            temp = 0
 
     elif message.chat.id == idMe:
         if message.document:
