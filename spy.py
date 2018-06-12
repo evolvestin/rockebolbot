@@ -38,7 +38,7 @@ except:
     list2 = 0
     list3 = 0
     list4 = 0
-tkn = chats1[0]
+tkn = '429683355:AAF3GReDyewByK-WRLQ44xpCNKIsYg1G8X0'#chats1[0]
 bot = telebot.TeleBot(tkn)
 
 less = '🌲'
@@ -619,7 +619,7 @@ def redmessages(message):
             if hour == 0 or hour == 8 or hour == 16:
                 if min > 54:
                     bot.delete_message(message.chat.id, message.message_id)
-                    
+
     elif message.chat.id == idChatRetroPinsUnion:
         if message.from_user.id != 205356091 \
                 and message.from_user.id != 105907720 \
@@ -784,7 +784,10 @@ def repeat_all_messages(message):
                 if retro == 1:
                     if hour == 3 or hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
                         if min > 54:
-                            bot.delete_message(message.chat.id, message.message_id)
+                            try:
+                                bot.delete_message(message.chat.id, message.message_id)
+                            except:
+                                kek = 0
         elif message.chat.id == idChatDevelopment:
             if global_split[4] == 1:
                 keyboard = spadder(8)
