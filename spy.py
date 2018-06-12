@@ -38,7 +38,7 @@ except:
     list2 = 0
     list3 = 0
     list4 = 0
-tkn = chats1[0]
+tkn = '429683355:AAF3GReDyewByK-WRLQ44xpCNKIsYg1G8X0'#chats1[0]
 bot = telebot.TeleBot(tkn)
 
 less = '🌲'
@@ -608,20 +608,30 @@ def get_new_member(message):
 
 @bot.message_handler(content_types=['audio', 'video', 'document', 'location', 'contact', 'sticker', 'voice'])
 def redmessages(message):
-    if message.from_user.id != 205356091 \
-            and message.from_user.id != 105907720 \
-            and message.from_user.id != 280993442 \
-            and message.from_user.id != idMe:
-        temp = rawtime_lite(int(datetime.now().timestamp()))
-        hour = int(temp[0])
-        min = int(temp[1])
-        if hour == 0 or hour == 8 or hour == 16:
-            if min > 54:
-                bot.delete_message(message.chat.id, message.message_id)
-        if retro == 1:
-            if hour == 3 or hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
+    if message.chat.id == idChatPinsUnion:
+        if message.from_user.id != 205356091 \
+                and message.from_user.id != 105907720 \
+                and message.from_user.id != 280993442 \
+                and message.from_user.id != idMe:
+            temp = rawtime_lite(int(datetime.now().timestamp()))
+            hour = int(temp[0])
+            min = int(temp[1])
+            if hour == 0 or hour == 8 or hour == 16:
                 if min > 54:
                     bot.delete_message(message.chat.id, message.message_id)
+                    
+    elif message.chat.id == idChatRetroPinsUnion:
+        if message.from_user.id != 205356091 \
+                and message.from_user.id != 105907720 \
+                and message.from_user.id != 280993442 \
+                and message.from_user.id != idMe:
+            temp = rawtime_lite(int(datetime.now().timestamp()))
+            hour = int(temp[0])
+            min = int(temp[1])
+            if retro == 1:
+                if hour == 3 or hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
+                    if min > 54:
+                        bot.delete_message(message.chat.id, message.message_id)
 
     elif message.chat.id == idMe:
         if message.document:
