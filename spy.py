@@ -717,6 +717,36 @@ def repeat_all_messages(message):
                 bot.send_message(adress, spec + tower + specmessage, parse_mode='HTML')
                 bot.send_message(idChannelPins, spec + tower + specmessage, parse_mode='HTML')
     else:
+        if message.chat.id == idChatPinsUnion:
+            if message.from_user.id != 205356091 \
+                    and message.from_user.id != 105907720 \
+                    and message.from_user.id != 280993442 \
+                    and message.from_user.id != idMe:
+                temp = rawtime_lite(int(datetime.now().timestamp()))
+                hour = int(temp[0])
+                min = int(temp[1])
+                if hour == 0 or hour == 8 or hour == 16:
+                    if min > 54:
+                        try:
+                            bot.delete_message(message.chat.id, message.message_id)
+                        except:
+                            temp = 0
+        elif message.chat.id == idChatRetroPinsUnion:
+            if message.from_user.id != 205356091 \
+                    and message.from_user.id != 105907720 \
+                    and message.from_user.id != 280993442 \
+                    and message.from_user.id != idMe:
+                temp = rawtime_lite(int(datetime.now().timestamp()))
+                hour = int(temp[0])
+                min = int(temp[1])
+                if retro == 1:
+                    if hour == 3 or hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
+                        if min > 54:
+                            try:
+                                bot.delete_message(message.chat.id, message.message_id)
+                            except:
+                                temp = 0
+
         if message.from_user.id == idMe:
             good = '✅Исполнено'
             bad = 'Что-то пошло не так'
@@ -756,38 +786,20 @@ def repeat_all_messages(message):
                 else:
                     bot.send_message(message.chat.id, bad)
 
-        if message.chat.id == idChatDetector or message.chat.id == idChatRetroDetector:
-            chat = message.chat.id
-            if message.from_user.id == idMe and message.reply_to_message:
-                    if message.text == 'не пиши' or message.text == 'пидорас' or message.text == 'говно':
-                        bot.send_voice(chat, 'AwADAgADXAEAAu7TEEiU1v4upM88swI',
-                                       reply_to_message_id=message.reply_to_message.message_id)
-                    elif message.text == 'пин':
-                        try:
-                            bot.pin_chat_message(message.chat.id, message.reply_to_message.message_id)
-                        except:
-                            try:
-                                bot.send_message(message.from_user.id, 'Я не админ в чате, чтобы пинить, учти это')
-                            except:
-                                temp = 0
+        if message.reply_to_message:
+            if message.text.lower() == 'не пиши' or message.text.lower() == 'пидорас' or message.text.lower() == 'говно' \
+                    or message.text.lower() == 'говной' or message.text.lower() == 'воняет':
+                bot.send_voice(message.chat.id, 'AwADAgADXAEAAu7TEEiU1v4upM88swI',
+                               reply_to_message_id=message.reply_to_message.message_id)
+            elif message.from_user.id == idMe and message.text == 'пин':
+                try:
+                    bot.pin_chat_message(message.chat.id, message.reply_to_message.message_id)
+                except:
+                    try:
+                        bot.send_message(message.from_user.id, 'Я не админ в чате, чтобы пинить, учти это')
+                    except:
+                        temp = 0
 
-            elif message.from_user.id != 205356091 \
-                    and message.from_user.id != 105907720 \
-                    and message.from_user.id != 280993442 \
-                    and message.from_user.id != idMe:
-                temp = rawtime_lite(int(datetime.now().timestamp()))
-                hour = int(temp[0])
-                min = int(temp[1])
-                if hour == 0 or hour == 8 or hour == 16:
-                    if min > 54:
-                        bot.delete_message(message.chat.id, message.message_id)
-                if retro == 1:
-                    if hour == 3 or hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
-                        if min > 54:
-                            try:
-                                bot.delete_message(message.chat.id, message.message_id)
-                            except:
-                                kek = 0
         elif message.chat.id == idChatDevelopment:
             if global_split[4] == 1:
                 keyboard = spadder(8)
