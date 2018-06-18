@@ -380,7 +380,7 @@ def handle_union_command(message):
         text = '🎛 Союзы\n' \
                '<i>Редактирование данного раздела, возможно только в чатах союзных пинов (0, 3)</i>\n\n' \
                'Штош, здесь союз выглядит '
-        if message.chat.id == idChatPinsUnion or message.chat.id == -1001186759363:
+        if message.chat.id == idChatPinsUnion:
             if a_union:
                 text = text + 'так:\n['
             else:
@@ -393,7 +393,7 @@ def handle_union_command(message):
             text = text + 'Хочешь изменить? /_union'
             bot.send_message(message.chat.id, text, parse_mode='HTML')
 
-        elif message.chat.id == idChatRetroPinsUnion:
+        elif message.chat.id == idChatRetroPinsUnion or message.chat.id == -1001186759363:
             if a_retrounion:
                 text = text + 'так:\n['
             else:
@@ -410,14 +410,14 @@ def handle_union_command(message):
 @bot.message_handler(commands=['_union'])
 def handle_change_union_command(message):
     if message.chat.id < 0:
-        if message.chat.id == idChatPinsUnion or message.chat.id == -1001186759363:
+        if message.chat.id == idChatPinsUnion:
             global a_union
             keyboard = union(1)
             text = '⏲ Конфигурация союзов\n' \
                    '<i>Союзы сброшены, мосты сожжены</i>'
             a_union = []
             bot.send_message(message.chat.id, text, reply_markup=keyboard, parse_mode='HTML')
-        elif message.chat.id == idChatRetroPinsUnion:
+        elif message.chat.id == idChatRetroPinsUnion or message.chat.id == -1001186759363:
             global a_retrounion
             keyboard = union(2)
             text = '⏲ Конфигурация <b>ретро-</b>союзов\n' \
