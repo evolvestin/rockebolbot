@@ -420,7 +420,7 @@ def handle_change_union_command(message):
         elif message.chat.id == idChatRetroPinsUnion:
             global a_retrounion
             keyboard = union(2)
-            text = '⏲ Конфигурация ретро-союзов\n' \
+            text = '⏲ Конфигурация <b>ретро-</b>союзов\n' \
                    '<i>Союзы сброшены, мосты сожжены</i>'
             a_retrounion = []
             bot.send_message(message.chat.id, text, reply_markup=keyboard, parse_mode='HTML')
@@ -660,8 +660,8 @@ def callbacks(call):
                            'Это удалит его из системы и ты сможешь нажать кнопку повторно.'
                     bot.send_message(call.message.chat.id, text)
         else:
+            global sheet1
             if str(call.data).startswith('eduni'):
-                global sheet1
                 if call.from_user.id == idMe:
                     global a_union
                     tower = call.data.replace('eduni', '')
