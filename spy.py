@@ -27,6 +27,8 @@ listsheet2 = client2.open('list').sheet1
 try:
     chats1 = sheet1.col_values(1)
     chats2 = sheet2.col_values(2)
+    uni = sheet1.row_values(8)
+    retr_uni = sheet2.row_values(9)
     list1 = listsheet1.col_values(1)
     list2 = listsheet1.col_values(2)
     list3 = listsheet2.col_values(3)
@@ -34,6 +36,8 @@ try:
 except:
     chats1 = 0
     chats2 = 0
+    uni = 0
+    retr_uni = 0
     list1 = 0
     list2 = 0
     list3 = 0
@@ -95,9 +99,14 @@ spycorp_spec = list2
 spycorp_tower = list3
 spycorp_version = list4
 
-a_union = [ambr, oplt, skal]
+a_union = []
+a_retrounion = []
+for u1 in uni:
+    a_union.append(str(u1))
+for u2 in retr_uni:
+    a_retrounion.append(str(u2))
+
 a_towers = [skal, bats, turt, oplt, rose, farm, ambr]
-a_retrounion = [mo, gp, va, eu]
 a_retrotowers = [mo, gp, cy, va, im, eu, ki]
 
 
@@ -176,6 +185,26 @@ def spadder(key):
         button.append(types.InlineKeyboardButton(text='Ввести специализацию + замок', callback_data='split_spec'))
         button.append(types.InlineKeyboardButton(text='Ввести маркировку CW', callback_data='split_version'))
         button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        keyboard.add(*button)
+    return keyboard
+
+
+def union(key):
+    if key == 1:
+        keyboard = types.InlineKeyboardMarkup(row_width=4)
+        button = []
+        for i in a_towers:
+            button.append(types.InlineKeyboardButton(text=i, callback_data='eduni' + i))
+        button.append(types.InlineKeyboardButton(text='⚰️Очистить', callback_data='edunireset'))
+        button.append(types.InlineKeyboardButton(text='🗳Сохранить', callback_data='edunisave'))
+        keyboard.add(*button)
+    elif key == 2:
+        keyboard = types.InlineKeyboardMarkup(row_width=4)
+        button = []
+        for i in a_retrotowers:
+            button.append(types.InlineKeyboardButton(text=i, callback_data='retro_eduni' + i))
+        button.append(types.InlineKeyboardButton(text='⚰️Очистить', callback_data='retro_edunireset'))
+        button.append(types.InlineKeyboardButton(text='🗳Сохранить', callback_data='retro_edunisave'))
         keyboard.add(*button)
     return keyboard
 
@@ -345,6 +374,58 @@ def handle_status_command(message):
         bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 
+@bot.message_handler(commands=['union'])
+def handle_union_command(message):
+    if message.chat.id < 0:
+        text = '🎛 Союзы\n' \
+               '<i>Редактирование данного раздела, возможно только в чатах союзных пинов (0, 3)</i>\n\n' \
+               'Штош, здесь союз выглядит '
+        if message.chat.id == idChatPinsUnion or message.chat.id == -1001186759363:
+            if a_union:
+                text = text + 'так:\n['
+            else:
+                text = text + 'никак. ¯\_(ツ)_/¯\n'
+            for i in a_union:
+                if a_union.index(i) == len(a_union) - 1:
+                    text = text + i + ']\n\n'
+                else:
+                    text = text + i + '➿'
+            text = text + 'Хочешь изменить? /_union'
+            bot.send_message(message.chat.id, text, parse_mode='HTML')
+
+        elif message.chat.id == idChatRetroPinsUnion:
+            if a_retrounion:
+                text = text + 'так:\n['
+            else:
+                text = text + 'никак. ¯\_(ツ)_/¯\n'
+            for i in a_retrounion:
+                if a_retrounion.index(i) == len(a_retrounion) - 1:
+                    text = text + i + ']\n\n'
+                else:
+                    text = text + i + '➿'
+            text = text + 'Хочешь изменить? /_union'
+            bot.send_message(message.chat.id, text, parse_mode='HTML')
+
+
+@bot.message_handler(commands=['_union'])
+def handle_change_union_command(message):
+    if message.chat.id < 0:
+        if message.chat.id == idChatPinsUnion or message.chat.id == -1001186759363:
+            global a_union
+            keyboard = union(1)
+            text = '⏲ Конфигурация союзов\n' \
+                   '<i>Союзы сброшены, мосты сожжены</i>'
+            a_union = []
+            bot.send_message(message.chat.id, text, reply_markup=keyboard, parse_mode='HTML')
+        elif message.chat.id == idChatRetroPinsUnion:
+            global a_retrounion
+            keyboard = union(2)
+            text = '⏲ Конфигурация ретро-союзов\n' \
+                   '<i>Союзы сброшены, мосты сожжены</i>'
+            a_retrounion = []
+            bot.send_message(message.chat.id, text, reply_markup=keyboard, parse_mode='HTML')
+
+
 @bot.message_handler(commands=['start'])
 def handle_start_command(message):
     if message.chat.id > 0:
@@ -416,8 +497,8 @@ def callbacks(call):
             text = 'Пидора ответ😡 Ну и зачем ты зашел сюда? Я шпион-бот, ' \
                    'больше ничо не умею...\nНу может и умею, но тебе не расскажу точно, бака😑\n\n' \
                    'Если вдруг, ты захочешь нам пошпионить всё-таки, то прожми /start и выбери другой стул.'
-
             bot.edit_message_text(chat_id=call.message.chat.id, text=text, message_id=call.message.message_id)
+
     if call.message.chat.id < 0:
         if call.message.chat.id == idChatDevelopment:
             if call.data == 'brake':
@@ -578,6 +659,118 @@ def callbacks(call):
                            '/del_' + str(idsearch.group(1)) + '\n' \
                            'Это удалит его из системы и ты сможешь нажать кнопку повторно.'
                     bot.send_message(call.message.chat.id, text)
+        else:
+            if str(call.data).startswith('eduni'):
+                global sheet1
+                if call.from_user.id == idMe:
+                    global a_union
+                    tower = call.data.replace('eduni', '')
+                    if tower != 'save' and tower != 'reset':
+                        keyboard = union(1)
+                        text = '⏲ Конфигурация союзов\n\nСоюз теперь такой:\n['
+                        if tower in a_union:
+                            temp = ''
+                        else:
+                            a_union.append(tower)
+                        for i in a_union:
+                            if a_union.index(i) == len(a_union) - 1:
+                                text = text + i + ']\n\n'
+                            else:
+                                text = text + i + '〰'
+                        text = text + '<i>Подумай хорошенько.</i>'
+                        try:
+                            bot.edit_message_text(chat_id=call.message.chat.id, text=text,
+                                              message_id=call.message.message_id, reply_markup=keyboard,
+                                              parse_mode='HTML')
+                        except:
+                            temp = ''
+                    elif tower == 'reset':
+                        keyboard = union(1)
+                        text = '⏲ Конфигурация союзов\n\nСоюз никак не выглядит\n\n<i>Подумай хорошенько.</i>'
+                        a_union = [skal]
+                        try:
+                            bot.edit_message_text(chat_id=call.message.chat.id, text=text,
+                                              message_id=call.message.message_id, reply_markup=keyboard,
+                                              parse_mode='HTML')
+                        except:
+                            temp = ''
+                    else:
+                        text = '⏲ Конфигурация союзов\n\nСоюз выглядит так:\n['
+                        try:
+                            google = sheet1.col_values(1)
+                        except:
+                            creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
+                            client1 = gspread.authorize(creds1)
+                            sheet1 = client1.open('chats').sheet1
+                            google = sheet1.col_values(1)
+                        sheet1.delete_row(8)
+                        sheet1.insert_row(a_union, 8)
+                        for i in a_union:
+                            if a_union.index(i) == len(a_union) - 1:
+                                text = text + i + ']\n\n'
+                            else:
+                                text = text + i + '➿'
+                        text = text + '<i>Думаю ты правильно подумал.</i>'
+                        try:
+                            bot.edit_message_text(chat_id=call.message.chat.id, text=text,
+                                              message_id=call.message.message_id, parse_mode='HTML')
+                        except:
+                            temp = ''
+            elif str(call.data).startswith('retro_eduni'):
+                if call.from_user.id == idMe:
+                    global a_retrounion
+                    tower = call.data.replace('retro_eduni', '')
+                    if tower != 'save' and tower != 'reset':
+                        keyboard = union(2)
+                        text = '⏲ Конфигурация <b>ретро-</b>союзов\n\nСоюз теперь такой:\n['
+                        if tower in a_retrounion:
+                            temp = ''
+                        else:
+                            a_retrounion.append(tower)
+                        for i in a_retrounion:
+                            if a_retrounion.index(i) == len(a_retrounion) - 1:
+                                text = text + i + ']\n\n'
+                            else:
+                                text = text + i + '〰'
+                        text = text + '<i>Подумай хорошенько.</i>'
+                        try:
+                            bot.edit_message_text(chat_id=call.message.chat.id, text=text,
+                                              message_id=call.message.message_id, reply_markup=keyboard,
+                                              parse_mode='HTML')
+                        except:
+                            temp = ''
+                    elif tower == 'reset':
+                        keyboard = union(2)
+                        text = '⏲ Конфигурация <b>ретро-</b>союзов\n\nСоюз никак не выглядит\n\n<i>Подумай хорошенько.</i>'
+                        a_retrounion = [mo]
+                        try:
+                            bot.edit_message_text(chat_id=call.message.chat.id, text=text,
+                                              message_id=call.message.message_id, reply_markup=keyboard,
+                                              parse_mode='HTML')
+                        except:
+                            temp = ''
+                    else:
+                        text = '⏲ Конфигурация <b>ретро-</b>союзов\n\nСоюз выглядит так:\n['
+                        try:
+                            google = sheet1.col_values(1)
+                        except:
+                            creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
+                            client1 = gspread.authorize(creds1)
+                            sheet1 = client1.open('chats').sheet1
+                            google = sheet1.col_values(1)
+                        sheet1.delete_row(9)
+                        sheet1.insert_row(a_retrounion, 9)
+                        for i in a_retrounion:
+                            if a_retrounion.index(i) == len(a_retrounion) - 1:
+                                text = text + i + ']\n\n'
+                            else:
+                                text = text + i + '➿'
+                        text = text + '<i>Думаю ты правильно подумал.</i>'
+                        try:
+                            bot.edit_message_text(chat_id=call.message.chat.id, text=text,
+                                              message_id=call.message.message_id, parse_mode='HTML')
+                        except:
+                            temp = ''
 
 
 @bot.message_handler(content_types=["new_chat_members"])
