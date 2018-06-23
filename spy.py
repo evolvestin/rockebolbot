@@ -1052,7 +1052,10 @@ def repeat_all_messages(message):
                             if message.from_user.username == 'evolvestin':
                                 name = 'Эволв: '
                     letter = '<i>' + name + '</i>' + message.text
-                    bot.send_message(cll, letter, parse_mode='HTML')
+                    try:
+                        bot.send_message(cll, letter, parse_mode='HTML')
+                    except:
+                        bot.send_message(message.chat.id, 'Не получилось отправить 😱', parse_mode='HTML')
                     bot.send_message(message.chat.id, 'Отправлено в таком виде:\n\n' + letter, parse_mode='HTML')
             elif str(message.text).startswith('/del'):
                 global listsheet1
