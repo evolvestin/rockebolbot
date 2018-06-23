@@ -1043,7 +1043,7 @@ def repeat_all_messages(message):
                     marker = 0
             elif mark == 1:
                 mark = 0
-                if message.text == '/no':
+                if str(message.text).startswith('/no'):
                     bot.send_message(message.chat.id, 'Отмена отправки сообщения')
                 else:
                     if message.from_user.first_name:
