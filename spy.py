@@ -59,7 +59,7 @@ ambr = '🍁'
 
 plus = 3  # часовой пояс
 retro = int(chats2[0])
-marker = 0
+mark = 0
 split_bots = ''
 split_spec = ''
 split_version = ''
@@ -992,6 +992,7 @@ def repeat_all_messages(message):
                         temp = 0
 
         elif message.chat.id == idChatDevelopment:
+            global mark
             if global_split[4] == 1:
                 keyboard = spadder(8)
                 if global_split[1] == '':
@@ -1031,21 +1032,26 @@ def repeat_all_messages(message):
                     text = 'Введен не верный id'
                     bot.send_message(message.chat.id, text)
             elif str(message.text).startswith('/call'):
-                if message.chat.id == idMe:
-                    try:
-                        cll = message.text
-                        cll = int(cll.replace('/call ', ''))
-                        bot.send_message(message.chat.id, 'Введите сообщение пользователю с id: ' + str(cll) + '(/no)')
-                        marker = 1
-                    except:
-                        bot.send_message(message.chat.id, 'Введен не верный id')
-                        marker = 0
-            elif marker == 1:
-                marker = 0
+                global cll
+                try:
+                    cll = message.text
+                    cll = int(cll.replace('/call ', ''))
+                    bot.send_message(message.chat.id, 'Введите сообщение пользователю с id: ' + str(cll) + '(/no)')
+                    mark = 1
+                except:
+                    bot.send_message(message.chat.id, 'Введен не верный id')
+                    marker = 0
+            elif mark == 1:
+                mark = 0
                 if message.text == '/no':
                     bot.send_message(message.chat.id, 'Отмена отправки сообщения')
                 else:
-                    letter = e_pensil + '<i>Эволв:</i>\n' + message.text
+                    if message.from_user.first_name:
+                        name = message.from_user.first_name + ' '
+                        if message.from_user.username:
+                            if message.from_user.username == 'evolvestin':
+                                name = 'Эволв: '
+                    letter = '<i>' + name + '</i>' + message.text
                     bot.send_message(cll, letter, parse_mode='HTML')
                     bot.send_message(message.chat.id, 'Отправлено в таком виде:\n\n' + letter, parse_mode='HTML')
             elif str(message.text).startswith('/del'):
