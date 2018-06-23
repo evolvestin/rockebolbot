@@ -24,25 +24,16 @@ sheet1 = client1.open('chats').sheet1
 sheet2 = client2.open('chats').sheet1
 listsheet1 = client1.open('list').sheet1
 listsheet2 = client2.open('list').sheet1
-try:
-    chats1 = sheet1.col_values(1)
-    chats2 = sheet2.col_values(2)
-    uni = sheet1.row_values(8)
-    retr_uni = sheet2.row_values(9)
-    list1 = listsheet1.col_values(1)
-    list2 = listsheet1.col_values(2)
-    list3 = listsheet2.col_values(3)
-    list4 = listsheet2.col_values(4)
-except:
-    chats1 = 0
-    chats2 = 0
-    uni = 0
-    retr_uni = 0
-    list1 = 0
-    list2 = 0
-    list3 = 0
-    list4 = 0
-tkn = chats1[0]
+
+chats1 = sheet1.col_values(1)
+chats2 = sheet2.col_values(2)
+uni = sheet1.row_values(8)
+retr_uni = sheet2.row_values(9)
+list1 = listsheet1.col_values(1)
+list2 = listsheet1.col_values(2)
+list3 = listsheet2.col_values(3)
+list4 = listsheet2.col_values(4)
+tkn = '429683355:AAF3GReDyewByK-WRLQ44xpCNKIsYg1G8X0'#chats1[0]
 bot = telebot.TeleBot(tkn)
 
 less = '🌲'
@@ -68,6 +59,7 @@ ambr = '🍁'
 
 plus = 3  # часовой пояс
 retro = int(chats2[0])
+marker = 0
 split_bots = ''
 split_spec = ''
 split_version = ''
@@ -1021,8 +1013,11 @@ def repeat_all_messages(message):
 
             if global_split[0] != '' and global_split[1] != '' and global_split[2] != '' and global_split[3] != '':
                 keyboard = spadder(7)
-                bot.edit_message_text(chat_id=temp.chat.id, text=temp.text,
+                try:
+                    bot.edit_message_text(chat_id=temp.chat.id, text=temp.text,
                                       reply_markup=keyboard, message_id=temp.message_id)
+                except:
+                    temp = ''
             global_split[4] = 0
 
             if str(message.text).startswith('/add'):
@@ -1035,6 +1030,24 @@ def repeat_all_messages(message):
                 except:
                     text = 'Введен не верный id'
                     bot.send_message(message.chat.id, text)
+            elif str(message.text).startswith('/call'):
+                if message.chat.id == idMe:
+                    try:
+                        cll = message.text
+                        cll = int(cll.replace('/call ', ''))
+                        bot.send_message(message.chat.id, 'Введите сообщение пользователю с id: ' + str(cll) + '(/no)')
+                        marker = 1
+                    except:
+                        bot.send_message(message.chat.id, 'Введен не верный id')
+                        marker = 0
+            elif marker == 1:
+                marker = 0
+                if message.text == '/no':
+                    bot.send_message(message.chat.id, 'Отмена отправки сообщения')
+                else:
+                    letter = e_pensil + '<i>Эволв:</i>\n' + message.text
+                    bot.send_message(cll, letter, parse_mode='HTML')
+                    bot.send_message(message.chat.id, 'Отправлено в таком виде:\n\n' + letter, parse_mode='HTML')
             elif str(message.text).startswith('/del'):
                 global listsheet1
                 delete = message.text.replace('/del_', '')
