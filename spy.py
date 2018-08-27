@@ -33,7 +33,7 @@ list1 = listsheet1.col_values(1)
 list2 = listsheet1.col_values(2)
 list3 = listsheet2.col_values(3)
 list4 = listsheet2.col_values(4)
-tkn = chats1[0]
+tkn = '429683355:AAF3GReDyewByK-WRLQ44xpCNKIsYg1G8X0'#chats1[0]
 bot = telebot.TeleBot(tkn)
 
 less = '🌲'
@@ -314,7 +314,7 @@ def handle_id_command(message):
         signature = str(message.reply_to_message.from_user.is_bot)
         isbot = 'Тип: '
         if signature == 'True' and username == '@rockebolbot':
-            isbot = isbot + '<b>Ето я</b>🖤'
+            isbot = isbot + '<b>Ето я</b>🐢'
         elif signature == 'True':
             isbot = isbot + '<b>Бот</b>'
         elif signature == 'False':
@@ -847,8 +847,11 @@ def repeat_all_messages(message):
                 time_all = rawtime(forwarded)
                 ftime = '\n<code>' + str(time_all[0]) + ' ' + str(time_all[1] + '.' + \
                     str(time_all[2]) + '.' + str(time_all[3])) + '</code>  '
-            if str(message.forward_from.username) == NBOT or \
-                    str(message.forward_from.username) == 'ChatWarsClassicBot':
+            if message.forward_from:
+                fuser = message.forward_from.username
+            else:
+                fuser = ''
+            if fuser == NBOT or fuser == 'ChatWarsClassicBot':
                 temp = forwardCW(message)
                 text = temp[0]
                 adder = temp[1]
@@ -1051,12 +1054,14 @@ def repeat_all_messages(message):
                         if message.from_user.username:
                             if message.from_user.username == 'evolvestin':
                                 name = 'Эволв: '
+                    else:
+                        name = ''
                     letter = '<i>' + name + '</i>' + message.text
                     try:
                         bot.send_message(cll, letter, parse_mode='HTML')
+                        bot.send_message(message.chat.id, 'Отправлено в таком виде:\n\n' + letter, parse_mode='HTML')
                     except:
                         bot.send_message(message.chat.id, 'Не получилось отправить 😱', parse_mode='HTML')
-                    bot.send_message(message.chat.id, 'Отправлено в таком виде:\n\n' + letter, parse_mode='HTML')
             elif str(message.text).startswith('/del'):
                 global listsheet1
                 delete = message.text.replace('/del_', '')
