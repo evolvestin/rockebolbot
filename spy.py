@@ -33,7 +33,7 @@ list1 = listsheet1.col_values(1)
 list2 = listsheet1.col_values(2)
 list3 = listsheet2.col_values(3)
 list4 = listsheet2.col_values(4)
-tkn = '618455414:AAHInDoXgrbzYS2qCu8gNXKTmCgiTxdFx28'#chats1[0]
+tkn = '429683355:AAF3GReDyewByK-WRLQ44xpCNKIsYg1G8X0'#chats1[0]
 bot = telebot.TeleBot(tkn)
 
 less = '🌲'
@@ -1171,7 +1171,7 @@ def detector():
             hour = int(temp[0])
             min = int(temp[1])
             sec = int(temp[2])
-            if hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
+            if hour == 6 or hour == 10 or hour == 14 or hour == 18 or hour == 22:
                 if retro == 1:
                     if sec == 25 and min == 59:
                         rnd = random.randint(0, len(fraze25) - 1)
@@ -1220,7 +1220,7 @@ def detector():
                 elif sec == 55 and min == 59:
                     bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
-            elif hour == 12 or hour == 20:
+            elif hour == 11 or hour == 19:
                 if sec >= 0 and min == 0 and retro == 1:
                     bot.send_message(idChatRetroDetector, '00:0' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '00:0' + str(sec), parse_mode='HTML')
