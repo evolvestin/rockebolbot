@@ -8,6 +8,7 @@ import urllib3
 import re
 import requests
 import time
+from ast import literal_eval
 from time import sleep
 import datetime
 from datetime import datetime
@@ -33,7 +34,7 @@ list1 = listsheet1.col_values(1)
 list2 = listsheet1.col_values(2)
 list3 = listsheet2.col_values(3)
 list4 = listsheet2.col_values(4)
-tkn = '618455414:AAHInDoXgrbzYS2qCu8gNXKTmCgiTxdFx28'#chats1[0]
+tkn = chats1[0]
 bot = telebot.TeleBot(tkn)
 
 less = '🌲'
@@ -839,10 +840,9 @@ def repeat_all_messages(message):
         try:
             req = requests.get('http://fucking-great-advice.ru/api/random')
             m = literal_eval(req.text)
-            print()
             bot.send_message(message.chat.id, m['text'])
-        except:
-            pass
+        except IndexError and Exception as error:
+            print(error)
 
     if message.chat.id > 0:
         if message.forward_date is not None:
