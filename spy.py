@@ -838,10 +838,12 @@ def repeat_all_messages(message):
     global global_split
     if 'совет' in message.text.lower():
         try:
-            print(message)
             req = requests.get('http://fucking-great-advice.ru/api/random')
             m = literal_eval(req.text)
-            bot.send_message(message.chat.id, m['text'])
+            reply = None
+            if message.reply_to_message:
+                reply = message.reply_to_message.message_id
+            bot.send_message(message.chat.id, m['text'], reply_to_message_id=reply)
         except IndexError and Exception as error:
             print(error)
 
