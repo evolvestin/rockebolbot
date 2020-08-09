@@ -836,8 +836,9 @@ def redmessages(message):
 @bot.message_handler(func=lambda message: message.text)
 def repeat_all_messages(message):
     global global_split
-    if 'совет' in message.text:
+    if 'совет' in message.text.lower():
         try:
+            print(message)
             req = requests.get('http://fucking-great-advice.ru/api/random')
             m = literal_eval(req.text)
             bot.send_message(message.chat.id, m['text'])
