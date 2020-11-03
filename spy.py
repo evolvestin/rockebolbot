@@ -1,27 +1,17 @@
 # -*- coding: utf-8 -*-
 
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
-import telebot
-from telebot import types
-import re
-import requests
-from ast import literal_eval
-from time import sleep
-import datetime
-from datetime import datetime
-import _thread
-import random
 import os
-
-
-def environmental_files():
-    directory = os.listdir('.')
-    for key in os.environ.keys():
-        if key.endswith('.json') and key not in directory:
-            file = open(key, 'w')
-            file.write(os.environ.get(key))
-            file.close()
+import re
+import random
+import gspread
+import telebot
+import _thread
+import requests
+from time import sleep
+from telebot import types
+from ast import literal_eval
+from datetime import datetime
+from objects import environmental_files
 
 
 environmental_files()
