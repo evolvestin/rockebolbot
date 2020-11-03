@@ -272,8 +272,7 @@ def edit_chats(key, id):
         try:
             sheet1 = client1.open('chats').sheet1
         except:
-            creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
-            client1 = gspread.authorize(creds1)
+            client1 = gspread.service_account('worker1.json')
             sheet1 = client1.open('chats').sheet1
         sheet1.update_cell(key + 2, 1, id)
     chat_ids[key] = id
@@ -626,8 +625,7 @@ def callbacks(call):
                     try:
                         listsheet1 = client1.open('list').sheet1
                     except:
-                        creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
-                        client1 = gspread.authorize(creds1)
+                        client1 = gspread.service_account('worker1.json')
                         listsheet1 = client1.open('list').sheet1
                     listsheet1.insert_row(togoogle, 1)
 
@@ -690,8 +688,7 @@ def callbacks(call):
                         try:
                             google = sheet1.col_values(1)
                         except:
-                            creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
-                            client1 = gspread.authorize(creds1)
+                            client1 = gspread.service_account('worker1.json')
                             sheet1 = client1.open('chats').sheet1
                             google = sheet1.col_values(1)
                         sheet1.delete_row(8)
@@ -745,8 +742,7 @@ def callbacks(call):
                         try:
                             google = sheet1.col_values(1)
                         except:
-                            creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
-                            client1 = gspread.authorize(creds1)
+                            client1 = gspread.service_account('worker1.json')
                             sheet1 = client1.open('chats').sheet1
                             google = sheet1.col_values(1)
                         sheet1.delete_row(9)
@@ -975,8 +971,7 @@ def repeat_all_messages(message):
                     try:
                         google = sheet1.col_values(1)
                     except:
-                        creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
-                        client1 = gspread.authorize(creds1)
+                        client1 = gspread.service_account('worker1.json')
                         sheet1 = client1.open('chats').sheet1
                         google = sheet1.col_values(1)
                     for g in google:
@@ -1080,8 +1075,7 @@ def repeat_all_messages(message):
                 try:
                     google = listsheet1.col_values(1)
                 except:
-                    creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
-                    client1 = gspread.authorize(creds1)
+                    client1 = gspread.service_account('worker1.json')
                     listsheet1 = client1.open('list').sheet1
                     google = listsheet1.col_values(1)
                 for m in google:
