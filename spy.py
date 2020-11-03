@@ -239,7 +239,7 @@ def rawtime_lite(stamp):
     return rtime
 
 
-def edit_chats(key, id):
+def edit_chats(key, chat_id):
     global idChatPinsUnion
     global idChatPinsEnemy
     global idChatDetector
@@ -250,27 +250,27 @@ def edit_chats(key, id):
     global client1
     me = 1
     if key == 0:
-        idChatPinsUnion = id
+        idChatPinsUnion = chat_id
     elif key == 1:
-        idChatPinsEnemy = id
+        idChatPinsEnemy = chat_id
     elif key == 2:
-        idChatDetector = id
+        idChatDetector = chat_id
     elif key == 3:
-        idChatRetroPinsUnion = id
+        idChatRetroPinsUnion = chat_id
     elif key == 4:
-        idChatRetroPinsEnemy = id
+        idChatRetroPinsEnemy = chat_id
     elif key == 5:
-        idChatRetroDetector = id
+        idChatRetroDetector = chat_id
     else:
         me = 0
     if me == 1:
         try:
-            sheet1 = client1.open('chats').sheet1
-        except:
+            sheet = client1.open('chats').sheet1
+        except IndexError and Exception:
             client1 = gspread.service_account('worker1.json')
-            sheet1 = client1.open('chats').sheet1
-        sheet1.update_cell(key + 2, 1, id)
-    chat_ids[key] = id
+            sheet = client1.open('chats').sheet1
+        sheet.update_cell(key + 2, 1, chat_id)
+    chat_ids[key] = chat_id
     return me
 
 
@@ -278,8 +278,8 @@ def edit_chats(key, id):
 def handle_time_command(message):
     time = rawtime(int(datetime.now().timestamp()))
     text = 'Время: ' + str(time[4]) + ':' + str(time[5]) + ':' + str(time[6]) + \
-        ' <code>(' + str(time[0]) + ' ' + str(time[1] + '.' + str(time[2]) + '.' + \
-        str(time[3])) + ', GMT+' + str(plus) + ')</code>'
+        ' <code>(' + str(time[0]) + ' ' + time[1] + '.' + str(time[2]) + '.' + str(time[3]) + \
+        ', GMT+' + str(plus) + ')</code>'
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 
 
@@ -342,11 +342,11 @@ def handle_status_command(message):
                 chatretrodetector = 'Да'
         if retro == 1:
             rstatus = 'Активен'
-            retroUI = '       Ретро-пины  здесь: <b>' + chatretropins + '</b>\n' \
-                      '       Ретро-детектор здесь: <b>' + chatretrodetector + '</b>\n'
+            retro_ui = '       Ретро-пины  здесь: <b>' + chatretropins + '</b>\n' \
+                '       Ретро-детектор здесь: <b>' + chatretrodetector + '</b>\n'
         else:
             rstatus = 'Деактивирован'
-            retroUI = ''
+            retro_ui = ''
 
         text = 'Группа: ' + str(chatname) + ' (<code>' + str(message.chat.id) + '</code>)'
 
@@ -354,7 +354,7 @@ def handle_status_command(message):
             text = text + '\n' \
                 'Пины приходят сюда: <b>' + chatpins + '</b>\n' + \
                 'Детектор битвы здесь: <b>' + chatdetector + '</b>\n' + \
-                'Ретро-режим: <b>' + rstatus + '</b>\n' + retroUI
+                'Ретро-режим: <b>' + rstatus + '</b>\n' + retro_ui
 
         bot.send_message(message.chat.id, text, parse_mode='HTML')
 
@@ -369,7 +369,7 @@ def handle_union_command(message):
             if a_union:
                 text = text + 'так:\n['
             else:
-                text = text + 'никак. ¯\_(ツ)_/¯\n'
+                text = text + r'никак. ¯\_(ツ)_/¯\n'
             for i in a_union:
                 if a_union.index(i) == len(a_union) - 1:
                     text = text + i + ']\n\n'
@@ -382,7 +382,7 @@ def handle_union_command(message):
             if a_retrounion:
                 text = text + 'так:\n['
             else:
-                text = text + 'никак. ¯\_(ツ)_/¯\n'
+                text = text + r'никак. ¯\_(ツ)_/¯\n'
             for i in a_retrounion:
                 if a_retrounion.index(i) == len(a_retrounion) - 1:
                     text = text + i + ']\n\n'
@@ -415,9 +415,8 @@ def handle_change_union_command(message):
 def handle_start_command(message):
     if message.chat.id > 0:
         keyboard = types.InlineKeyboardMarkup(row_width=2)
-        button = []
-        button.append(types.InlineKeyboardButton(text='Я шпион🕵🏿', callback_data='Spy'))
-        button.append(types.InlineKeyboardButton(text='Нет😡', callback_data='NoSpy'))
+        button = [types.InlineKeyboardButton(text='Я шпион🕵🏿', callback_data='Spy'),
+                  types.InlineKeyboardButton(text='Нет😡', callback_data='NoSpy')]
         spy = 0
         for i in spycorp_ids:
             if message.chat.id == i:
@@ -437,8 +436,11 @@ def handle_berman_command(message):
     if retro == 1:
         rsec = rawtime_lite(int(datetime.now().timestamp()))
         seconds = int(rsec[2])
-        if seconds == 0 or seconds == 10 or seconds == 11 or seconds == 20 or seconds == 21 or seconds == 30 or seconds == 31 or seconds == 40 or seconds == 41 or seconds == 50 or seconds == 51:
-            bot.send_message(message.chat.id, 'Только что в мире умер один человек, почтим его память тремя секундами перемирия')
+        if seconds == 0 or seconds == 10 or seconds == 11 or seconds == 20 or \
+                seconds == 21 or seconds == 30 or seconds == 31 or seconds == 40 or \
+                seconds == 41 or seconds == 50 or seconds == 51:
+            bot.send_message(message.chat.id, 'Только что в мире умер один человек, '
+                                              'почтим его память тремя секундами перемирия')
             sleep(3)
             bot.send_message(message.chat.id, 'Траур завершен, у вас есть 7 секунд, чтобы успеть повоевать')
         else:
@@ -488,11 +490,12 @@ def callbacks(call):
         if call.message.chat.id == idChatDevelopment:
             if call.data == 'brake':
                 text = '<b>Повелитель</b> посчитал вас недостойным права быть шпионом. You have been banned forever.'
-                search = re.search('(\d+)\.', call.message.text)
-                bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + '\n🤤Отвергнут', message_id=call.message.message_id)
+                search = re.search(r'(\d+)\.', call.message.text)
+                bot.edit_message_text(chat_id=call.message.chat.id,
+                                      text=call.message.text + '\n🤤Отвергнут', message_id=call.message.message_id)
                 try:
                     bot.send_message(search.group(1), text, parse_mode='HTML')
-                except:
+                except IndexError and Exception:
                     bot.send_message(call.message.chat.id, 'Сообщение об отмене доставить не удалось😤')
             elif call.data == 'brake_ext':
                 bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + '\n🙄Отменен',
@@ -551,13 +554,13 @@ def callbacks(call):
                 bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
                                       reply_markup=keyboard, message_id=call.message.message_id)
             elif call.data == mo or call.data == gp or call.data == cy or \
-                 call.data == va or call.data == im or call.data == eu or call.data == ki:
+                    call.data == va or call.data == im or call.data == eu or call.data == ki:
                 keyboard = spadder(6)
                 text = '\nЗамок: ' + call.data
                 bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
                                       reply_markup=keyboard, message_id=call.message.message_id)
             elif call.data == skal or call.data == bats or call.data == turt or \
-                call.data == oplt or call.data == rose or call.data == farm or call.data == ambr:
+                    call.data == oplt or call.data == rose or call.data == farm or call.data == ambr:
                 keyboard = spadder(6)
                 text = '\nЗамок: ' + call.data
                 bot.edit_message_text(chat_id=call.message.chat.id, text=call.message.text + text,
@@ -585,7 +588,7 @@ def callbacks(call):
                 global spycorp_tower
                 global spycorp_version
                 key = 0
-                idsearch = re.search('(\d+)\.', call.message.text)
+                idsearch = re.search(r'(\d+)\.', call.message.text)
                 typesearch = re.search('\n------\nТип: (.*)\n', call.message.text)
                 specsearch = re.search('\nСпециализация: (.*)', call.message.text)
                 towersearch = re.search('\nЗамок: (.*)', call.message.text)
@@ -606,6 +609,8 @@ def callbacks(call):
                 elif typesearch.group(1) == 'Сплит':
                     versearch = re.search('\nМаркировка: (.*)', call.message.text)
                     version = versearch.group(1)
+                else:
+                    version = 0
 
                 for i in spycorp_ids:
                     if int(idsearch.group(1)) == i:
@@ -618,11 +623,11 @@ def callbacks(call):
                     spycorp_tower.append(towersearch.group(1))
                     spycorp_version.append(version)
                     try:
-                        listsheet1 = client1.open('list').sheet1
-                    except:
+                        listsheet = client1.open('list').sheet1
+                    except IndexError and Exception:
                         client1 = gspread.service_account('worker1.json')
-                        listsheet1 = client1.open('list').sheet1
-                    listsheet1.insert_row(togoogle, 1)
+                        listsheet = client1.open('list').sheet1
+                    listsheet.insert_row(togoogle, 1)
 
                     worktext = '😈Хе-хе! <b>Повелителю</b> ты понравился. Теперь ты принят на работу. ' \
                                'Так что, начиная с этого момента, всё, что ты сюда пришлешь, ' \
@@ -636,7 +641,7 @@ def callbacks(call):
                                           message_id=call.message.message_id)
                     try:
                         bot.send_message(int(idsearch.group(1)), worktext, parse_mode='HTML')
-                    except:
+                    except IndexError and Exception:
                         bot.send_message(call.message.chat.id, 'Сообщение c поздравлениями доставить не удалось😱')
                 else:
                     text = 'Человек с таким id уже есть в системе, если нужно, используй:\n' \
@@ -652,9 +657,7 @@ def callbacks(call):
                     if tower != 'save' and tower != 'reset':
                         keyboard = union(1)
                         text = '⏲ Конфигурация союзов\n\nСоюз теперь такой:\n['
-                        if tower in a_union:
-                            temp = ''
-                        else:
+                        if tower not in a_union:
                             a_union.append(tower)
                         for i in a_union:
                             if a_union.index(i) == len(a_union) - 1:
@@ -664,29 +667,28 @@ def callbacks(call):
                         text = text + '<i>Подумай хорошенько.</i>'
                         try:
                             bot.edit_message_text(chat_id=call.message.chat.id, text=text,
-                                              message_id=call.message.message_id, reply_markup=keyboard,
-                                              parse_mode='HTML')
-                        except:
-                            temp = ''
+                                                  message_id=call.message.message_id, reply_markup=keyboard,
+                                                  parse_mode='HTML')
+                        except IndexError and Exception as error:
+                            print(error)
                     elif tower == 'reset':
                         keyboard = union(1)
                         text = '⏲ Конфигурация союзов\n\nСоюз никак не выглядит\n\n<i>Подумай хорошенько.</i>'
                         a_union = [skal]
                         try:
                             bot.edit_message_text(chat_id=call.message.chat.id, text=text,
-                                              message_id=call.message.message_id, reply_markup=keyboard,
-                                              parse_mode='HTML')
-                        except:
-                            temp = ''
+                                                  message_id=call.message.message_id, reply_markup=keyboard,
+                                                  parse_mode='HTML')
+                        except IndexError and Exception as error:
+                            print(error)
                     else:
                         text = '⏲ Конфигурация союзов\n\nСоюз выглядит так:\n['
                         try:
-                            google = sheet1.col_values(1)
-                        except:
+                            sheet1.delete_row(8)
+                        except IndexError and Exception:
                             client1 = gspread.service_account('worker1.json')
                             sheet1 = client1.open('chats').sheet1
-                            google = sheet1.col_values(1)
-                        sheet1.delete_row(8)
+                            sheet1.delete_row(8)
                         sheet1.insert_row(a_union, 8)
                         for i in a_union:
                             if a_union.index(i) == len(a_union) - 1:
@@ -696,9 +698,9 @@ def callbacks(call):
                         text = text + '<i>Думаю ты правильно подумал.</i>'
                         try:
                             bot.edit_message_text(chat_id=call.message.chat.id, text=text,
-                                              message_id=call.message.message_id, parse_mode='HTML')
-                        except:
-                            temp = ''
+                                                  message_id=call.message.message_id, parse_mode='HTML')
+                        except IndexError and Exception as error:
+                            print(error)
             elif str(call.data).startswith('retro_eduni'):
                 if call.from_user.id == idMe:
                     global a_retrounion
@@ -706,9 +708,7 @@ def callbacks(call):
                     if tower != 'save' and tower != 'reset':
                         keyboard = union(2)
                         text = '⏲ Конфигурация <b>ретро-</b>союзов\n\nСоюз теперь такой:\n['
-                        if tower in a_retrounion:
-                            temp = ''
-                        else:
+                        if tower not in a_retrounion:
                             a_retrounion.append(tower)
                         for i in a_retrounion:
                             if a_retrounion.index(i) == len(a_retrounion) - 1:
@@ -718,29 +718,30 @@ def callbacks(call):
                         text = text + '<i>Подумай хорошенько.</i>'
                         try:
                             bot.edit_message_text(chat_id=call.message.chat.id, text=text,
-                                              message_id=call.message.message_id, reply_markup=keyboard,
-                                              parse_mode='HTML')
-                        except:
-                            temp = ''
+                                                  message_id=call.message.message_id, reply_markup=keyboard,
+                                                  parse_mode='HTML')
+                        except IndexError and Exception as error:
+                            print(error)
                     elif tower == 'reset':
                         keyboard = union(2)
-                        text = '⏲ Конфигурация <b>ретро-</b>союзов\n\nСоюз никак не выглядит\n\n<i>Подумай хорошенько.</i>'
+                        text = '⏲ Конфигурация <b>ретро-</b>союзов\n\n' \
+                               'Союз никак не выглядит\n\n' \
+                               '<i>Подумай хорошенько.</i>'
                         a_retrounion = [mo]
                         try:
                             bot.edit_message_text(chat_id=call.message.chat.id, text=text,
-                                              message_id=call.message.message_id, reply_markup=keyboard,
-                                              parse_mode='HTML')
-                        except:
-                            temp = ''
+                                                  message_id=call.message.message_id, reply_markup=keyboard,
+                                                  parse_mode='HTML')
+                        except IndexError and Exception as error:
+                            print(error)
                     else:
                         text = '⏲ Конфигурация <b>ретро-</b>союзов\n\nСоюз выглядит так:\n['
                         try:
-                            google = sheet1.col_values(1)
-                        except:
+                            sheet1.delete_row(9)
+                        except IndexError and Exception:
                             client1 = gspread.service_account('worker1.json')
                             sheet1 = client1.open('chats').sheet1
-                            google = sheet1.col_values(1)
-                        sheet1.delete_row(9)
+                            sheet1.delete_row(9)
                         sheet1.insert_row(a_retrounion, 9)
                         for i in a_retrounion:
                             if a_retrounion.index(i) == len(a_retrounion) - 1:
@@ -750,9 +751,9 @@ def callbacks(call):
                         text = text + '<i>Думаю ты правильно подумал.</i>'
                         try:
                             bot.edit_message_text(chat_id=call.message.chat.id, text=text,
-                                              message_id=call.message.message_id, parse_mode='HTML')
-                        except:
-                            temp = ''
+                                                  message_id=call.message.message_id, parse_mode='HTML')
+                        except IndexError and Exception as error:
+                            print(error)
 
 
 @bot.message_handler(content_types=["new_chat_members"])
@@ -790,13 +791,13 @@ def redmessages(message):
                 and message.from_user.id != idMe:
             temp = rawtime_lite(int(datetime.now().timestamp()))
             hour = int(temp[0])
-            min = int(temp[1])
+            minute = int(temp[1])
             if hour == 0 or hour == 8 or hour == 16:
-                if min > 54:
+                if minute > 54:
                     try:
                         bot.delete_message(message.chat.id, message.message_id)
-                    except:
-                        temp = 0
+                    except IndexError and Exception as error:
+                        print(error)
 
     elif message.chat.id == idChatRetroPinsUnion:
         if message.from_user.id != 205356091 \
@@ -805,14 +806,14 @@ def redmessages(message):
                 and message.from_user.id != idMe:
             temp = rawtime_lite(int(datetime.now().timestamp()))
             hour = int(temp[0])
-            min = int(temp[1])
+            minute = int(temp[1])
             if retro == 1:
                 if hour == 3 or hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
-                    if min > 54:
+                    if minute > 54:
                         try:
                             bot.delete_message(message.chat.id, message.message_id)
-                        except:
-                            temp = 0
+                        except IndexError and Exception as error:
+                            print(error)
 
     elif message.chat.id == idMe:
         if message.document:
@@ -841,24 +842,25 @@ def repeat_all_messages(message):
             adder = '  '
             forwarded = message.forward_date
             stamp = int(datetime.now().timestamp())
-            forwardedD = datetime.utcfromtimestamp(int(forwarded + plus * 60 * 60)).strftime('%d')
+            forwarded_day = datetime.utcfromtimestamp(int(forwarded + plus * 60 * 60)).strftime('%d')
             currentday = datetime.utcfromtimestamp(int(stamp + plus * 60 * 60)).strftime('%d')
             time = rawtime_lite(forwarded)
-            if currentday != forwardedD:
+            if currentday != forwarded_day:
                 time_all = rawtime(forwarded)
-                ftime = '\n<code>' + str(time_all[0]) + ' ' + str(time_all[1] + '.' + \
-                    str(time_all[2]) + '.' + str(time_all[3])) + '</code>  '
+                ftime = '\n<code>' + str(time_all[0]) + ' ' + time_all[1] + '.' + \
+                    str(time_all[2]) + '.' + str(time_all[3]) + '</code>  '
             if message.forward_from:
                 fuser = message.forward_from.username
             else:
                 fuser = ''
             if fuser == NBOT or fuser == 'ChatWarsClassicBot':
-                temp = forwardCW(message)
+                temp = forward_cw(message)
                 text = temp[0]
                 adder = temp[1]
             else:
                 text = pin_analizer(message)
-            messagetime = adder + ftime + '<code>' + str(time[0]) + ':' + str(time[1]) + ':' + str(time[2]) + '[F]</code>'
+            messagetime = adder + ftime + '<code>' + str(time[0]) + ':' + \
+                str(time[1]) + ':' + str(time[2]) + '[F]</code>'
         else:
             text = pin_analizer(message)
             time = rawtime_lite(int(datetime.now().timestamp()))
@@ -895,6 +897,8 @@ def repeat_all_messages(message):
                     elif retrosearch:
                         spec = tower.replace(retrosearch.group(1), '')
                         tower = retrosearch.group(1)
+                    else:
+                        spec = ''
 
                 if version == '3':
                     adress = idChatPinsEnemy
@@ -919,13 +923,13 @@ def repeat_all_messages(message):
                     and message.from_user.id != idMe:
                 temp = rawtime_lite(int(datetime.now().timestamp()))
                 hour = int(temp[0])
-                min = int(temp[1])
+                minute = int(temp[1])
                 if hour == 0 or hour == 8 or hour == 16:
-                    if min > 54:
+                    if minute > 54:
                         try:
                             bot.delete_message(message.chat.id, message.message_id)
-                        except:
-                            temp = 0
+                        except IndexError and Exception as error:
+                            print(error)
         elif message.chat.id == idChatRetroPinsUnion:
             if message.from_user.id != 205356091 \
                     and message.from_user.id != 105907720 \
@@ -933,14 +937,14 @@ def repeat_all_messages(message):
                     and message.from_user.id != idMe:
                 temp = rawtime_lite(int(datetime.now().timestamp()))
                 hour = int(temp[0])
-                min = int(temp[1])
+                minute = int(temp[1])
                 if retro == 1:
                     if hour == 3 or hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
-                        if min > 54:
+                        if minute > 54:
                             try:
                                 bot.delete_message(message.chat.id, message.message_id)
-                            except:
-                                temp = 0
+                            except IndexError and Exception as error:
+                                print(error)
 
         if message.from_user.id == idMe:
             good = '✅Исполнено'
@@ -948,7 +952,7 @@ def repeat_all_messages(message):
             if str(message.text).startswith('/chat'):
                 try:
                     key = int(message.text.replace('/chat ', ''))
-                except:
+                except IndexError and Exception:
                     key = 10
                 edit = edit_chats(key, message.chat.id)
                 if edit == 1:
@@ -959,15 +963,15 @@ def repeat_all_messages(message):
                 global chat_names
                 try:
                     name = message.text.replace('/name ', '')
-                except:
+                except IndexError and Exception:
                     name = 10
                 if name != 10:
                     global sheet1
                     try:
                         google = sheet1.col_values(1)
-                    except:
-                        client1 = gspread.service_account('worker1.json')
-                        sheet1 = client1.open('chats').sheet1
+                    except IndexError and Exception:
+                        client = gspread.service_account('worker1.json')
+                        sheet1 = client.open('chats').sheet1
                         google = sheet1.col_values(1)
                     for g in google:
                         if str(message.chat.id) == g:
@@ -981,18 +985,19 @@ def repeat_all_messages(message):
                     bot.send_message(message.chat.id, bad)
 
         if message.reply_to_message:
-            if message.text.lower() == 'не пиши' or message.text.lower() == 'пидорас' or message.text.lower() == 'говно' \
-                    or message.text.lower() == 'говной' or message.text.lower() == 'воняет':
+            if message.text.lower() == 'не пиши' or message.text.lower() == 'пидорас' \
+                    or message.text.lower() == 'говно' or message.text.lower() == 'говной' \
+                    or message.text.lower() == 'воняет':
                 bot.send_voice(message.chat.id, 'AwADAgADXAEAAu7TEEiU1v4upM88swI',
                                reply_to_message_id=message.reply_to_message.message_id)
             elif message.from_user.id == idMe and message.text == 'пин':
                 try:
                     bot.pin_chat_message(message.chat.id, message.reply_to_message.message_id)
-                except:
+                except IndexError and Exception:
                     try:
                         bot.send_message(message.from_user.id, 'Я не админ в чате, чтобы пинить, учти это')
-                    except:
-                        temp = 0
+                    except IndexError and Exception as error:
+                        print(error)
 
         elif message.chat.id == idChatDevelopment:
             global mark
@@ -1014,14 +1019,16 @@ def repeat_all_messages(message):
                     global_split[0] = global_split[0] + '\nМаркировка: ' + message.text
                     global_split[3] = message.text
                 temp = bot.send_message(message.chat.id, global_split[0], reply_markup=keyboard)
+            else:
+                temp = None
 
             if global_split[0] != '' and global_split[1] != '' and global_split[2] != '' and global_split[3] != '':
                 keyboard = spadder(7)
                 try:
                     bot.edit_message_text(chat_id=temp.chat.id, text=temp.text,
-                                      reply_markup=keyboard, message_id=temp.message_id)
-                except:
-                    temp = ''
+                                          reply_markup=keyboard, message_id=temp.message_id)
+                except IndexError and Exception as error:
+                    print(error)
             global_split[4] = 0
 
             if str(message.text).startswith('/add'):
@@ -1043,7 +1050,7 @@ def repeat_all_messages(message):
                     mark = 1
                 except IndexError and Exception:
                     bot.send_message(message.chat.id, 'Введен не верный id')
-                    marker = 0
+                    mark = 0
             elif mark == 1:
                 mark = 0
                 if str(message.text).startswith('/no'):
@@ -1060,18 +1067,18 @@ def repeat_all_messages(message):
                     try:
                         bot.send_message(cll, letter, parse_mode='HTML')
                         bot.send_message(message.chat.id, 'Отправлено в таком виде:\n\n' + letter, parse_mode='HTML')
-                    except:
+                    except IndexError and Exception:
                         bot.send_message(message.chat.id, 'Не получилось отправить 😱', parse_mode='HTML')
             elif str(message.text).startswith('/del'):
                 global listsheet1
                 delete = message.text.replace('/del_', '')
-                search = re.search('(\w+)', delete)
+                search = re.search(r'(\w+)', delete)
                 marker = 0
                 try:
                     google = listsheet1.col_values(1)
-                except:
-                    client1 = gspread.service_account('worker1.json')
-                    listsheet1 = client1.open('list').sheet1
+                except IndexError and Exception:
+                    client = gspread.service_account('worker1.json')
+                    listsheet1 = client.open('list').sheet1
                     google = listsheet1.col_values(1)
                 for m in google:
                     if str(search.group(1)) == m:
@@ -1109,51 +1116,55 @@ def pin_analizer(message):
     return text
 
 
-def forwardCW(message):
+def forward_cw(message):
     if str(message.forward_from.username) == 'ChatWarsClassicBot':
         repsearch = re.search(srch_retrotowers + '(.+)' + atk + ':', message.text)
         kazsearch = re.search(srch_retrotowers + '(.+)( замок)', message.text)
-        CWtime = message.forward_date
-        CWtimeH = int(datetime.utcfromtimestamp(int(CWtime + plus * 60 * 60)).strftime('%H'))
+        cw_time = message.forward_date
+        cw_time_hour = int(datetime.utcfromtimestamp(int(cw_time + plus * 60 * 60)).strftime('%H'))
         if repsearch:
             report = message.text.replace(repsearch.group(2), '')
-            if CWtimeH > -1 and CWtimeH < 4:
+            repchas = 'NaN часов'
+            if -1 < cw_time_hour < 4:
                 repchas = '0 часов'
-            if CWtimeH > 3 and CWtimeH < 8:
+            if 3 < cw_time_hour < 8:
                 repchas = '4 часа'
-            if CWtimeH > 7 and CWtimeH < 12:
+            if 7 < cw_time_hour < 12:
                 repchas = '8 часов'
-            if CWtimeH > 11 and CWtimeH < 16:
+            if 11 < cw_time_hour < 16:
                 repchas = '12 часов'
-            if CWtimeH > 15 and CWtimeH < 20:
+            if 15 < cw_time_hour < 20:
                 repchas = '16 часов'
-            if CWtimeH > 19 and CWtimeH < 24:
+            if 19 < cw_time_hour < 24:
                 repchas = '20 часов'
             time = '\n<code>Битва в ' + str(repchas) + '.</code> '
             report = [report, time]
         elif kazsearch:
             kazflag = kazsearch.group(1)
             kazname = kazsearch.group(2)
-            kazsearch = re.search('(Казна замка:\n)([0-9]+)' + gold + ' ([0-9]+)' + less + ' ([0-9]+)' + gori, message.text)
+            kazsearch = re.search('(Казна замка:\n)([0-9]+)' + gold +
+                                  ' ([0-9]+)' + less + ' ([0-9]+)' + gori, message.text)
             if kazsearch:
-                report = kazflag + kazname + ':' + '\n' + kazsearch.group(2) + gold + \
-                         ' ' + kazsearch.group(3) + less + ' ' + kazsearch.group(4) + gori
-                report = [report, '\n']
+                report = [kazflag + kazname + ':' + '\n' + kazsearch.group(2) + gold +
+                          ' ' + kazsearch.group(3) + less + ' ' + kazsearch.group(4) + gori, '\n']
+            else:
+                report = ['NaN', '']
         else:
             report = ['Форварды из ЧВ отключены (кроме репортов и казны), ради вашей безопасности🌝', '']
         return report
     elif str(message.forward_from.username) == NBOT:
         text = srch_towers + '(.+) .+:.+ ' + deff + ':.+ Lvl: .+\nТвои результаты в бою:\n.+'
         repsearch = re.search(text, message.text)
-        CWtime = message.forward_date
-        CWtimeH = int(datetime.utcfromtimestamp(int(CWtime + plus * 60 * 60)).strftime('%H'))
+        cw_time = message.forward_date
+        cw_time_hour = int(datetime.utcfromtimestamp(int(cw_time + plus * 60 * 60)).strftime('%H'))
         if repsearch:
             report = message.text.replace(repsearch.group(2), 'Солдат')
-            if CWtimeH > 0 and CWtimeH <= 9:
+            repchas = 'NaN часов'
+            if 0 < cw_time_hour <= 9:
                 repchas = '01 час'
-            if CWtimeH > 8 and CWtimeH < 17:
+            if 8 < cw_time_hour < 17:
                 repchas = '09 часов'
-            if CWtimeH > 16 and CWtimeH < 25:
+            if 16 < cw_time_hour < 25:
                 repchas = '17 часов'
             time = '\n<code>Битва в ' + str(repchas) + '.</code> '
             report = [report, time]
@@ -1168,60 +1179,60 @@ def detector():
             sleep(0.9)
             temp = rawtime_lite(int(datetime.now().timestamp()))
             hour = int(temp[0])
-            min = int(temp[1])
+            minute = int(temp[1])
             sec = int(temp[2])
             if hour == 7 or hour == 11 or hour == 15 or hour == 19 or hour == 23:
                 if retro == 1:
-                    if sec == 25 and min == 59:
+                    if sec == 25 and minute == 59:
                         rnd = random.randint(0, len(fraze25) - 1)
                         bot.send_message(idChatRetroDetector, fraze25[rnd], parse_mode='HTML')
-                    elif sec == 30 and min == 59:
+                    elif sec == 30 and minute == 59:
                         bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
                         bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
-                    elif sec == 35 and min == 59:
+                    elif sec == 35 and minute == 59:
                         bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
                         bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
-                    elif sec == 40 and min == 59:
+                    elif sec == 40 and minute == 59:
                         bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
                         bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
-                    elif sec == 45 and min == 59:
+                    elif sec == 45 and minute == 59:
                         bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
                         bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
-                    elif sec == 50 and min == 59:
+                    elif sec == 50 and minute == 59:
                         bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
                         bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
-                    elif sec == 55 and min == 59:
+                    elif sec == 55 and minute == 59:
                         bot.send_message(idChatRetroDetector, '59:' + str(sec), parse_mode='HTML')
                         bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
             elif hour == 0 or hour == 8 or hour == 16:
-                if sec == 25 and min == 59:
+                if sec == 25 and minute == 59:
                     rnd = random.randint(0, len(fraze25) - 1)
                     bot.send_message(idChatDetector, fraze25[rnd], parse_mode='HTML')
-                elif sec == 30 and min == 59:
+                elif sec == 30 and minute == 59:
                     bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
-                elif sec == 35 and min == 59:
+                elif sec == 35 and minute == 59:
                     bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
-                elif sec == 40 and min == 59:
+                elif sec == 40 and minute == 59:
                     bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
-                elif sec == 45 and min == 59:
+                elif sec == 45 and minute == 59:
                     bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
-                elif sec == 50 and min == 59:
+                elif sec == 50 and minute == 59:
                     bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
-                elif sec == 55 and min == 59:
+                elif sec == 55 and minute == 59:
                     bot.send_message(idChatDetector, '59:' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '59:' + str(sec), parse_mode='HTML')
             elif hour == 12 or hour == 20 or hour == 0 or hour == 8 or hour == 16:
-                if sec >= 0 and min == 0 and retro == 1:
+                if sec >= 0 and minute == 0 and retro == 1:
                     bot.send_message(idChatRetroDetector, '00:0' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '00:0' + str(sec), parse_mode='HTML')
                     sleep(60)
             elif hour == 1 or hour == 9 or hour == 17:
-                if sec >= 0 and min == 0:
+                if sec >= 0 and minute == 0:
                     bot.send_message(idChatDetector, '00:0' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '00:0' + str(sec), parse_mode='HTML')
                     sleep(60)
