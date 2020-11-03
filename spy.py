@@ -3,6 +3,7 @@
 import re
 import random
 import gspread
+import objects
 import telebot
 import _thread
 import requests
@@ -10,10 +11,9 @@ from time import sleep
 from telebot import types
 from ast import literal_eval
 from datetime import datetime
-from objects import environmental_files
 
-
-environmental_files()
+stamp1 = objects.time_now()
+objects.environmental_files()
 # ======================================================================================================================
 client1 = gspread.service_account('worker1.json')
 client2 = gspread.service_account('worker2.json')
@@ -30,8 +30,6 @@ list1 = listsheet1.col_values(1)
 list2 = listsheet1.col_values(2)
 list3 = listsheet2.col_values(3)
 list4 = listsheet2.col_values(4)
-tkn = chats1[0]
-bot = telebot.TeleBot(tkn)
 
 less = '🌲'
 gori = '⛰'
@@ -98,11 +96,10 @@ for u2 in retr_uni:
 
 a_towers = [skal, bats, turt, oplt, rose, farm, ambr]
 a_retrotowers = [mo, gp, cy, va, im, eu, ki]
-
-
-NBOT = 'C' + 'h' + 'a' + 't' + 'W' + 'a' + 'r' + 's' + 'B' + 'o' + 't'
+NBOT = 'ChatWarsBot'
 # ======================================================================================================================
-bot.send_message(idMe, '🤤')
+bot = objects.start_main_bot('non-async', chats1[0])
+objects.start_message(chats1[0], stamp1)
 
 
 def spadder(key):
