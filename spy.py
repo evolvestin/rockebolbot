@@ -4,17 +4,27 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import telebot
 from telebot import types
-import urllib3
 import re
 import requests
-import time
 from ast import literal_eval
 from time import sleep
 import datetime
 from datetime import datetime
 import _thread
 import random
+import os
 
+
+def environmental_files():
+    directory = os.listdir('.')
+    for key in os.environ.keys():
+        if key.endswith('.json') and key not in directory:
+            file = open(key, 'w')
+            file.write(os.environ.get(key))
+            file.close()
+
+
+environmental_files()
 # ======================================================================================================================
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
 creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
