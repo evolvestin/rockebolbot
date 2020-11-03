@@ -16,11 +16,8 @@ from objects import environmental_files
 
 environmental_files()
 # ======================================================================================================================
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds1 = ServiceAccountCredentials.from_json_keyfile_name('worker1.json', scope)
-creds2 = ServiceAccountCredentials.from_json_keyfile_name('worker2.json', scope)
-client1 = gspread.authorize(creds1)
-client2 = gspread.authorize(creds2)
+client1 = gspread.service_account('worker1.json')
+client2 = gspread.service_account('worker2.json')
 sheet1 = client1.open('chats').sheet1
 sheet2 = client2.open('chats').sheet1
 listsheet1 = client1.open('list').sheet1
