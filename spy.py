@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
 import re
 import random
 import gspread
@@ -109,74 +108,68 @@ bot.send_message(idMe, '🤤')
 def spadder(key):
     if key == 1:
         keyboard = types.InlineKeyboardMarkup(row_width=3)
-        button = []
-        button.append(types.InlineKeyboardButton(text='CW1', callback_data='CW1'))
-        button.append(types.InlineKeyboardButton(text='CW3', callback_data='CW3'))
-        button.append(types.InlineKeyboardButton(text='⚡️Сплит', callback_data='Split'))
-        button.append(types.InlineKeyboardButton(text='🙄Отмена', callback_data='brake_ext'))
-        button.append(types.InlineKeyboardButton(text='😈Отвергнуть', callback_data='brake'))
+        button = [types.InlineKeyboardButton(text='CW1', callback_data='CW1'),
+                  types.InlineKeyboardButton(text='CW3', callback_data='CW3'),
+                  types.InlineKeyboardButton(text='⚡️Сплит', callback_data='Split'),
+                  types.InlineKeyboardButton(text='🙄Отмена', callback_data='brake_ext'),
+                  types.InlineKeyboardButton(text='😈Отвергнуть', callback_data='brake')]
         keyboard.add(*button)
     elif key == 2:
         keyboard = types.InlineKeyboardMarkup(row_width=3)
-        button = []
-        button.append(types.InlineKeyboardButton(text='Все', callback_data='all_cw1'))
-        button.append(types.InlineKeyboardButton(text=atk, callback_data='atk_cw1'))
-        button.append(types.InlineKeyboardButton(text=deff, callback_data='deff_cw1'))
-        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        button = [types.InlineKeyboardButton(text='Все', callback_data='all_cw1'),
+                  types.InlineKeyboardButton(text=atk, callback_data='atk_cw1'),
+                  types.InlineKeyboardButton(text=deff, callback_data='deff_cw1'),
+                  types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena')]
         keyboard.add(*button)
     elif key == 3:
         keyboard = types.InlineKeyboardMarkup(row_width=3)
-        button = []
-        button.append(types.InlineKeyboardButton(text='Все', callback_data='all_cw3'))
-        button.append(types.InlineKeyboardButton(text=atk, callback_data='atk_cw3'))
-        button.append(types.InlineKeyboardButton(text=deff, callback_data='deff_cw3'))
-        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        button = [types.InlineKeyboardButton(text='Все', callback_data='all_cw3'),
+                  types.InlineKeyboardButton(text=atk, callback_data='atk_cw3'),
+                  types.InlineKeyboardButton(text=deff, callback_data='deff_cw3'),
+                  types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena')]
         keyboard.add(*button)
 
     elif key == 4:
         keyboard = types.InlineKeyboardMarkup(row_width=3)
-        button = []
-        button.append(types.InlineKeyboardButton(text=mo, callback_data=mo))
-        button.append(types.InlineKeyboardButton(text=gp, callback_data=gp))
-        button.append(types.InlineKeyboardButton(text=cy, callback_data=cy))
-        button.append(types.InlineKeyboardButton(text=va, callback_data=va))
-        button.append(types.InlineKeyboardButton(text=im, callback_data=im))
-        button.append(types.InlineKeyboardButton(text=eu, callback_data=eu))
-        button.append(types.InlineKeyboardButton(text=ki, callback_data=ki))
-        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        button = [types.InlineKeyboardButton(text=mo, callback_data=mo),
+                  types.InlineKeyboardButton(text=gp, callback_data=gp),
+                  types.InlineKeyboardButton(text=cy, callback_data=cy),
+                  types.InlineKeyboardButton(text=va, callback_data=va),
+                  types.InlineKeyboardButton(text=im, callback_data=im),
+                  types.InlineKeyboardButton(text=eu, callback_data=eu),
+                  types.InlineKeyboardButton(text=ki, callback_data=ki),
+                  types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena')]
         keyboard.add(*button)
     elif key == 5:
         keyboard = types.InlineKeyboardMarkup(row_width=3)
-        button = []
-        button.append(types.InlineKeyboardButton(text=skal, callback_data=skal))
-        button.append(types.InlineKeyboardButton(text=bats, callback_data=bats))
-        button.append(types.InlineKeyboardButton(text=turt, callback_data=turt))
-        button.append(types.InlineKeyboardButton(text=oplt, callback_data=oplt))
-        button.append(types.InlineKeyboardButton(text=rose, callback_data=rose))
-        button.append(types.InlineKeyboardButton(text=farm, callback_data=farm))
-        button.append(types.InlineKeyboardButton(text=ambr, callback_data=ambr))
-        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        button = [types.InlineKeyboardButton(text=skal, callback_data=skal),
+                  types.InlineKeyboardButton(text=bats, callback_data=bats),
+                  types.InlineKeyboardButton(text=turt, callback_data=turt),
+                  types.InlineKeyboardButton(text=oplt, callback_data=oplt),
+                  types.InlineKeyboardButton(text=rose, callback_data=rose),
+                  types.InlineKeyboardButton(text=farm, callback_data=farm),
+                  types.InlineKeyboardButton(text=ambr, callback_data=ambr),
+                  types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena')]
         keyboard.add(*button)
     elif key == 6:
         keyboard = types.InlineKeyboardMarkup(row_width=3)
-        button = []
-        button.append(types.InlineKeyboardButton(text='👌Добавить', callback_data='good'))
-        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        button = [types.InlineKeyboardButton(text='👌Добавить', callback_data='good'),
+                  types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena')]
         keyboard.add(*button)
     elif key == 7:
         keyboard = types.InlineKeyboardMarkup(row_width=3)
-        button = []
-        button.append(types.InlineKeyboardButton(text='👌Добавить', callback_data='good'))
-        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        button = [types.InlineKeyboardButton(text='👌Добавить', callback_data='good'),
+                  types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena')]
         keyboard.add(*button)
     elif key == 8:
         keyboard = types.InlineKeyboardMarkup(row_width=1)
-        button = []
-        button.append(types.InlineKeyboardButton(text='Ввести ботов', callback_data='split_bots'))
-        button.append(types.InlineKeyboardButton(text='Ввести специализацию + замок', callback_data='split_spec'))
-        button.append(types.InlineKeyboardButton(text='Ввести маркировку CW', callback_data='split_version'))
-        button.append(types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena'))
+        button = [types.InlineKeyboardButton(text='Ввести ботов', callback_data='split_bots'),
+                  types.InlineKeyboardButton(text='Ввести специализацию + замок', callback_data='split_spec'),
+                  types.InlineKeyboardButton(text='Ввести маркировку CW', callback_data='split_version'),
+                  types.InlineKeyboardButton(text='⚰️Отмена', callback_data='otmena')]
         keyboard.add(*button)
+    else:
+        keyboard = None
     return keyboard
 
 
@@ -197,6 +190,8 @@ def union(key):
         button.append(types.InlineKeyboardButton(text='⚰️Очистить', callback_data='retro_edunireset'))
         button.append(types.InlineKeyboardButton(text='🗳Сохранить', callback_data='retro_edunisave'))
         keyboard.add(*button)
+    else:
+        keyboard = None
     return keyboard
 
 
@@ -1230,14 +1225,14 @@ def detector():
                     bot.send_message(idChatDetector, '00:0' + str(sec), parse_mode='HTML')
                     bot.send_message(idChannelPins, '00:0' + str(sec), parse_mode='HTML')
                     sleep(60)
-        except Exception as e:
+        except IndexError and Exception:
             sleep(0.9)
 
 
 def telepol():
     try:
         bot.polling(none_stop=True, timeout=60)
-    except:
+    except IndexError and Exception:
         bot.stop_polling()
         sleep(0.5)
         telepol()
