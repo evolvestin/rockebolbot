@@ -289,8 +289,8 @@ def handle_id_command(message):
         text = 'Твой ID: <code>' + str(message.from_user.id) + '</code>\n'
         if message.chat.id < 0:
             text = text + 'Group ID: <code>' + str(message.chat.id) + '</code>'
-    elif message.reply_to_message:
-        id = str(message.reply_to_message.from_user.id)
+    else:
+        user_id = str(message.reply_to_message.from_user.id)
         if message.reply_to_message.from_user.username:
             username = '@' + str(message.reply_to_message.from_user.username)
         else:
@@ -316,7 +316,7 @@ def handle_id_command(message):
             isbot = ''
 
         text = firstname + ' ' + lastname + ' [<b>' + username + '</b>]\n' + \
-            'ID: <code>' + id + '</code>\n' + isbot
+            'ID: <code>' + user_id + '</code>\n' + isbot
 
     bot.send_message(message.chat.id, text, parse_mode='HTML')
 
@@ -1028,10 +1028,10 @@ def repeat_all_messages(message):
                 keyboard = spadder(1)
                 try:
                     add = message.text.replace('/add_', '')
-                    search = re.search('(\w+)', add)
+                    search = re.search(r'(\w+)', add)
                     text = str(search.group(1)) + '.'
                     bot.send_message(message.chat.id, text, reply_markup=keyboard)
-                except:
+                except IndexError and Exception:
                     text = 'Введен не верный id'
                     bot.send_message(message.chat.id, text)
             elif str(message.text).startswith('/call'):
@@ -1041,7 +1041,7 @@ def repeat_all_messages(message):
                     cll = int(cll.replace('/call ', ''))
                     bot.send_message(message.chat.id, 'Введите сообщение пользователю с id: ' + str(cll) + '(/no)')
                     mark = 1
-                except:
+                except IndexError and Exception:
                     bot.send_message(message.chat.id, 'Введен не верный id')
                     marker = 0
             elif mark == 1:
