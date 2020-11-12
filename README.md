@@ -45,4 +45,4 @@ https://docs.google.com/spreadsheets/d/1Cg56o07Z5Nj46C1GHGyOtbtP9fhcKR6oZCDW91FZ
 
 Ссылки я для себя оставил если че. Удачи там в новых начинаниях всем и остальным.
 
-03.11.2020
+12.11.2020

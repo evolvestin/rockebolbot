@@ -4,14 +4,12 @@ import re
 import random
 import gspread
 import objects
-import telebot
 import _thread
 import requests
 from time import sleep
 from telebot import types
 from ast import literal_eval
 from datetime import datetime
-
 stamp1 = objects.time_now()
 objects.environmental_files()
 # ======================================================================================================================
@@ -96,10 +94,11 @@ for u2 in retr_uni:
 
 a_towers = [skal, bats, turt, oplt, rose, farm, ambr]
 a_retrotowers = [mo, gp, cy, va, im, eu, ki]
+Auth = objects.AuthCentre(chats1[0])
 NBOT = 'ChatWarsBot'
 # ======================================================================================================================
-bot = objects.start_main_bot('non-async', chats1[0])
-objects.start_message(chats1[0], stamp1)
+bot = Auth.start_main_bot('non-async')
+Auth.start_message(stamp1)
 
 
 def spadder(key):
