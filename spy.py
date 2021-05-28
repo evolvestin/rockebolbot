@@ -75,8 +75,8 @@ idChatRetroPinsUnion = chat_ids[3]
 idChatRetroPinsEnemy = chat_ids[4]
 idChatRetroDetector = chat_ids[5]
 
-fraze25 = ['...', '-cCc-', '..', '.', '....', 'сСс..', '_____S______', 'zhopa', '_))))))))))', 'ase;rlkgnawer;gnawr',
-           ',krelggj<))))>', 'HA)', '(WOW', '(W(W()WOWS))', 'F<CK)', 'помните ', 'Ы(((', 'БВБЛЯ))']
+fraze25 = ['...', '-cCc-', '..', '.', '....', 'сСс..', '_____S______', '****a', '_))))))))))', 'ase;rlkgnawer;gnawr',
+           ',krelggj<))))>', 'HA)', '(WOW', '(W(W()WOWS))', '****)', 'помните ', 'Ы(((', 'БВ***))']
 
 spycorp_ids = []
 for new in list1:
@@ -477,7 +477,7 @@ def callbacks(call):
             bot.send_message(idChatDevelopment, devtext, reply_markup=keyboard)
             bot.edit_message_text(chat_id=call.message.chat.id, text=text, message_id=call.message.message_id)
         elif call.data == 'NoSpy':
-            text = 'Пидора ответ😡 Ну и зачем ты зашел сюда? Я шпион-бот, ' \
+            text = '****** ответ😡 Ну и зачем ты зашел сюда? Я шпион-бот, ' \
                    'больше ничо не умею...\nНу может и умею, но тебе не расскажу точно, бака😑\n\n' \
                    'Если вдруг, ты захочешь нам пошпионить всё-таки, то прожми /start и выбери другой стул.'
             bot.edit_message_text(chat_id=call.message.chat.id, text=text, message_id=call.message.message_id)
@@ -981,9 +981,7 @@ def repeat_all_messages(message):
                     bot.send_message(message.chat.id, bad)
 
         if message.reply_to_message:
-            if message.text.lower() == 'не пиши' or message.text.lower() == 'пидорас' \
-                    or message.text.lower() == 'говно' or message.text.lower() == 'говной' \
-                    or message.text.lower() == 'воняет':
+            if message.text.lower() == 'не пиши':
                 bot.send_voice(message.chat.id, 'AwADAgADXAEAAu7TEEiU1v4upM88swI',
                                reply_to_message_id=message.reply_to_message.message_id)
             elif message.from_user.id == idMe and message.text == 'пин':

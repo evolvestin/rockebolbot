@@ -1,1 +1,1 @@
-worker: python spy.py
+worker: python new_bot.py
