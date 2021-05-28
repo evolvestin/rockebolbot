@@ -303,7 +303,7 @@ if __name__ == '__main__':
         Auth.dev.printer(f'Запуск бота локально за {time_now() - stamp1} сек.')
     else:
         Auth.dev.start(stamp1)
-        threads = [logger, google_update, auto_reboot]
+        threads = [logger, google_update, auto_reboot, detector]
         Auth.dev.printer(f'Бот запущен за {time_now() - stamp1} сек.')
 
     for thread_element in threads:
