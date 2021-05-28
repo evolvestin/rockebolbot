@@ -117,7 +117,6 @@ async def repeat_channel_messages(message: types.Message):
 @dispatcher.message_handler(content_types=objects.red_contents)
 async def red_messages(message: types.Message):
     try:
-        print(message)
         if str(message['chat']['id']) not in black_list:
             db = SQL(db_path)
             user = db.get_user(message['chat']['id'])
@@ -237,7 +236,7 @@ def detector():
     def advice_query():
         try:
             response = objects.make_dict(requests.get('http://fucking-great-advice.ru/api/random').text)
-            return italic(response['text']) if response.get('text') else '25'
+            return italic(objects.html_secure(response['text'])) if response.get('text') else '25'
         except IndexError and Exception:
             return '25'
 
