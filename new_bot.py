@@ -241,9 +241,9 @@ def detector():
             return '25'
 
     advice = advice_query()
+    used = []
     while True:
         try:
-            used = []
             text = None
             date = datetime.now(tz)
             minute = date.strftime('%M')
