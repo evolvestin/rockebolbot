@@ -243,14 +243,17 @@ def detector():
     advice = advice_query()
     while True:
         try:
+            used = []
             text = None
             date = datetime.now(tz)
             minute = date.strftime('%M')
             second = date.strftime('%S')
             if date.strftime('%H') in ['00', '08', '16'] and minute == '59':
-                if second == '25':
+                if second == '25' and second not in used:
                     text = advice
-                elif second in ['30', '35', '40', '45', '50', '55']:
+                    used.append(second)
+                elif second in ['30', '35', '40', '45', '50', '55'] and second not in used:
+                    used.append(second)
                     text = f'{minute}:{second}'
 
             if date.strftime('%H') in ['01', '09', '17'] and minute == '00' and second == '00':
@@ -260,8 +263,10 @@ def detector():
                 Auth.message(id=-1001376818013, text=text)
                 if minute == '00' and second == '00':
                     advice = advice_query()
+                    used.clear()
+                    sleep(60)
             else:
-                sleep(0.9)
+                sleep(0.5)
         except IndexError and Exception:
             Auth.dev.thread_except()
 
