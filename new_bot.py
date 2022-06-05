@@ -1,5 +1,4 @@
 import os
-import asyncio
 import objects
 import _thread
 import gspread
@@ -32,7 +31,6 @@ logging = []
 idMe = 396978030
 db_path = 'db/database.db'
 objects.environmental_files()
-loop = asyncio.get_event_loop()
 os.makedirs('db', exist_ok=True)
 tz = timezone(timedelta(hours=3))
 Auth = objects.AuthCentre(LOG_DELAY=120,
@@ -132,11 +130,11 @@ async def red_messages(message: types.Message):
 async def repeat_all_messages(message: types.Message):
     try:
         db = SQL(db_path)
-        text, start = None, None
+        text, starting = None, None
         user = db.get_user(message['chat']['id'])
         log_text = True if str(message['chat']['id']) not in black_list else None
         if user is None:
-            start = True
+            starting = True
             first_start(message)
 
         if message['text'].lower().startswith('/'):
@@ -182,7 +180,7 @@ async def repeat_all_messages(message: types.Message):
             except IndexError and Exception as error:
                 Auth.dev.printer(error)
 
-        log_text = ' [#Впервые]' if start else log_text
+        log_text = ' [#Впервые]' if starting else log_text
         await sender(message, user, text=text, log_text=log_text)
         db.close()
     except IndexError and Exception:
@@ -271,26 +269,6 @@ def detector():
             Auth.dev.thread_except()
 
 
-def auto_reboot():
-    global logging
-    reboot = None
-    while True:
-        try:
-            sleep(30)
-            date = datetime.now(tz)
-            if date.strftime('%H') == '23' and date.strftime('%M') == '57':
-                reboot = True
-                while date.strftime('%M') == '57':
-                    sleep(1)
-                    date = datetime.now(tz)
-            if reboot:
-                reboot = None
-                text, _ = Auth.logs.reboot(dispatcher)
-                Auth.dev.printer(text)
-        except IndexError and Exception:
-            Auth.dev.thread_except()
-
-
 def logger():
     global logging
     while True:
@@ -302,15 +280,22 @@ def logger():
             Auth.dev.thread_except()
 
 
-if __name__ == '__main__':
-    if os.environ.get('local'):
-        threads = [logger, google_update]
-        Auth.dev.printer(f'Запуск бота локально за {time_now() - stamp1} сек.')
-    else:
-        Auth.dev.start(stamp1)
-        threads = [logger, google_update, auto_reboot, detector]
-        Auth.dev.printer(f'Бот запущен за {time_now() - stamp1} сек.')
+def start(stamp):
+    try:
+        threads = [logger, google_update, detector]
+        if os.environ.get('local'):
+            threads = [logger]
+            Auth.dev.printer(f'Запуск бота локально за {time_now() - stamp} сек.')
+        else:
+            Auth.dev.start(stamp)
+            Auth.dev.printer(f'Бот запущен за {time_now() - stamp} сек.')
 
-    for thread_element in threads:
-        _thread.start_new_thread(thread_element, ())
-    executor.start_polling(dispatcher, allowed_updates=objects.allowed_updates)
+        for thread_element in threads:
+            _thread.start_new_thread(thread_element, ())
+        executor.start_polling(dispatcher, allowed_updates=objects.allowed_updates)
+    except IndexError and Exception:
+        Auth.dev.thread_except()
+
+
+if __name__ == '__main__' and os.environ.get('local'):
+    start(stamp1)
