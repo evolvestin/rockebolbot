@@ -1,8 +1,8 @@
 import os
-import objects
 import _thread
 import gspread
 import requests
+import functions
 from SQL import SQL
 from time import sleep
 from aiogram import types
@@ -10,8 +10,8 @@ from copy import copy, deepcopy
 from aiogram.utils import executor
 from string import ascii_uppercase
 from aiogram.dispatcher import Dispatcher
-from objects import bold, code, italic, time_now
 from datetime import datetime, timezone, timedelta
+from functions import bold, code, italic, time_now
 # =================================================================================================================
 stamp1 = time_now()
 
@@ -30,16 +30,16 @@ def users_db_creation():
 logging = []
 idMe = 396978030
 db_path = 'db/database.db'
-objects.environmental_files()
+functions.environmental_files()
 os.makedirs('db', exist_ok=True)
 tz = timezone(timedelta(hours=3))
-Auth = objects.AuthCentre(LOG_DELAY=120,
-                          ID_DEV=-1001312302092,
-                          TOKEN=os.environ.get('TOKEN'),
-                          ID_DUMP=os.environ.get('ID_DUMP'),
-                          ID_LOGS=os.environ.get('ID_LOGS'),
-                          ID_MEDIA=os.environ.get('ID_MEDIA'),
-                          DEV_TOKEN=os.environ.get('DEV_TOKEN'))
+Auth = functions.AuthCentre(LOG_DELAY=120,
+                            ID_DEV=-1001312302092,
+                            TOKEN=os.environ.get('TOKEN'),
+                            ID_DUMP=os.environ.get('ID_DUMP'),
+                            ID_LOGS=os.environ.get('ID_LOGS'),
+                            ID_MEDIA=os.environ.get('ID_MEDIA'),
+                            DEV_TOKEN=os.environ.get('DEV_TOKEN'))
 
 bot = Auth.async_bot
 dispatcher = Dispatcher(bot)
@@ -112,7 +112,7 @@ async def repeat_channel_messages(message: types.Message):
         await Auth.dev.async_except(message)
 
 
-@dispatcher.message_handler(content_types=objects.red_contents)
+@dispatcher.message_handler(content_types=functions.red_contents)
 async def red_messages(message: types.Message):
     try:
         if str(message['chat']['id']) not in black_list:
@@ -173,7 +173,7 @@ async def repeat_all_messages(message: types.Message):
 
         elif 'совет' in message['text'].lower():
             try:
-                response = objects.make_dict(requests.get('http://fucking-great-advice.ru/api/random').text)
+                response = functions.make_dict(requests.get('http://fucking-great-advice.ru/api/random').text)
                 reply = message['reply_to_message']['message_id'] if message['reply_to_message'] else None
                 await sender(message, user, text=response.get('text'), log_text=log_text, reply=reply)
                 log_text = None
@@ -233,8 +233,8 @@ def google_update():
 def detector():
     def advice_query():
         try:
-            response = objects.make_dict(requests.get('http://fucking-great-advice.ru/api/random').text)
-            return italic(objects.html_secure(response['text'])) if response.get('text') else '25'
+            response = functions.make_dict(requests.get('http://fucking-great-advice.ru/api/random').text)
+            return italic(functions.html_secure(response['text'])) if response.get('text') else '25'
         except IndexError and Exception:
             return '25'
 
@@ -292,7 +292,7 @@ def start(stamp):
 
         for thread_element in threads:
             _thread.start_new_thread(thread_element, ())
-        executor.start_polling(dispatcher, allowed_updates=objects.allowed_updates)
+        executor.start_polling(dispatcher, allowed_updates=functions.allowed_updates)
     except IndexError and Exception:
         Auth.dev.thread_except()
 

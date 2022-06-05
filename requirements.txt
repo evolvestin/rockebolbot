@@ -1,4 +1,7 @@
+aiogram==2.20
 gspread==3.6.0
-urllib3==1.26.9
-requests==2.24.0
-e-objects>=2.10.1
+heroku3==5.1.4
+requests>=2.25.1
+Unidecode==1.2.0
+pyTelegramBotAPI==4.5.1
+google-api-python-client==1.10.0
